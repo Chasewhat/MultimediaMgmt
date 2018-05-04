@@ -15,7 +15,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
     [POCOViewModel]
     public class PermitAddEditViewModel : BaseViewModel
     {
-        public virtual PermitOperate CurrPermit { get; set; }
+        public virtual PermitOperateEx CurrPermit { get; set; }
         public virtual List<KeyValuePair<int, string>> Buildings { get; set; }
         public virtual Dictionary<string, string> Sexs { get; set; }
 
@@ -34,10 +34,26 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         public virtual DateTime? TimeBegin { get; set; }
         public virtual DateTime? TimeEnd { get; set; }
 
-        public virtual string InstituteId { get; set; }
-        public virtual string FacultyId { get; set; }
+        public virtual string CollegeName { get; set; }
+        public virtual string MajorsName { get; set; }
         public virtual string Sex { get; set; }
         public virtual string ClassId { get; set; }
+
+        public virtual int? BuildingId { get; set; }
+        protected void OnBuildingIdChanged()
+        {
+            if (BuildingId.HasValue && BuildingId.Value > 0)
+            {
+                TerminalIds = multimediaEntities.ClassRoom.
+                    Where(s => s.BuildingId == BuildingId.Value).
+                    Select(s => s.TerminalId).ToList();
+            }
+        }
+        public virtual string TerminalId { get; set; }
+
+        public virtual List<string> TerminalIds { get; set; }
+
+        public Action<string> MessageShow;
 
         private int currId = 0;
         public PermitAddEditViewModel(int id)
@@ -56,11 +72,10 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                               join c in multimediaEntities.ClassRoom on p.TerminalId equals c.TerminalId
                               join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
                               where p.ID == id
-                              select new PermitOperate()
+                              select new PermitOperateEx()
                               {
                                   Id = p.ID,
                                   BuildingId = b.id,
-                                  ClassRoomId = c.Id,
                                   TerminalId = p.TerminalId,
                                   RoomName = c.RoomName,
                                   BuildingName = b.BuildingName,
@@ -76,7 +91,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 ButtonContent = "增加";
             }
             if (CurrPermit == null)
-                CurrPermit = new PermitOperate();
+                CurrPermit = new PermitOperateEx();
             else
             {
                 Times = CurrPermit.PermitTime.Split(';').ToSmartObservableCollection();
@@ -89,6 +104,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 }
                 ChoosedPersons = temp.ToSmartObservableCollection();
             }
+            BuildingId = CurrPermit.BuildingId;
+            TerminalId = CurrPermit.TerminalId;
             SelectedTimes = new SmartObservableCollection<string>();
             SelectedPersons = new SmartObservableCollection<Person>();
             SelectedChoosedPersons = new SmartObservableCollection<Person>();
@@ -99,30 +116,33 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         {
             CurrPermit.PermitTime = string.Join(";", Times.Distinct().ToArray());
             CurrPermit.PersonId = string.Join(";", ChoosedPersons.Select(s => s.PersonId).Distinct().ToArray());
-            if (string.IsNullOrEmpty(CurrPermit.TerminalId))
+            if (string.IsNullOrEmpty(TerminalId) ||
+                string.IsNullOrEmpty(CurrPermit.PersonId) ||
+                string.IsNullOrEmpty(CurrPermit.PermitTime))
+            {
+                MessageShow("请确认必填项");
                 return;
-            if (string.IsNullOrEmpty(CurrPermit.PersonId))
-                return;
-            if (string.IsNullOrEmpty(CurrPermit.PermitTime))
-                return;
+            }
             if (currId > 0)
             {
                 ClassRoomPermit permit = multimediaEntities.ClassRoomPermit.FirstOrDefault(s => s.ID == currId);
                 if (permit != null)
+                {
+                    permit.TerminalId = TerminalId;
                     multimediaEntities.Entry(permit).State = EntityState.Modified;
-                multimediaEntities.SaveChanges();
+                }
             }
             else
             {
                 ClassRoomPermit permit = new ClassRoomPermit()
                 {
-                    TerminalId = CurrPermit.TerminalId,
+                    TerminalId = TerminalId,
                     PersonId = CurrPermit.PersonId,
                     PermitTime = CurrPermit.PermitTime
                 };
                 multimediaEntities.ClassRoomPermit.Add(permit);
-                multimediaEntities.SaveChanges();
             }
+            multimediaEntities.SaveChanges();
         }
 
         [Command]
@@ -158,8 +178,11 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         [Command]
         public void QueryPerson()
         {
-            Persons = multimediaEntities.Person.Where(s => s.ClassId == ClassId &&
-                s.Sex == Sex && s.FacultyId == FacultyId).ToSmartObservableCollection();
+            Persons = (from p in multimediaEntities.Person
+                        join m in multimediaEntities.Majors on p.FacultyId equals m.FacultyId
+                        where p.ClassId == ClassId && p.Sex == Sex &&
+                             m.CollegeName == CollegeName && m.MajorsName == MajorsName
+                        select p).ToSmartObservableCollection();
         }
 
         [Command]

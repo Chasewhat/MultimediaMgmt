@@ -18,10 +18,10 @@ namespace MultimediaMgmt.View.Controls
         private MonitorMgmtViewModel monitorMgmtViewModel;
         private int monitorWidth = 300, monitorHeight = 200;
         private int monitorMax = 16;
-        private List<ucMonitor1> monitors = new List<ucMonitor1>();
-        private List<ucMonitor1> roomMonitors = new List<ucMonitor1>();
+        private List<ucMonitor> monitors = new List<ucMonitor>();
+        private List<ucMonitor> roomMonitors = new List<ucMonitor>();
         private bool isShowRoom = false;
-        private KeyValuePair<int, ucMonitor1> currMonitor;
+        private KeyValuePair<int, ucMonitor> currMonitor;
 
         public ucMonitorMgmt()
         {
@@ -39,7 +39,7 @@ namespace MultimediaMgmt.View.Controls
         {
             if (isChecked)
             { //新增视频
-                ucMonitor1 monitor = new ucMonitor1();
+                ucMonitor monitor = new ucMonitor();
                 monitor.Margin = new Thickness(2);
                 monitor.Width = double.NaN;
                 monitor.Height = double.NaN;
@@ -81,7 +81,7 @@ namespace MultimediaMgmt.View.Controls
         {
             if (roomMonitors.Count <= 0)
                 return;
-            foreach (ucMonitor1 monitor in roomMonitors)
+            foreach (ucMonitor monitor in roomMonitors)
                 monitor.Dispose();
             roomMonitors.Clear();
             this.overviewRoomPanel.Children.Clear();
@@ -92,7 +92,7 @@ namespace MultimediaMgmt.View.Controls
             RoomDispose();
             for (int i = 0; i < 3; i++)
             {
-                ucMonitor1 roomMonitor = new ucMonitor1();
+                ucMonitor roomMonitor = new ucMonitor();
                 roomMonitor.Margin = new Thickness(2);
                 roomMonitor.Width = double.NaN;
                 roomMonitor.Height = double.NaN;
@@ -120,11 +120,11 @@ namespace MultimediaMgmt.View.Controls
             this.overviewPanel.Children.Insert(currMonitor.Key, currMonitor.Value);
         }
 
-        public void StatusChangedExec(ucMonitor1 ucc, bool isDetail)
+        public void StatusChangedExec(ucMonitor ucc, bool isDetail)
         {
             if (isDetail)
             {
-                currMonitor = new KeyValuePair<int, ucMonitor1>(monitors.IndexOf(ucc), ucc);
+                currMonitor = new KeyValuePair<int, ucMonitor>(monitors.IndexOf(ucc), ucc);
                 RoomMonitorInit();
                 this.listPanel.ItemWidth = new GridLength(monitorWidth + 40);
                 this.detailPanel.Visibility = Visibility.Visible;
@@ -140,7 +140,7 @@ namespace MultimediaMgmt.View.Controls
             }
         }
 
-        public void RoomStatusChangedExec(ucMonitor1 ucc, bool isDetail)
+        public void RoomStatusChangedExec(ucMonitor ucc, bool isDetail)
         {
             if (isDetail)
             {
@@ -148,7 +148,7 @@ namespace MultimediaMgmt.View.Controls
                 this.listPanel.ItemWidth = new GridLength(monitorWidth + 40);
                 if (this.detailPanel.Content != null)
                 {
-                    ucMonitor1 temp = this.detailPanel.Content as ucMonitor1;
+                    ucMonitor temp = this.detailPanel.Content as ucMonitor;
                     temp.StatusSet();
                     temp.Dispose();
                     this.detailPanel.Content = null;
@@ -169,14 +169,14 @@ namespace MultimediaMgmt.View.Controls
         //{
         //    monitorWidth = (int)widthChange.EditValue;
         //    foreach (var child in this.overviewPanel.Children)
-        //        (child as ucMonitor1).Width = monitorWidth;
+        //        (child as ucMonitor).Width = monitorWidth;
         //}
 
         //private void heightChange_EditValueChanged(object sender, RoutedEventArgs e)
         //{
         //    monitorHeight = (int)heightChange.EditValue;
         //    foreach (var child in this.overviewPanel.Children)
-        //        (child as ucMonitor1).Height = monitorHeight; ;
+        //        (child as ucMonitor).Height = monitorHeight; ;
         //}
     }
 }

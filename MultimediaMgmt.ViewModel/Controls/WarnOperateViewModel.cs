@@ -16,7 +16,7 @@ namespace MultimediaMgmt.ViewModel.Controls
     {
         public virtual SmartObservableCollection<WarnOperate> WarnOperates { get; set; }
         public virtual WarnOperate SelectedWarnOperate { get; set; }
-        public virtual string BuildingId { get; set; }
+        public virtual int? BuildingId { get; set; }
         public virtual string TerminalId { get; set; }
 
         public virtual List<KeyValuePair<int, string>> Buildings { get; set; }
@@ -51,9 +51,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                            Alarm_In3 = t.Alarm_In3,
                            Alarm_In4 = t.Alarm_In4
                        };
-            int bid = BuildingId.ToInt();
-            if (bid > 0)
-                data = data.Where(s => s.BuildingId == bid);
+            if (BuildingId.HasValue && BuildingId.Value > 0)
+                data = data.Where(s => s.BuildingId == BuildingId.Value);
             if (!string.IsNullOrEmpty(TerminalId))
                 data = data.Where(s => s.TerminalId == TerminalId);
 

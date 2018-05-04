@@ -15,6 +15,10 @@ namespace MultimediaMgmt.View.PopWindows
         {
             InitializeComponent();
             this.DataContext = permitAddEditViewModel = ViewModelSource.Create(() => new PermitAddEditViewModel(id));
+            permitAddEditViewModel.MessageShow = (s) =>
+            {
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            };
         }
     }
 }

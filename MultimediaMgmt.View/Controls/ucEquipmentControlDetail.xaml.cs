@@ -28,7 +28,7 @@ namespace MultimediaMgmt.View.Controls
             {
                 foreach (var ui in this.monitorsPanel.Children)
                 {
-                    ucMonitor1 monitor = ui as ucMonitor1;
+                    ucMonitor monitor = ui as ucMonitor;
                     monitor.Dispose();
                 }
                 this.monitorsPanel.Children.Clear();
@@ -52,7 +52,7 @@ namespace MultimediaMgmt.View.Controls
 
             for (int i = 0; i < monitorCount; i++)
             {
-                ucMonitor1 monitor = new ucMonitor1();
+                ucMonitor monitor = new ucMonitor();
                 monitor.Margin = new Thickness(5);
                 monitor.Tag = i;
                 monitor.StatusChanged += StatusChangedExec;
@@ -60,15 +60,15 @@ namespace MultimediaMgmt.View.Controls
             }
         }
 
-        public void StatusChangedExec(ucMonitor1 ucc, bool isDetail)
+        public void StatusChangedExec(ucMonitor ucc, bool isDetail)
         {
             if (isDetail)
             {
                 monitorsPanel.Rows = monitorsPanel.Columns = 1;
                 foreach (var child in monitorsPanel.Children)
                 {
-                    if ((child as ucMonitor1).Tag != ucc.Tag)
-                        (child as ucMonitor1).Visibility = Visibility.Collapsed;
+                    if ((child as ucMonitor).Tag != ucc.Tag)
+                        (child as ucMonitor).Visibility = Visibility.Collapsed;
                 }
             }
             else
@@ -77,7 +77,7 @@ namespace MultimediaMgmt.View.Controls
                 monitorsPanel.Columns = monitorColumns;
                 foreach (var child in monitorsPanel.Children)
                 {
-                    (child as ucMonitor1).Visibility = Visibility.Visible;
+                    (child as ucMonitor).Visibility = Visibility.Visible;
                 }
             }
         }

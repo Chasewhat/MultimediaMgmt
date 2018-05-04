@@ -54,7 +54,7 @@
                     </dxg:TableView.RowCellMenuCustomizations>
                 </dxg:TableView>
             </dxg:GridControl.View>
-            <dxg:GridColumn FieldName="RoomName" Header="教室编号" Width="80"/>
+            <dxg:GridColumn FieldName="TerminalId" Header="教室编号" Width="80"/>
             <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80"/>
             <dxg:GridColumn FieldName="PersonName" Header="允许使用人员姓名" Width="300"/>
             <dxg:GridColumn FieldName="PermitTime" Header="允许时间段" Width="300"/>

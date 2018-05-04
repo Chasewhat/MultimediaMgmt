@@ -128,10 +128,10 @@
     <Compile Include="Models\EquipmentControllersEntity.cs" />
     <Compile Include="Models\CreditCardInfoEntity.cs" />
     <Compile Include="Models\DataStandard.cs" />
-    <Compile Include="Models\PermitOperate.cs" />
+    <Compile Include="Models\PermitOperateEx.cs" />
     <Compile Include="Models\WarnOperate.cs" />
     <Compile Include="Models\WarnInfoEntity.cs" />
-    <Compile Include="Models\CentralizedControlEntity.cs" />
+    <Compile Include="Models\CentralizedControlEx.cs" />
     <Compile Include="Models\CommonTree.cs" />
     <Compile Include="MultimediaModels.Context.cs">
       <AutoGen>True</AutoGen>

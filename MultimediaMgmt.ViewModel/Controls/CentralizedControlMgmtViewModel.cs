@@ -7,49 +7,60 @@ using System.Threading.Tasks;
 using MultimediaMgmt.Common.Extend;
 using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.Model;
+using MultimediaMgmt.Common.Helper;
+using Newtonsoft.Json.Linq;
 
 namespace MultimediaMgmt.ViewModel.Controls
 {
     [POCOViewModel]
     public class CentralizedControlMgmtViewModel : BaseViewModel
     {
-        public virtual SmartObservableCollection<CentralizedControlEntity> CentralizedControls { get; set; }
-        public virtual CentralizedControlEntity SelectedCentralizedControl { get; set; }
-        public virtual SmartObservableCollection<CentralizedControlEntity> SelectedCentralizedControls { get; set; }
-            = new SmartObservableCollection<CentralizedControlEntity>();
+        public virtual SmartObservableCollection<CentralizedControlEx> CentralizedControls { get; set; }
+        public virtual CentralizedControlEx SelectedCentralizedControl { get; set; }
+        public virtual SmartObservableCollection<CentralizedControlEx> SelectedCentralizedControls { get; set; }
+            = new SmartObservableCollection<CentralizedControlEx>();
 
-        public virtual List<string> TechBuilds { get; set; }
-        public virtual string SelectedTechBuild { get; set; }
+        public virtual List<KeyValuePair<int, string>> Buildings { get; set; }
+        public virtual int? BuildingId { get; set; }
 
         public virtual bool AllControlSwitch { get; set; }
         public virtual bool AllAirConditionerSwitch { get; set; }
         public virtual bool AllLightingSwitch { get; set; }
+        public virtual bool SystemCheck { get; set; }
+        public virtual bool AirConitionerCheck { get; set; }
+        public virtual bool LampCheck { get; set; }
 
-        private List<CentralizedControlEntity> ccs = new List<CentralizedControlEntity>();
         public CentralizedControlMgmtViewModel()
         {
-            Random r = new Random();
-            for (int i = 0; i < 20; i++)
+            Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
             {
-                ccs.Add(new CentralizedControlEntity()
-                {
-                    Code = "B00" + i,
-                    TechBuild = "教五楼",
-                    ControlSwitch = r.Next(0, 3) > 1,
-                    AirConditionerSwitch = r.Next(0, 3) > 1,
-                    LightingSwitch = r.Next(0, 3) > 1
-                });
-            }
-            CentralizedControls = new SmartObservableCollection<CentralizedControlEntity>(ccs);
-
-            TechBuilds = new List<string>() { "教一楼", "教二楼", "教三楼", "教四楼", "教五楼" };
-            AllSwitchSet();
+                Key = s.id,
+                Value = s.BuildingName
+            }).AsEnumerable().Select(s =>
+                            new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
         }
 
         [Command]
         public void Query()
         {
-            CentralizedControls = ccs.Where(s => s.TechBuild == SelectedTechBuild).ToSmartObservableCollection();
+            var data = from c in multimediaEntities.ClassRoom
+                       join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
+                       join t in multimediaEntities.TerminalCurrentInfo on c.TerminalId equals t.TerminalID
+                       select new CentralizedControlEx()
+                       {
+                           Id = c.Id,
+                           TerminalId = c.TerminalId,
+                           TerminalIp = c.TerminalIp,
+                           BuildingId = c.BuildingId,
+                           RoomName = c.RoomName,
+                           BuildingName = b.BuildingName,
+                           System = t.System,
+                           AirConitioner = t.AirConitioner,
+                           Lamp = t.Lamp
+                       };
+            if (BuildingId.HasValue && BuildingId.Value > 0)
+                data = data.Where(s => s.BuildingId == BuildingId.Value);
+            CentralizedControls = data.ToSmartObservableCollection();
             AllSwitchSet();
         }
 
@@ -59,31 +70,75 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0)
                 return;
             CentralizedControls.BeginUpdate();
+            StringBuilder temp = new StringBuilder();
             foreach (var cc in SelectedCentralizedControls)
             {
-                //CentralizedControlEntity temp = CentralizedControls.FirstOrDefault
-                cc.ExecResult = "执行成功";
+                if (SystemCheck && cc.System.HasValue)
+                {
+                    if (GetExec(cc.TerminalIp, cc.System.Value, "System"))
+                        temp.Append("中控执行成功,");
+                    else
+                        temp.Append("中控执行失败,");
+                }
+                if (AirConitionerCheck && cc.AirConitioner.HasValue)
+                {
+                    if (GetExec(cc.TerminalIp, cc.AirConitioner.Value, "AirConitioner"))
+                        temp.Append("空调执行成功,");
+                    else
+                        temp.Append("空调执行失败,");
+                }
+                if (LampCheck && cc.Lamp.HasValue)
+                {
+                    if (GetExec(cc.TerminalIp, cc.Lamp.Value, "Lamp"))
+                        temp.Append("照明执行成功,");
+                    else
+                        temp.Append("照明执行失败,");
+                }
+                if (temp.Length > 0)
+                {
+                    temp = temp.Remove(temp.Length - 1, 1);
+                    cc.ExecResult = temp.ToString();
+                }
             }
             CentralizedControls.EndUpdate();
+        }
+
+        private bool GetExec(string ip, bool status, string target)
+        {
+            try
+            {
+                string url = string.Format("{0}/TERMINAL_STATUS?{1}={2}",
+                    ip, target, status);
+                string response = WebHelper.Get(url);
+                JObject jo = JObject.Parse(response);
+                if ((bool)jo["success"])
+                    return true;
+                else
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         [Command]
         public void SelectedAll(int field)
         {
             CentralizedControls.BeginUpdate();
-            foreach (CentralizedControlEntity cc in CentralizedControls)
+            foreach (CentralizedControlEx cc in CentralizedControls)
             {
                 if (field == 1)
                 {
-                    cc.ControlSwitch = true;
+                    cc.System = true;
                 }
                 if (field == 2)
                 {
-                    cc.AirConditionerSwitch = true;
+                    cc.AirConitioner = true;
                 }
                 if (field == 3)
                 {
-                    cc.LightingSwitch = true;
+                    cc.Lamp = true;
                 }
             }
             CentralizedControls.EndUpdate();
@@ -93,19 +148,19 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void UnSelectedAll(int field)
         {
             CentralizedControls.BeginUpdate();
-            foreach (CentralizedControlEntity cc in CentralizedControls)
+            foreach (CentralizedControlEx cc in CentralizedControls)
             {
                 if (field == 1)
                 {
-                    cc.ControlSwitch = false;
+                    cc.System = false;
                 }
                 if (field == 2)
                 {
-                    cc.AirConditionerSwitch = false;
+                    cc.AirConitioner = false;
                 }
                 if (field == 3)
                 {
-                    cc.LightingSwitch = false;
+                    cc.Lamp = false;
                 }
             }
             CentralizedControls.EndUpdate();
@@ -114,13 +169,13 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void AllSwitchSet()
         {
             bool acSwitch = true, aaSwitch = true, alSwitch = true;
-            foreach (CentralizedControlEntity cc in CentralizedControls)
+            foreach (CentralizedControlEx cc in CentralizedControls)
             {
-                if (!cc.ControlSwitch)
+                if (!cc.System.HasValue || !cc.System.Value)
                     acSwitch = false;
-                if (!cc.AirConditionerSwitch)
+                if (!cc.AirConitioner.HasValue || !cc.AirConitioner.Value)
                     aaSwitch = false;
-                if (!cc.LightingSwitch)
+                if (!cc.Lamp.HasValue || !cc.Lamp.Value)
                     alSwitch = false;
             }
             AllControlSwitch = acSwitch;

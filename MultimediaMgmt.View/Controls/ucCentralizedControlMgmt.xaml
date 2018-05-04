@@ -13,9 +13,9 @@
     <DockPanel>
         <dxb:ToolBarControl Height="35" x:Name="toolBarMain" DockPanel.Dock="Top" Margin="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
             <dxb:BarEditItem Content="教学楼:" ClosePopupOnChangingEditValue="True" EditWidth="100"
-                              EditValue="{Binding SelectedTechBuild}">
+                              EditValue="{Binding BuildingId}">
                 <dxb:BarEditItem.EditSettings>
-                    <dxe:ComboBoxEditSettings ItemsSource="{Binding TechBuilds}"/>
+                    <dxe:ComboBoxEditSettings IsTextEditable="False" ValueMember="Key" DisplayMember="Value" ItemsSource="{Binding Buildings}"/>
                 </dxb:BarEditItem.EditSettings>
             </dxb:BarEditItem>
             <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
@@ -34,14 +34,15 @@
                     </dxg:TableView.RowCellMenuCustomizations>
                 </dxg:TableView>
             </dxg:GridControl.View>
-            <dxg:GridColumn FieldName="Code" Header="教室编号" Width="80" AllowEditing="False" Fixed="Left"/>
-            <dxg:GridColumn FieldName="TechBuild" Header="教学楼" Width="80" AllowEditing="False" Fixed="Left"/>
-            <dxg:GridColumn FieldName="ControlSwitch" Header="中控开关" Width="120" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn FieldName="TerminalID" Header="教室编号" Width="80" AllowEditing="False" Fixed="Left"/>
+            <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" AllowEditing="False" Fixed="Left"/>
+            <dxg:GridColumn  FieldName="System" Header="中控开关" Width="150" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <dxe:ToggleSwitch Margin="5,0,0,0" ToggleSwitchWidth="40" Background="Transparent" 
+                            <dxe:CheckEdit IsChecked="{Binding SystemCheck}" HorizontalAlignment="Center"/>
+                            <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <dxe:ToggleSwitch ToggleSwitchWidth="40" Background="Transparent" 
                                               IsChecked="{Binding Path=DataContext.AllControlSwitch, ElementName=mainUc}" AllowDrop="False" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <dxe:ToggleSwitch.Style>
                                     <Style TargetType="{x:Type dxe:ToggleSwitch}">
@@ -62,15 +63,16 @@
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.EditSettings>
-                    <dxe:ToggleSwitchEditSettings />
+                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="AirConditionerSwitch" Header="空调开关" Width="120">
+            <dxg:GridColumn FieldName="AirConitioner" Header="空调开关" Width="150">
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <dxe:ToggleSwitch Margin="5,0,0,0" ToggleSwitchWidth="40" Background="Transparent" 
+                            <dxe:CheckEdit IsChecked="{Binding AirConitionerCheck}" HorizontalAlignment="Center"/>
+                            <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <dxe:ToggleSwitch ToggleSwitchWidth="40" Background="Transparent" 
                                               IsChecked="{Binding Path=DataContext.AllAirConditionerSwitch, ElementName=mainUc}" AllowDrop="False" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <dxe:ToggleSwitch.Style>
                                     <Style TargetType="{x:Type dxe:ToggleSwitch}">
@@ -91,15 +93,16 @@
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.EditSettings>
-                    <dxe:ToggleSwitchEditSettings/>
+                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="LightingSwitch" Header="照明开关" Width="120">
+            <dxg:GridColumn FieldName="Lamp" Header="照明开关" Width="150">
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <dxe:ToggleSwitch Margin="5,0,0,0" ToggleSwitchWidth="40" Background="Transparent" 
+                            <dxe:CheckEdit IsChecked="{Binding LampCheck}" HorizontalAlignment="Center"/>
+                            <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <dxe:ToggleSwitch ToggleSwitchWidth="40" Background="Transparent" 
                                               IsChecked="{Binding Path=DataContext.AllLightingSwitch, ElementName=mainUc}" AllowDrop="False" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <dxe:ToggleSwitch.Style>
                                     <Style TargetType="{x:Type dxe:ToggleSwitch}">
@@ -120,7 +123,7 @@
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.EditSettings>
-                    <dxe:ToggleSwitchEditSettings/>
+                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="ExecResult" Header="命令执行结果" Width="150" AllowEditing="False"/>

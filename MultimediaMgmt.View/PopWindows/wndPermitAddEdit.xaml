@@ -9,7 +9,7 @@
     xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-    Height="450" Width="760" SizeToContent="Height"
+    Height="420" Width="760" SizeToContent="Height"
     x:Class="MultimediaMgmt.View.PopWindows.wndPermitAddEdit" WindowStyle="ToolWindow"
     Title="{Binding WindowTitle}" ResizeBorderThickness="1"
     WindowStartupLocation="CenterScreen" 
@@ -21,18 +21,19 @@
         <dxlc:LayoutControl Orientation="Horizontal">
             <dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical" Width="220" ItemSpace="10">
-                    <dxlc:LayoutItem Label="教学楼:" Foreground="Red" IsRequired="True">
-                        <dxe:ComboBoxEdit HorizontalAlignment="Left" Width="120" IsTextEditable="False" EditValue="{Binding CurrPermit.BuildingId}" ItemsSource="{Binding Buildings}" DisplayMember="Value" ValueMember="Key"/>
+                    <dxlc:LayoutItem Label="教学楼:">
+                        <dxe:ComboBoxEdit HorizontalAlignment="Left" Width="120" IsTextEditable="False" EditValue="{Binding BuildingId}" ItemsSource="{Binding Buildings}" DisplayMember="Value" ValueMember="Key"/>
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="教室编号:" Foreground="Red" IsRequired="True">
+                    <!--<dxlc:LayoutItem Label="教室编号:" Foreground="Red" IsRequired="True">
                         <dxe:ButtonEdit EditValue="{Binding CurrPermit.RoomName}" HorizontalAlignment="Left" Width="120" AllowDefaultButton="False">
                             <dxe:ButtonEdit.Buttons>
                                 <dxe:ButtonInfo IsDefaultButton="True" GlyphKind="Search" Content="查询终端" Command="{Binding GetTerminalIdCommand}"/>
                             </dxe:ButtonEdit.Buttons>
                         </dxe:ButtonEdit>
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="教室终端ID:" Foreground="Red" IsRequired="True">
-                        <dxe:TextEdit EditValue="{Binding CurrPermit.TerminalId}" IsReadOnly="True" HorizontalAlignment="Left" Width="120"/>
+                    </dxlc:LayoutItem>-->
+                    <dxlc:LayoutItem Label="教室编号:" Foreground="Red" IsRequired="True">
+                        <dxe:ComboBoxEdit HorizontalAlignment="Left" Width="120" IsTextEditable="False" EditValue="{Binding TerminalId}" ItemsSource="{Binding TerminalIds}" DisplayMember="Value" ValueMember="Key"/>
+                        <!--<dxe:TextEdit EditValue="{Binding TerminalId}" IsReadOnly="True" HorizontalAlignment="Left" Width="120"/>-->
                     </dxlc:LayoutItem>
                     <dxlc:GroupSeparator Height="8"/>
                     <dxlc:LayoutItem>
@@ -71,10 +72,10 @@
                 <dxlc:GroupSeparator Orientation="Vertical" Width="10"/>
                 <dxlc:LayoutGroup Orientation="Vertical" Width="150" ItemSpace="10">
                     <dxlc:LayoutItem Label="院系:">
-                        <dxe:TextEdit HorizontalAlignment="Left" Width="100" EditValue="{Binding InstituteId}"/>
+                        <dxe:TextEdit HorizontalAlignment="Left" Width="100" EditValue="{Binding CollegeName}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="专业:">
-                        <dxe:TextEdit HorizontalAlignment="Left" Width="100" EditValue="{Binding FacultyId}"/>
+                        <dxe:TextEdit HorizontalAlignment="Left" Width="100" EditValue="{Binding MajorsName}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="性别:">
                         <dxe:ComboBoxEdit HorizontalAlignment="Left" Width="100" IsTextEditable="False" EditValue="{Binding Sex}" ItemsSource="{Binding Sexs}" DisplayMember="Value" ValueMember="Key"/>
@@ -88,7 +89,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical" Width="150" ItemSpace="10">
                     <dxlc:LayoutItem Label="待选名单: " IsRequired="True" LabelPosition="Top">
-                        <dxg:GridControl Width="150" Height="300" AllowInitiallyFocusedRow="False" SelectionMode="Row"
+                        <dxg:GridControl Width="150" Height="270" AllowInitiallyFocusedRow="False" SelectionMode="Row"
                                          ItemsSource="{Binding Persons}" SelectedItems="{Binding SelectedPersons}">
                             <dxg:GridControl.View>
                                 <dxg:TableView AllowEditing="False"
@@ -109,7 +110,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical" Width="150" ItemSpace="10">
                     <dxlc:LayoutItem Label="已选名单: " IsRequired="True" Foreground="Red" LabelPosition="Top">
-                        <dxg:GridControl Width="150" Height="300" AllowInitiallyFocusedRow="False" SelectionMode="Row"
+                        <dxg:GridControl Width="150" Height="270" AllowInitiallyFocusedRow="False" SelectionMode="Row"
                                           ItemsSource="{Binding ChoosedPersons}" SelectedItems="{Binding SelectedChoosedPersons}">
                             <dxg:GridControl.View>
                                 <dxg:TableView AllowEditing="False"
