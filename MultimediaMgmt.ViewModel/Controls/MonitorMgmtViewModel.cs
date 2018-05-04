@@ -24,5 +24,23 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             ShowCountExec?.Invoke(count);
         }
+
+        public ClassRoomEx GetClassRoom(int id)
+        {
+            return (from c in multimediaEntities.ClassRoom
+                       join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
+                       select new ClassRoomEx()
+                       {
+                           Id = c.Id,
+                           TerminalId = c.TerminalId,
+                           TerminalIp = c.TerminalIp,
+                           RoomName = c.RoomName,
+                           BuildingId = c.BuildingId,
+                           BuildingName = b.BuildingName,
+                           Location = b.Location,
+                           Floor = c.Floor,
+                           VedioAddress = c.VedioAddress
+                       }).FirstOrDefault(s=>s.Id==id);
+        }
     }
 }

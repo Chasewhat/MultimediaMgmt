@@ -21,9 +21,14 @@ namespace MultimediaMgmt.View.Controls
         public delegate void StatusChangedEvent(ucMonitor uc, bool isDetail);
         public event StatusChangedEvent StatusChanged;
         private bool isSet = false;
-        public ucMonitor()
+        public string MediaUrl = string.Empty;
+        public int Id = 0;
+        public ucMonitor(string info,string mediaUrl,int id)
         {
             InitializeComponent();
+            monitorInfo.Content = info;
+            MediaUrl = mediaUrl;
+            Id = id;
         }
 
         private void volumnChange_EditValueChanged(object sender, RoutedEventArgs e)
@@ -79,13 +84,14 @@ namespace MultimediaMgmt.View.Controls
 
         private void play_ItemClick(object sender, ItemClickEventArgs e)
         {
-
             if (this.vlcTest.SourceProvider.MediaPlayer == null)
             {
+                if (string.IsNullOrEmpty(MediaUrl))
+                    return;
                 // Default installation path of VideoLAN.LibVLC.Windows
                 var libDirectory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
                 this.vlcTest.SourceProvider.CreatePlayer(libDirectory);
-                this.vlcTest.SourceProvider.MediaPlayer.Play(new Uri("rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov"));
+                this.vlcTest.SourceProvider.MediaPlayer.Play(new Uri(MediaUrl));
                 this.vlcTest.SourceProvider.disposedValue = false;
                 this.vlcTest.SourceProvider.MediaPlayer.Audio.Volume = 0;
                 this.mediaPlay.Glyph = Constants.Images["imagePause"];

@@ -21,7 +21,7 @@
                             </Border>
                         </ControlTemplate>
                     </dxb:ToolBarControl.Resources>
-                    <dxb:BarStaticItem Content="一号教学楼101" ShowBorder="False"/>
+                    <dxb:BarStaticItem Content="{Binding ClassRoomInfo}" ShowBorder="False"/>
                     <dxb:BarCheckItem x:Name="statusChange" Alignment="Far" Glyph="{dx:DXImageOffice2013 Image=Merge_16x16.png}" CheckedChanged="showDetail_CheckedChanged"/>
                 </dxb:ToolBarControl>
                 <Grid>
@@ -53,8 +53,8 @@
                         <Border Margin="0,10,0,0" Grid.Row="5" Grid.ColumnSpan="5" 
                                 BorderThickness="0,0.5,0,0" BorderBrush="DarkGray">
                             <StackPanel>
-                                <TextBlock Foreground="White" Margin="0,3,0,3" Text="张三丰" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBlock Foreground="White" Text="毛泽东思想" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Foreground="White" Margin="0,3,0,3" Text="{Binding PersonName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Foreground="White" Text="{Binding CourseName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                     </Grid>

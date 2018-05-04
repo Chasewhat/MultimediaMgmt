@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm.POCO;
 using DevExpress.Xpf.Bars;
+using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.ViewModel.Controls;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,18 @@ namespace MultimediaMgmt.View.Controls
     {
         private EquipmentControlDetailViewModel classControlDetailViewModel;
         private int monitorCount = 0, monitorRows = 1, monitorColumns = 1;
+        public int Id = 0;
         public ucEquipmentControlDetail()
         {
             InitializeComponent();
             this.DataContext = classControlDetailViewModel = ViewModelSource.Create<EquipmentControlDetailViewModel>();
+        }
+
+        public void Init(ClassRoomEx cr)
+        {
+            Id = cr.Id;
+            classControlDetailViewModel.Init(cr);
+            MonitorInit(true);
         }
 
         public void MonitorInit(bool isShow = true)
@@ -35,7 +44,12 @@ namespace MultimediaMgmt.View.Controls
             }
             if (!isShow)
                 return;
-            monitorCount = new Random().Next(1, 5);
+            if (classControlDetailViewModel.CurrClassRoom == null
+                || string.IsNullOrEmpty(classControlDetailViewModel.CurrClassRoom.VedioAddress))
+                return;
+            string[] address = classControlDetailViewModel.CurrClassRoom.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            
+            monitorCount = address.Length;
             if (monitorCount > 2)
             {
                 monitorsPanel.Rows = monitorsPanel.Columns = monitorRows = monitorColumns = 2;
@@ -49,14 +63,27 @@ namespace MultimediaMgmt.View.Controls
             {
                 monitorsPanel.Rows = monitorsPanel.Columns = monitorRows = monitorColumns = 1;
             }
-
-            for (int i = 0; i < monitorCount; i++)
+            int i = 0;
+            foreach (string ad in address)
             {
-                ucMonitor monitor = new ucMonitor();
+                if (i == 0)
+                {
+                    i++;
+                    continue;
+                }
+                string info = string.Format("{0}{1}",
+                    classControlDetailViewModel.CurrClassRoom.BuildingName,
+                    classControlDetailViewModel.CurrClassRoom.TerminalId);
+                if (i > 0)
+                    info += string.Format("{0}#视频源", i + 1);
+                ucMonitor monitor = new ucMonitor(info, ad, classControlDetailViewModel.CurrClassRoom.Id);
                 monitor.Margin = new Thickness(5);
+                monitor.Width = double.NaN;
+                monitor.Height = double.NaN;
                 monitor.Tag = i;
                 monitor.StatusChanged += StatusChangedExec;
                 this.monitorsPanel.Children.Add(monitor);
+                i++;
             }
         }
 

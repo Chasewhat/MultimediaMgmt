@@ -10,6 +10,7 @@
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
     x:Class="MultimediaMgmt.View.Controls.ucEquipmentControlDetail"
+    xmlns:cvt="clr-namespace:MultimediaMgmt.View.Converters"
     mc:Ignorable="d" 
     d:DesignHeight="500" d:DesignWidth="1000">
     <UserControl.Resources>
@@ -46,6 +47,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <cvt:StatusBoolConverter x:Key="statusBoolConverter"/>
     </UserControl.Resources>
     <dxlc:LayoutControl Orientation="Horizontal">
         <dxlc:LayoutGroup Orientation="Horizontal">
@@ -53,71 +55,71 @@
                 <dxlc:LayoutGroup Orientation="Horizontal" ItemSpace="0">
                     <dxlc:LayoutGroup Orientation="Vertical" ItemSpace="0">
                         <dxlc:LayoutItem Label="中控: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.System}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="电源: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.ACRelay1}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="空调: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.AirConitioner}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="投影机: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="False" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Projector}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="幕布: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.ProjectorScreen}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="窗帘: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="False" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Curtain}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="照明: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Lamp}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="音响: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="False" CheckedStateContent="开" UncheckedStateContent="禁音" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Volume}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="录播: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="False" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Record}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="投影机信号源: " FontSize="15">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="电脑" VerticalAlignment="Center"/>
-                                <dxe:ComboBoxEdit Margin="5,0,0,0" ItemsSource="{Binding SignalSources}" Width="50"/>
+                                <dxe:ComboBoxEdit EditValue="{Binding CurrClassRoom.ProjectionSignal}" Margin="5,0,0,0" ItemsSource="{Binding Signals}" Width="50" DisplayMember="Value" ValueMember="Key"/>
                             </StackPanel>
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup Orientation="Vertical" ItemSpace="0">
                         <dxlc:LayoutItem Label="内网口1: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="连通" UncheckedStateContent="断开" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.LAN1}" CheckedStateContent="连通" UncheckedStateContent="断开" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="内网口2: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="连通" UncheckedStateContent="断开" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.LAN2}" CheckedStateContent="连通" UncheckedStateContent="断开" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="内网口3: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="连通" UncheckedStateContent="断开" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.LAN3}" CheckedStateContent="连通" UncheckedStateContent="断开" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="内网口4: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="连通" UncheckedStateContent="断开" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.LAN4}" CheckedStateContent="连通" UncheckedStateContent="断开" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
-                        <dxlc:LayoutItem Label="设布防: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="设防" UncheckedStateContent="撤防" HorizontalAlignment="Left"/>
+                        <dxlc:LayoutItem Label="布防: " FontSize="15">
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Alarm_Control}" CheckedStateContent="设防" UncheckedStateContent="撤防" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="电视一体机: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="False" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.FPD}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="门禁: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="True" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Door_Status}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="大屏: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="False" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Large_Screen}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="电控门: " FontSize="15">
-                            <dxe:ToggleSwitchEdit IsChecked="False" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
+                            <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Lock_Status}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="电脑信号源: " FontSize="15">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="电脑" VerticalAlignment="Center"/>
-                                <dxe:ComboBoxEdit Margin="5,0,0,0" ItemsSource="{Binding SignalSources}" Width="50"/>
+                                <dxe:ComboBoxEdit Margin="5,0,0,0" EditValue="{Binding CurrClassRoom.ComputerSignal}" ItemsSource="{Binding Signals}" Width="50" DisplayMember="Value" ValueMember="Key"/>
                             </StackPanel>
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
@@ -125,13 +127,13 @@
                 <dxlc:LayoutGroup Orientation="Horizontal" ItemSpace="0">
                     <dxlc:LayoutGroup Orientation="Vertical" ItemSpace="0" Width="120" ItemLabelsAlignment="Local">
                         <dxlc:LayoutItem Label="电脑: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="开"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.ComputerStatus,Converter={StaticResource statusBoolConverter},ConverterParameter=1}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="安防报警: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="开"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.Alarm_In1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="报警2: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="开"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.Alarm_In2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="教室温度: " FontSize="14">
                             <TextBlock Foreground="DeepSkyBlue" Text="30℃"/>
@@ -139,27 +141,27 @@
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup Orientation="Vertical" ItemSpace="0" Width="120" ItemLabelsAlignment="Local">
                         <dxlc:LayoutItem Label="光耦输入1: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="开"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.IN_STATUS1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="光耦输入2: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="开"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.IN_STATUS2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="光耦输入3: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="开"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.IN_STATUS3,Converter={StaticResource statusBoolConverter},ConverterParameter=1}"/>
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup Orientation="Vertical" ItemSpace="0" ItemLabelsAlignment="Local">
                         <dxlc:LayoutItem Label="当前班级: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="机电专业2013级1班"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.ClassName}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="当前老师: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="张三丰"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.PersonName}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="班级人数: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="36"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.StudentSum}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="当前人数: " FontSize="14">
-                            <TextBlock Foreground="DeepSkyBlue" Text="20"/>
+                            <TextBlock Foreground="DeepSkyBlue" Text="{Binding CurrClassRoom.RealStudentSum}"/>
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>
@@ -177,7 +179,7 @@
                                 <dxc:AxisX2D Visible="False" GridLinesVisible="True" TickmarksMinorVisible="True" TickmarksVisible="True" GridLinesMinorVisible="True"/>
                             </dxc:XYDiagram2D.AxisX>
                             <dxc:LineSeries2D Brush="{StaticResource NewYellow}" ArgumentScaleType="DateTime" DisplayName="能耗" DataSource="{Binding EnergyConsumptions}" 
-                                              ArgumentDataMember="Date" ValueDataMember="Value" CrosshairLabelPattern="{}Date：{A:yyyy-MM-dd}&#xA;{S}：{V:F3}">
+                                              ArgumentDataMember="Date" ValueDataMember="Value" CrosshairLabelPattern="{}Date：{A:yyyy-MM-dd}&#xA;{S}：{V:F3}KWH">
                                 <dxc:LineSeries2D.LineStyle>
                                     <dxc:LineStyle DashCap="Triangle" Thickness="1"/>
                                 </dxc:LineSeries2D.LineStyle>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Common.Helper
+namespace MultimediaMgmt.Common.Helper
 {
     /// <summary>
     /// 日志记录帮助类,记录为.log文本文档

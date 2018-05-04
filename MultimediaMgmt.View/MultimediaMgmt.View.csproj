@@ -323,6 +323,7 @@
     <Compile Include="Controls\ucMainMgmt.xaml.cs">
       <DependentUpon>ucMainMgmt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\StatusBoolConverter.cs" />
     <Compile Include="Converters\IntBoolConverter.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Linq;
+using System.Windows.Threading;
 
 namespace MultimediaMgmt.View.Controls
 {
@@ -16,6 +18,7 @@ namespace MultimediaMgmt.View.Controls
     public partial class ucEquipmentMgmt : UserControl
     {
         private EquipmentMgmtViewModel classRoomMgmtViewModel;
+        private List<ucEquipmentControl> equipments = new List<ucEquipmentControl>();
         public ucEquipmentMgmt()
         {
             InitializeComponent();
@@ -25,30 +28,61 @@ namespace MultimediaMgmt.View.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             classRoomTree.CheckedChanged += CheckedChangedExec;
-            for (int i = 0; i < 20; i++)
-            {
-                ucEquipmentControl ucc = new ucEquipmentControl();
-                ucc.Margin = new Thickness(5);
-                ucc.Width = 180;
-                ucc.Height = 200;
-                ucc.Tag = i;
-                ucc.StatusChanged += StatusChangedExec;
-                this.overviewPanel.Children.Add(ucc);
-            }
             this.detailPanel.CloseCommand = new DelegateCommand(() =>
              {
                  this.detailPanel.Visibility = Visibility.Collapsed;
                  this.listPanel.ItemWidth = new GridLength(1, GridUnitType.Star);
              });
+            //每隔60秒刷新一次
+            DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.ApplicationIdle);
+            timer.Interval = TimeSpan.FromSeconds(60);
+            timer.Tick += (s, se) => { Refresh(); };
+            timer.Start();
+        }
+
+        public void Refresh()
+        {
+            classRoomMgmtViewModel.ClassRoomListRefresh();
+            foreach (ucEquipmentControl ucc in equipments)
+            {
+                ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == ucc.Id);
+                ucc.Init(cr);
+            }
+            if (detailPanel.Content != null)
+            {
+                ucEquipmentControlDetail temp = this.detailPanel.Content as ucEquipmentControlDetail;
+                ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
+                temp.Init(cr);
+            }
         }
 
         public void CheckedChangedExec(CommonTree classRoom, bool isChecked)
         {
             if (isChecked)
-            { //新增设备
+            {
+                //新增设备
+                classRoomMgmtViewModel.ids.Add(classRoom.ID);
+                classRoomMgmtViewModel.ClassRoomListRefresh();
+                ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID);
+                if (cr == null)
+                    return;
+                ucEquipmentControl ucc = new ucEquipmentControl();
+                ucc.Margin = new Thickness(5);
+                ucc.Width = 180;
+                ucc.Height = 200;
+                ucc.StatusChanged += StatusChangedExec;
+                equipments.Add(ucc);
+                this.overviewPanel.Children.Add(ucc);
+                ucc.Init(cr);
             }
             else
-            { //删除设备
+            {
+                //删除设备
+                ucEquipmentControl eq = equipments.FirstOrDefault(s => s.Id == classRoom.ID);
+                if (eq == null)
+                    return;
+                equipments.Remove(eq);
+                this.overviewPanel.Children.Remove(eq);
             }
         }
 
@@ -64,7 +98,6 @@ namespace MultimediaMgmt.View.Controls
                 ucc.Width = double.NaN;
                 ucc.Height = double.NaN;
                 this.detailPanel.Content = ucc;
-                ucc.MonitorInit(true);
             }
             else
             {
@@ -99,7 +132,7 @@ namespace MultimediaMgmt.View.Controls
                 this.detailPanel.Content = null;
                 temp.Width = 180;
                 temp.Height = 200;
-                this.overviewPanel.Children.Insert((int)temp.Tag, temp);
+                this.overviewPanel.Children.Insert(0, temp);
             }
             if (this.detailPanel.Content is ucEquipmentControlDetail)
             {
@@ -111,14 +144,18 @@ namespace MultimediaMgmt.View.Controls
 
         private void listView_RowDoubleClick(object sender, DevExpress.Xpf.Grid.RowDoubleClickEventArgs e)
         {
+            if (classRoomMgmtViewModel.SelectedClassRoomEx == null)
+                return;
             DetailClear();
             this.listPanel.ItemWidth = new GridLength(220);
             this.detailPanel.Visibility = Visibility.Visible;
-            this.detailPanel.Caption = "一号教学楼101";
+            this.detailPanel.Caption = string.Format("{0}{1}",
+                    classRoomMgmtViewModel.SelectedClassRoomEx.BuildingName,
+                    classRoomMgmtViewModel.SelectedClassRoomEx.TerminalId);
             this.detailPanel.ShowCaption = true;
             ucEquipmentControlDetail detail = new ucEquipmentControlDetail();
             this.detailPanel.Content = detail;
-            detail.MonitorInit(true);
+            detail.Init(classRoomMgmtViewModel.SelectedClassRoomEx);
         }
     }
 }

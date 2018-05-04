@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Media;
 
 namespace MultimediaMgmt.Model
@@ -10,6 +11,17 @@ namespace MultimediaMgmt.Model
         /// 当前登录用户
         /// </summary>
         public static UserProfile CurrUser = null;
+
+        public static readonly string LogPath = Path.Combine(Environment.CurrentDirectory, "Log");
+
+        /// <summary>
+        /// 信号源
+        /// </summary>
+        public static readonly Dictionary<int, string> Signals = new Dictionary<int, string>() {
+            { 1,"台式电脑" },
+            { 2,"手提电脑" },
+            { 3,"展台" },
+            { 4,"扩展" }};
 
         /// <summary>
         /// 性别
@@ -63,34 +75,34 @@ namespace MultimediaMgmt.Model
             { "floor16", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/floor16.png") as ImageSource },
             { "imagePlay", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/play.png") as ImageSource },
             { "imagePause", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/pause.png") as ImageSource },
-            { "zkc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zkc.png") as ImageSource },
-            { "zko", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zko.png") as ImageSource },
-            { "dsc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dsc.png") as ImageSource },
-            { "dso", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dso.png") as ImageSource },
-            { "dnc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dnc.png") as ImageSource },
-            { "dno", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dno.png") as ImageSource },
-            { "tyjc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/tyjc.png") as ImageSource },
-            { "tyjo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/tyjo.png") as ImageSource },
-            { "mbc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mbc.png") as ImageSource },
-            { "mbo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mbo.png") as ImageSource },
-            { "clc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/clc.png") as ImageSource },
-            { "clo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/clo.png") as ImageSource },
-            { "zmc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zmc.png") as ImageSource },
-            { "zmo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zmo.png") as ImageSource },
-            { "yxc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/yxc.png") as ImageSource },
-            { "yxo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/yxo.png") as ImageSource },
-            { "lbc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/lbc.png") as ImageSource },
-            { "lbo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/lbo.png") as ImageSource },
-            { "dgmc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dgmc.png") as ImageSource },
-            { "dgmo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dgmo.png") as ImageSource },
-            { "mjc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mjc.png") as ImageSource },
-            { "mjo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mjo.png") as ImageSource },
-            { "dpc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dpc.png") as ImageSource },
-            { "dpo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dpo.png") as ImageSource },
-            { "dyc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dyc.png") as ImageSource },
-            { "dyo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dyo.png") as ImageSource },
-            { "ktc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/ktc.png") as ImageSource },
-            { "kto", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/kto.png") as ImageSource }
+            { "Systemc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zkc.png") as ImageSource },
+            { "Systemo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zko.png") as ImageSource },
+            { "FPDc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dsc.png") as ImageSource },
+            { "FPDo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dso.png") as ImageSource },
+            { "ComputerStatusc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dnc.png") as ImageSource },
+            { "ComputerStatuso", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dno.png") as ImageSource },
+            { "Projectorc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/tyjc.png") as ImageSource },
+            { "Projectoro", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/tyjo.png") as ImageSource },
+            { "ProjectionScreenc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mbc.png") as ImageSource },
+            { "ProjectionScreeno", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mbo.png") as ImageSource },
+            { "Curtainc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/clc.png") as ImageSource },
+            { "Curtaino", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/clo.png") as ImageSource },
+            { "Lampc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zmc.png") as ImageSource },
+            { "Lampo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zmo.png") as ImageSource },
+            { "Volumec", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/yxc.png") as ImageSource },
+            { "Volumeo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/yxo.png") as ImageSource },
+            { "Recordc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/lbc.png") as ImageSource },
+            { "Recordo", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/lbo.png") as ImageSource },
+            { "Lock_Statusc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dgmc.png") as ImageSource },
+            { "Lock_Statuso", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dgmo.png") as ImageSource },
+            { "Door_Statusc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mjc.png") as ImageSource },
+            { "Door_Statuso", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mjo.png") as ImageSource },
+            { "Large_Screenc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dpc.png") as ImageSource },
+            { "Large_Screeno", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dpo.png") as ImageSource },
+            { "ACRelay1c", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dyc.png") as ImageSource },
+            { "ACRelay1o", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dyo.png") as ImageSource },
+            { "AirConditionerc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/ktc.png") as ImageSource },
+            { "AirConditionero", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/kto.png") as ImageSource }
         };
     }
 }

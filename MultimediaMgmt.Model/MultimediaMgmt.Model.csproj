@@ -117,6 +117,7 @@
     <Compile Include="MenuItem.cs">
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClassRoomEx.cs" />
     <Compile Include="Models\ReservationEx.cs" />
     <Compile Include="Models\CardLogEx.cs" />
     <Compile Include="Models\EquipmentStatusEx.cs" />

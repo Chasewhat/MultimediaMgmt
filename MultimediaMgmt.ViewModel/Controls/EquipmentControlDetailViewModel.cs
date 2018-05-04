@@ -14,12 +14,12 @@ namespace MultimediaMgmt.ViewModel.Controls
     [POCOViewModel]
     public class EquipmentControlDetailViewModel : BaseViewModel
     {
-        public virtual List<int> SignalSources { get; set; }
+        public virtual ClassRoomEx CurrClassRoom { get; set; }
+        public virtual Dictionary<int, string> Signals { get; set; }
         public virtual List<DataStandard> EnergyConsumptions { get; protected set; }
 
         public EquipmentControlDetailViewModel()
         {
-            SignalSources = new List<int>() { 1, 2, 3, 4 };
             List<DataStandard> temp = new List<DataStandard>();
             Random rd = new Random();
             for (int i = 50; i > 0; i--)
@@ -27,6 +27,13 @@ namespace MultimediaMgmt.ViewModel.Controls
                 temp.Add(new DataStandard(DateTime.Now.AddDays(-i), rd.Next(10, 50) + rd.NextDouble()));
             }
             EnergyConsumptions = temp;
+
+            Signals = Constants.Signals;
+        }
+
+        public void Init(ClassRoomEx cr)
+        {
+            CurrClassRoom = cr;
         }
     }
 }

@@ -51,6 +51,7 @@
     <Compile Include="Extend\SmartObservableCollection.cs" />
     <Compile Include="Helper\ConfigHelper.cs" />
     <Compile Include="Helper\JsonHelper.cs" />
+    <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\WebHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -3,10 +3,9 @@ using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.ViewModel.Controls;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace MultimediaMgmt.View.Controls
 {
@@ -38,8 +37,16 @@ namespace MultimediaMgmt.View.Controls
         public void CheckedChangedExec(CommonTree classRoom, bool isChecked)
         {
             if (isChecked)
-            { //新增视频
-                ucMonitor monitor = new ucMonitor();
+            {
+                //新增视频
+                ClassRoomEx cr = monitorMgmtViewModel.GetClassRoom(classRoom.ID);
+                if (cr == null || string.IsNullOrEmpty(cr.VedioAddress))
+                    return;
+                string[] address = cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (address.Length <= 0)
+                    return;
+                ucMonitor monitor = new ucMonitor(
+                    string.Format("{0}{1}", cr.BuildingName, cr.TerminalId), address[0], cr.Id);
                 monitor.Margin = new Thickness(2);
                 monitor.Width = double.NaN;
                 monitor.Height = double.NaN;
@@ -49,7 +56,13 @@ namespace MultimediaMgmt.View.Controls
                 this.overviewPanel.Children.Add(monitor);
             }
             else
-            { //删除视频
+            {
+                //删除视频
+                ucMonitor rm = monitors.FirstOrDefault(s => s.Id == classRoom.ID);
+                if (rm == null)
+                    return;
+                monitors.Remove(rm);
+                this.overviewPanel.Children.Remove(rm);
             }
         }
 
@@ -86,19 +99,31 @@ namespace MultimediaMgmt.View.Controls
             roomMonitors.Clear();
             this.overviewRoomPanel.Children.Clear();
         }
-        private void RoomMonitorInit()
+        private void RoomMonitorInit(int id)
         {
             this.monitorRoom.IsActive = true;
             RoomDispose();
-            for (int i = 0; i < 3; i++)
+            ClassRoomEx cr = monitorMgmtViewModel.GetClassRoom(id);
+            if (cr == null || string.IsNullOrEmpty(cr.VedioAddress))
+                return;
+            int i = 0;
+            foreach (string address in cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                ucMonitor roomMonitor = new ucMonitor();
-                roomMonitor.Margin = new Thickness(2);
-                roomMonitor.Width = double.NaN;
-                roomMonitor.Height = double.NaN;
-                roomMonitor.Tag = i + 1;
-                roomMonitor.StatusChanged += RoomStatusChangedExec;
-                roomMonitors.Add(roomMonitor);
+                if (i == 0)
+                {
+                    i++;
+                    continue;
+                }
+                string info = string.Format("{0}{1}{2}#视频源",
+                    cr.BuildingName, cr.TerminalId, i + 1);
+                ucMonitor monitor = new ucMonitor(info, address, cr.Id);
+                monitor.Margin = new Thickness(2);
+                monitor.Width = double.NaN;
+                monitor.Height = double.NaN;
+                monitor.Tag = i;
+                monitor.StatusChanged += RoomStatusChangedExec;
+                roomMonitors.Add(monitor);
+                i++;
             }
             roomMonitors.ForEach(m =>
             {
@@ -115,9 +140,11 @@ namespace MultimediaMgmt.View.Controls
             this.monitorMain.IsActive = true;
             RoomDispose();
             this.detailPanel.Content = null;
+            if (!monitors.Contains(currMonitor.Value))
+                return;
             currMonitor.Value.StatusChanged -= RoomStatusChangedExec;
             currMonitor.Value.StatusChanged += StatusChangedExec;
-            this.overviewPanel.Children.Insert(currMonitor.Key, currMonitor.Value);
+            this.overviewPanel.Children.Insert(0, currMonitor.Value);
         }
 
         public void StatusChangedExec(ucMonitor ucc, bool isDetail)
@@ -125,7 +152,7 @@ namespace MultimediaMgmt.View.Controls
             if (isDetail)
             {
                 currMonitor = new KeyValuePair<int, ucMonitor>(monitors.IndexOf(ucc), ucc);
-                RoomMonitorInit();
+                RoomMonitorInit(ucc.Id);
                 this.listPanel.ItemWidth = new GridLength(monitorWidth + 40);
                 this.detailPanel.Visibility = Visibility.Visible;
                 this.overviewRoomPanel.Columns = 1;
