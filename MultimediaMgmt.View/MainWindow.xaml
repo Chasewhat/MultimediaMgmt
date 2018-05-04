@@ -1,0 +1,108 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultimediaMgmt.View"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" 
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+        xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:control="clr-namespace:MultimediaMgmt.View.Controls"
+        x:Class="MultimediaMgmt.View.MainWindow" Background="Black"
+        Padding="0" Margin="0" WindowStyle="None" AllowsTransparency="True"
+        Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" 
+        Loaded="DXWindow_Loaded" ContentRendered="Window_ContentRendered" StateChanged="Window_StateChanged">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="1" ResizeBorderThickness="4" CaptionHeight="30" CornerRadius="0"/>
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <DataTemplate x:Key="splashScreenTemplate">
+            <dx:WaitIndicator DeferedVisibility="True" Content="{Binding WaitIndiContent}"/>
+        </DataTemplate>
+        <BitmapImage x:Key="imgMax" UriSource="pack://application:,,,/Resources/max.png"/>
+        <BitmapImage x:Key="imgMin" UriSource="pack://application:,,,/Resources/min.png"/>
+        <BitmapImage x:Key="imgNormal" UriSource="pack://application:,,,/Resources/normal.png"/>
+        <BitmapImage x:Key="imgClose" UriSource="pack://application:,,,/Resources/close.png"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
+    <Border BorderBrush="#6E6E6E" BorderThickness="1.5">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left" Width="50" Orientation="Vertical">
+                <Image Source="{StaticResource imgMultimedia}" Stretch="Fill" Margin="5"/>
+                <dxb:ToolBarControl Margin="5" Cursor="Hand" ShowBackground="False" Caption="tool" Orientation="Vertical" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="1|主页" x:Name="biMain" GroupIndex="1" Hint="主页" LargeGlyph="{StaticResource imgHome}"/>
+                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="2|设备监控" x:Name="biEquipment" GroupIndex="1" Hint="设备监控" LargeGlyph="{StaticResource imgComp}"/>
+                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="3|视频监控" x:Name="biMonitor" GroupIndex="1" Hint="视频监控" LargeGlyph="{StaticResource imgMonitor}"/>
+                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="4|设备集控" x:Name="biCentralized" GroupIndex="1" Hint="设备集控" LargeGlyph="{StaticResource imgSwitch}"/>
+                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="5|报警信息管理" x:Name="biWarn" GroupIndex="1" Hint="报警信息管理" LargeGlyph="{StaticResource imgWarn}"/>
+                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="6|卡控及预约管理" x:Name="biPermit" GroupIndex="1" Hint="卡控及预约管理" LargeGlyph="{StaticResource imgPermit}"/>
+                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="7|刷卡记录" x:Name="biCard" GroupIndex="1" Hint="刷卡记录" LargeGlyph="{StaticResource imgCard}"/>
+                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="8|设备资产管理" x:Name="biStock" GroupIndex="1" Hint="设备资产管理" LargeGlyph="{StaticResource imgStock}"/>
+                </dxb:ToolBarControl>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Top" Background="#383838">
+                <dxb:ToolBarControl Margin="5,5,5,0" ShowBackground="False" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                    <dxb:BarStaticItem Content="{Binding CurrOper}" ShowBorder="False" Glyph="{dx:DXImage Image=Attachment_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                    <dxb:BarStaticItem Alignment="Far" Content="{Binding UserName}" ShowBorder="False" Glyph="{dx:DXImageOffice2013 Image=Customer_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                    <dxb:BarItemSeparator Alignment="Far"/>
+                    <dxb:BarButtonItem Alignment="Far" Hint="最小化" ItemClick="WindowMin">
+                        <dxb:BarButtonItem.GlyphTemplate>
+                            <DataTemplate>
+                                <Image WindowChrome.IsHitTestVisibleInChrome="True" Source="{StaticResource imgMin}"/>
+                            </DataTemplate>
+                        </dxb:BarButtonItem.GlyphTemplate>
+                    </dxb:BarButtonItem>
+                    <dxb:BarButtonItem x:Name="barMax" IsVisible="False" Alignment="Far" Hint="最大化" ItemClick="WindowMax">
+                        <dxb:BarButtonItem.GlyphTemplate>
+                            <DataTemplate>
+                                <Image WindowChrome.IsHitTestVisibleInChrome="True" Source="{StaticResource imgMax}"/>
+                            </DataTemplate>
+                        </dxb:BarButtonItem.GlyphTemplate>
+                    </dxb:BarButtonItem>
+                    <dxb:BarButtonItem x:Name="barNormal" IsVisible="True" Alignment="Far" Hint="还原" ItemClick="WindowNormal">
+                        <dxb:BarButtonItem.GlyphTemplate>
+                            <DataTemplate>
+                                <Image WindowChrome.IsHitTestVisibleInChrome="True" Source="{StaticResource imgNormal}"/>
+                            </DataTemplate>
+                        </dxb:BarButtonItem.GlyphTemplate>
+                    </dxb:BarButtonItem>
+                    <dxb:BarButtonItem Alignment="Far" Hint="关闭" ItemClick="WindowClose">
+                        <dxb:BarButtonItem.GlyphTemplate>
+                            <DataTemplate>
+                                <StackPanel Name="closePanel" WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <Image Source="{StaticResource imgClose}"/>
+                                </StackPanel>
+                                <DataTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="Red" TargetName="closePanel"/>
+                                    </Trigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </dxb:BarButtonItem.GlyphTemplate>
+                    </dxb:BarButtonItem>
+                </dxb:ToolBarControl>
+            </StackPanel>
+            <dx:LoadingDecorator x:Name="loadWait" IsSplashScreenShown="{Binding IsLoad}" SplashScreenDataContext="{Binding}" OwnerLock="LoadingContent" SplashScreenTemplate="{StaticResource splashScreenTemplate}">
+                <Grid>
+                    <dxdo:DocumentGroup x:Name="docGroup" Background="Transparent" ShowTabHeaders="False" Margin="0" Padding="0"
+                                        ShowCaption="False" AllowHide="False" AllowClose="False"
+                                        ShowCloseButton="False" ShowControlBox="False" ClosePageButtonShowMode="NoWhere" 
+                                        TabContentCacheMode="CacheTabsOnSelecting">
+                        <dxdo:DocumentPanel x:Name="operMain" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False"/>
+                        <dxdo:DocumentPanel x:Name="operEquipment" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False"/>
+                        <dxdo:DocumentPanel x:Name="operMonitor" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False"/>
+                        <dxdo:DocumentPanel x:Name="operCentralized" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False"/>
+                        <dxdo:DocumentPanel x:Name="operWarn" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False"/>
+                        <dxdo:DocumentPanel x:Name="operPermit" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False"/>
+                        <dxdo:DocumentPanel x:Name="operCard" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False"/>
+                        <dxdo:DocumentPanel x:Name="operStock" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False"/>
+                    </dxdo:DocumentGroup>
+                </Grid>
+            </dx:LoadingDecorator>
+        </DockPanel>
+    </Border>
+</Window>

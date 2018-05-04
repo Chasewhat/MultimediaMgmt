@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E2EF03BB-9E5E-4EF0-93D1-317D4845A42E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MultimediaMgmt.ViewModel</RootNamespace>
+    <AssemblyName>MultimediaMgmt.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Mvvm.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Mvvm.v17.1.ViewModel, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Prism, Version=7.0.0.396, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.0.0.396\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.2.2.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.2.2\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.5\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.5\lib\net45\WebMatrix.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.2.5\lib\net45\WebMatrix.WebData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Controls\IcCardRealtimeViewModel.cs" />
+    <Compile Include="Controls\Stocks\EquipmentStatusViewModel.cs" />
+    <Compile Include="Controls\Stocks\SurveillanceLogViewModel.cs" />
+    <Compile Include="Controls\Stocks\EquipmentTransferLogViewModel.cs" />
+    <Compile Include="Controls\Stocks\EquipmentScrapLogViewModel.cs" />
+    <Compile Include="Controls\Stocks\EquipmentLoanLogViewModel.cs" />
+    <Compile Include="Controls\Stocks\EquipmentRepairLogViewModel.cs" />
+    <Compile Include="Controls\Stocks\EquipmentInStockViewModel .cs" />
+    <Compile Include="Controls\StdCourseTableViewModel.cs" />
+    <Compile Include="Controls\ReservationViewModel.cs" />
+    <Compile Include="Controls\ClassroomReservationApprovalViewModel.cs" />
+    <Compile Include="Controls\WarnHistoryViewModel.cs" />
+    <Compile Include="Controls\PermitOperateViewModel.cs" />
+    <Compile Include="Helpers\RestConnection.cs" />
+    <Compile Include="Interfaces\IRestConnection.cs" />
+    <Compile Include="LoginViewModel.cs" />
+    <Compile Include="PopWindows\IcCardAddEditViewModel.cs" />
+    <Compile Include="PopWindows\PermitAddEditViewModel.cs" />
+    <Compile Include="Controls\WarnOperateViewModel.cs" />
+    <Compile Include="Controls\MainControlViewModel.cs" />
+    <Compile Include="Controls\EquipmentControlDetailViewModel.cs" />
+    <Compile Include="Controls\IcCardHistoryViewModel.cs" />
+    <Compile Include="Controls\IcCardMaintanceViewModel.cs" />
+    <Compile Include="Controls\EquipmentControlViewModel.cs" />
+    <Compile Include="Controls\EquipmentMgmtViewModel.cs" />
+    <Compile Include="Controls\CentralizedControlMgmtViewModel.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="Controls\MonitorMgmtViewModel.cs" />
+    <Compile Include="Controls\ClassRoomViewModel.cs" />
+    <Compile Include="Notice\NOTICE.cs" />
+    <Compile Include="PopWindows\Stocks\EquipmentUseDateEditViewModel.cs" />
+    <Compile Include="PopWindows\Stocks\SurveillanceLogAddEditViewModel.cs" />
+    <Compile Include="PopWindows\Stocks\EquipmentTransferLogAddEditViewModel.cs" />
+    <Compile Include="PopWindows\Stocks\EquipmentScrapLogAddEditViewModel.cs" />
+    <Compile Include="PopWindows\Stocks\EquipmentLoanLogAddEditViewModel.cs" />
+    <Compile Include="PopWindows\Stocks\EquipmentRepairLogAddEditViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MultimediaMgmt.Common\MultimediaMgmt.Common.csproj">
+      <Project>{e7e2e969-d9ab-4f32-9ded-478db7fe5568}</Project>
+      <Name>MultimediaMgmt.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultimediaMgmt.Model\MultimediaMgmt.Model.csproj">
+      <Project>{7a835f89-94ee-4db8-98c7-d2185620834f}</Project>
+      <Name>MultimediaMgmt.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

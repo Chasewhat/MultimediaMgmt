@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="28eb7a8d4e9a40fe8347e9e48e1ed9e5" Name="Diagram1">
+        <EntityTypeShape EntityType="MultimediaModels.AccessCardLog" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.AlarmInfo" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.BlackList" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.ClassGrade" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.ClassRoom" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.ClassroomBuilding" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.ClassRoomPermit" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.ClassroomReservation" Width="1.5" PointX="2.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.ClassroomReservationApproval" Width="1.5" PointX="5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.DisplayConfig" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.EquipmentInStock" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.EquipmentLoanLog" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.EquipmentRepairLog" Width="1.5" PointX="11.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.EquipmentScrapLog" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.EquipmentTransferLog" Width="1.5" PointX="6.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.EquipmentType" Width="1.5" PointX="11.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.IcCard" Width="1.5" PointX="11.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.LossCard" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.Majors" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.MenuItem" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.Person" Width="1.5" PointX="13.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.ReservationCourseTable" Width="1.5" PointX="5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.StdClassPeriod" Width="1.5" PointX="13.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.StdCourseTable" Width="1.5" PointX="8.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.Student" Width="1.5" PointX="13.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.SwipeCardLog" Width="1.5" PointX="2.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.SysParameter" Width="1.5" PointX="10.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.TerminalActiveTime" Width="1.5" PointX="12.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.TerminalCurrentInfo" Width="1.5" PointX="14.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.TerminalInfo" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.UserProfile" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.WeeklyCourseTable" Width="1.5" PointX="15.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.LessonLog" Width="1.5" PointX="16.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MultimediaModels.SurveillanceLog" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="MultimediaModels.FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId" ManuallyRouted="false" />
+        <AssociationConnector Association="MultimediaModels.FK_dbo_ReservationCourseTable_dbo_ClassroomReservation_ClassroomReservationId" ManuallyRouted="false" />
+        <AssociationConnector Association="MultimediaModels.FK_dbo_MenuItem_dbo_MenuItem_ParentId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

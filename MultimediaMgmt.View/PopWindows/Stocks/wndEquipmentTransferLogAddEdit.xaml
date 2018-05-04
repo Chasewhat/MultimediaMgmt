@@ -1,0 +1,41 @@
+﻿<dx:DXWindow 
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    Height="295" Width="240" SizeToContent="Height"
+    x:Class="MultimediaMgmt.View.PopWindows.wndEquipmentTransferLogAddEdit" WindowStyle="ToolWindow"
+    Title="{Binding WindowTitle}" ResizeBorderThickness="1"
+    WindowStartupLocation="CenterScreen" 
+    >
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,10">
+            <dx:SimpleButton x:Name="btnConfrim" Content="{Binding ButtonContent}" Glyph="{dx:DXImageOffice2013 Image=Apply_32x32.png}" Command="{Binding ConfirmCommand}" />
+        </StackPanel>
+        <dxlc:LayoutControl Orientation="Horizontal">
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical" Width="180" ItemSpace="10">
+                    <dxlc:LayoutItem Label="设备编码:" Foreground="Red" IsRequired="True">
+                        <dxe:TextEdit EditValue="{Binding SerialName}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="转移日期:" Foreground="Red" IsRequired="True">
+                        <dxe:DateEdit EditValue="{Binding TransferDate}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="新使用项目:">
+                        <dxe:TextEdit EditValue="{Binding CurrTransferLog.Project}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="新使用部门:">
+                        <dxe:TextEdit EditValue="{Binding CurrTransferLog.Department}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="新使用地点:">
+                        <dxe:TextEdit EditValue="{Binding CurrTransferLog.Location}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="新负责人:">
+                        <dxe:TextEdit EditValue="{Binding CurrTransferLog.Principal}"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </DockPanel>
+</dx:DXWindow>

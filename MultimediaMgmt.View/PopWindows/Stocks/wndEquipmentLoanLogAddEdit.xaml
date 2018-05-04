@@ -1,0 +1,47 @@
+﻿<dx:DXWindow 
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    Height="355" Width="240" SizeToContent="Height"
+    x:Class="MultimediaMgmt.View.PopWindows.wndEquipmentLoanLogAddEdit" WindowStyle="ToolWindow"
+    Title="{Binding WindowTitle}" ResizeBorderThickness="1"
+    WindowStartupLocation="CenterScreen" 
+    >
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,10">
+            <dx:SimpleButton x:Name="btnConfrim" Content="{Binding ButtonContent}" Glyph="{dx:DXImageOffice2013 Image=Apply_32x32.png}" Command="{Binding ConfirmCommand}" />
+        </StackPanel>
+        <dxlc:LayoutControl Orientation="Horizontal">
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical" Width="180" ItemSpace="10">
+                    <dxlc:LayoutItem Label="设备编码:" Foreground="Red" IsRequired="True">
+                        <dxe:TextEdit EditValue="{Binding SerialName}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="借出日期:" Foreground="Red" IsRequired="True">
+                        <dxe:DateEdit EditValue="{Binding LoanDate}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="预归还日期:">
+                        <dxe:DateEdit EditValue="{Binding CurrLoanLog.PredictReturnDate}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="实际归还日期:">
+                        <dxe:DateEdit EditValue="{Binding CurrLoanLog.RealityReturnDate}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="借用人:" Foreground="Red" IsRequired="True">
+                        <dxe:TextEdit EditValue="{Binding Borrower}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="借用部门:">
+                        <dxe:TextEdit EditValue="{Binding CurrLoanLog.Department}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="授权人:">
+                        <dxe:TextEdit EditValue="{Binding CurrLoanLog.Authorize}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="备注:">
+                        <dxe:TextEdit EditValue="{Binding CurrLoanLog.Remarks}"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </DockPanel>
+</dx:DXWindow>

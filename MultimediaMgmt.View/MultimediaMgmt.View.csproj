@@ -1,0 +1,551 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{16C04A8C-078B-4DF5-95F3-E90BF7A531FB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MultimediaMgmt.View</RootNamespace>
+    <AssemblyName>MultimediaMgmt.View</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mmm.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Images.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v17.1.ViewModel, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Charts.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Docking.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Grid.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Grid.v17.1.Core, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Layout.v17.1.Core, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.LayoutControl.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.MetropolisDark.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism, Version=7.0.0.396, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.0.0.396\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RefDLL\Vlc.DotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Core.Interops, Version=2.2.1.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RefDLL\Vlc.DotNet.Core.Interops.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Forms, Version=2.2.1.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RefDLL\Vlc.DotNet.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Wpf, Version=2.2.1.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RefDLL\Vlc.DotNet.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Controls\Stocks\ucEquipmentStatus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stocks\ucSurveillanceLog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stocks\ucEquipmentTransferLog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stocks\ucEquipmentScrapLog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stocks\ucEquipmentLoanLog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stocks\ucEquipmentRepairLog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stocks\ucEquipmentInStock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucIcCardMaintance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stocks\ucEquipmentStockMgmt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucIcCardRealtime.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucStdCourseTable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucReservation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucClassroomReservationApproval.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucPermitMgmt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucWarnMgmt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucWarnHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucWarnOperate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucEquipmentControlDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucIcCardMgmt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucIcCardHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucPermitOperate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucCentralizedControlMgmt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\ucEquipmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucEquipmentMgmt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucMonitorMgmt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucClassRoom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucMonitor1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucMonitor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucMainMgmt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\Stocks\ucEquipmentStatus.xaml.cs">
+      <DependentUpon>ucEquipmentStatus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stocks\ucSurveillanceLog.xaml.cs">
+      <DependentUpon>ucSurveillanceLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stocks\ucEquipmentTransferLog.xaml.cs">
+      <DependentUpon>ucEquipmentTransferLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stocks\ucEquipmentScrapLog.xaml.cs">
+      <DependentUpon>ucEquipmentScrapLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stocks\ucEquipmentLoanLog.xaml.cs">
+      <DependentUpon>ucEquipmentLoanLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stocks\ucEquipmentRepairLog.xaml.cs">
+      <DependentUpon>ucEquipmentRepairLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stocks\ucEquipmentInStock.xaml.cs">
+      <DependentUpon>ucEquipmentInStock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucIcCardMaintance.xaml.cs">
+      <DependentUpon>ucIcCardMaintance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stocks\ucEquipmentStockMgmt.xaml.cs">
+      <DependentUpon>ucEquipmentStockMgmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucIcCardRealtime.xaml.cs">
+      <DependentUpon>ucIcCardRealtime.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucStdCourseTable.xaml.cs">
+      <DependentUpon>ucStdCourseTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucReservation.xaml.cs">
+      <DependentUpon>ucReservation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucClassroomReservationApproval.xaml.cs">
+      <DependentUpon>ucClassroomReservationApproval.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucPermitMgmt.xaml.cs">
+      <DependentUpon>ucPermitMgmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucWarnMgmt.xaml.cs">
+      <DependentUpon>ucWarnMgmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucWarnHistory.xaml.cs">
+      <DependentUpon>ucWarnHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucWarnOperate.xaml.cs">
+      <DependentUpon>ucWarnOperate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucEquipmentControlDetail.xaml.cs">
+      <DependentUpon>ucEquipmentControlDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucIcCardMgmt.xaml.cs">
+      <DependentUpon>ucIcCardMgmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucIcCardHistory.xaml.cs">
+      <DependentUpon>ucIcCardHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucPermitOperate.xaml.cs">
+      <DependentUpon>ucPermitOperate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucCentralizedControlMgmt.xaml.cs">
+      <DependentUpon>ucCentralizedControlMgmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucEquipmentControl.xaml.cs">
+      <DependentUpon>ucEquipmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucEquipmentMgmt.xaml.cs">
+      <DependentUpon>ucEquipmentMgmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucMonitorMgmt.xaml.cs">
+      <DependentUpon>ucMonitorMgmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucClassRoom.xaml.cs">
+      <DependentUpon>ucClassRoom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucMonitor1.xaml.cs">
+      <DependentUpon>ucMonitor1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucMonitor.xaml.cs">
+      <DependentUpon>ucMonitor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucMainMgmt.xaml.cs">
+      <DependentUpon>ucMainMgmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\IntBoolConverter.cs" />
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="PopWindows\Stocks\wndEquipmentUseDateEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopWindows\Stocks\wndSurveillanceLogAddEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopWindows\Stocks\wndEquipmentTransferLogAddEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopWindows\Stocks\wndEquipmentScrapLogAddEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopWindows\Stocks\wndEquipmentLoanLogAddEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopWindows\Stocks\wndEquipmentRepairLogAddEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopWindows\wndIcCardAddEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopWindows\wndPermitAddEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Images.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PopWindows\Stocks\wndEquipmentUseDateEdit.xaml.cs">
+      <DependentUpon>wndEquipmentUseDateEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PopWindows\Stocks\wndSurveillanceLogAddEdit.xaml.cs">
+      <DependentUpon>wndSurveillanceLogAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PopWindows\Stocks\wndEquipmentTransferLogAddEdit.xaml.cs">
+      <DependentUpon>wndEquipmentTransferLogAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PopWindows\Stocks\wndEquipmentScrapLogAddEdit.xaml.cs">
+      <DependentUpon>wndEquipmentScrapLogAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PopWindows\Stocks\wndEquipmentLoanLogAddEdit.xaml.cs">
+      <DependentUpon>wndEquipmentLoanLogAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PopWindows\Stocks\wndEquipmentRepairLogAddEdit.xaml.cs">
+      <DependentUpon>wndEquipmentRepairLogAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PopWindows\wndIcCardAddEdit.xaml.cs">
+      <DependentUpon>wndIcCardAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PopWindows\wndPermitAddEdit.xaml.cs">
+      <DependentUpon>wndPermitAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="mmm.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\multimedia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\build.png" />
+    <Resource Include="Resources\card.png" />
+    <Resource Include="Resources\comp.png" />
+    <Resource Include="Resources\home.png" />
+    <Resource Include="Resources\monitor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\study.png" />
+    <Resource Include="Resources\switch.png" />
+    <Resource Include="Resources\users.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\build16.png" />
+    <Resource Include="Resources\home16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\voice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MultimediaMgmt.Common\MultimediaMgmt.Common.csproj">
+      <Project>{e7e2e969-d9ab-4f32-9ded-478db7fe5568}</Project>
+      <Name>MultimediaMgmt.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultimediaMgmt.Model\MultimediaMgmt.Model.csproj">
+      <Project>{7a835f89-94ee-4db8-98c7-d2185620834f}</Project>
+      <Name>MultimediaMgmt.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultimediaMgmt.ViewModel\MultimediaMgmt.ViewModel.csproj">
+      <Project>{e2ef03bb-9e5e-4ef0-93d1-317d4845a42e}</Project>
+      <Name>MultimediaMgmt.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\permit.png" />
+    <Resource Include="Resources\stock.png" />
+    <Resource Include="Resources\warn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mute.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\close.png" />
+    <Resource Include="Resources\max.png" />
+    <Resource Include="Resources\min.png" />
+    <Resource Include="Resources\normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\floor16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\dgmc.png" />
+    <Resource Include="Resources\dgmo.png" />
+    <Resource Include="Resources\dnc.png" />
+    <Resource Include="Resources\dno.png" />
+    <Resource Include="Resources\dpc.png" />
+    <Resource Include="Resources\dpo.png" />
+    <Resource Include="Resources\dsc.png" />
+    <Resource Include="Resources\dso.png" />
+    <Resource Include="Resources\dyc.png" />
+    <Resource Include="Resources\dyo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\clc.png" />
+    <Resource Include="Resources\clo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\fsc.png" />
+    <Resource Include="Resources\fso.png" />
+    <Resource Include="Resources\jhjc.png" />
+    <Resource Include="Resources\jhjo.png" />
+    <Resource Include="Resources\ktc.png" />
+    <Resource Include="Resources\kto.png" />
+    <Resource Include="Resources\lbc.png" />
+    <Resource Include="Resources\lbo.png" />
+    <Resource Include="Resources\mbc.png" />
+    <Resource Include="Resources\mbo.png" />
+    <Resource Include="Resources\mjc.png" />
+    <Resource Include="Resources\mjo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\yjc.png" />
+    <Resource Include="Resources\yjo.png" />
+    <Resource Include="Resources\yxc.png" />
+    <Resource Include="Resources\yxo.png" />
+    <Resource Include="Resources\zkc.png" />
+    <Resource Include="Resources\zko.png" />
+    <Resource Include="Resources\zmc.png" />
+    <Resource Include="Resources\zmo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tyjc.png" />
+    <Resource Include="Resources\tyjo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\list.png" />
+    <Resource Include="Resources\matrix.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1.png" />
+    <Resource Include="Resources\16.png" />
+    <Resource Include="Resources\32.png" />
+    <Resource Include="Resources\4.png" />
+    <Resource Include="Resources\9.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

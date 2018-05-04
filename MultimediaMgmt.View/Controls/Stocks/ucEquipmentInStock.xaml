@@ -1,0 +1,48 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    x:Class="MultimediaMgmt.View.Controls.ucEquipmentInStock" 
+    mc:Ignorable="d" 
+    d:DesignHeight="300" d:DesignWidth="800">
+    <DockPanel>
+        <dxb:ToolBarControl Padding="0" Height="35" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+            <dxb:BarEditItem Content="设备编号:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding SerialNumber}">
+                <dxb:BarEditItem.EditSettings>
+                    <dxe:TextEditSettings/>
+                </dxb:BarEditItem.EditSettings>
+            </dxb:BarEditItem>
+            <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+        </dxb:ToolBarControl>
+        <dxg:GridControl ItemsSource="{Binding EquipmentInStocks}"
+                		x:Name="gridControl"
+                        AllowInitiallyFocusedRow="False" 
+                        >
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="gridView" AllowEditing="False">
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridColumn FieldName="SerialNumber" Header="设备编码" Width="80" Fixed="Left"/>
+            <dxg:GridColumn FieldName="Name" Header="名称" Width="80" />
+            <dxg:GridColumn FieldName="Manufacturer" Header="厂家" Width="80"/>
+            <dxg:GridColumn FieldName="SaleCompany" Header="销售商" Width="80"/>
+            <dxg:GridColumn FieldName="Type" Header="型号" Width="80"/>
+            <dxg:GridColumn FieldName="Configuration" Header="配置" Width="80" />
+            <dxg:GridColumn FieldName="ProduceDate" Header="出厂日期" Width="80"/>
+            <dxg:GridColumn FieldName="UserDepartment" Header="使用部门" Width="80"/>
+            <dxg:GridColumn FieldName="Place" Header="使用地点" Width="80"/>
+            <dxg:GridColumn FieldName="Keeper" Header="保管人" Width="80"/>
+            <dxg:GridColumn FieldName="Price" Header="单价" Width="80"/>
+            <dxg:GridColumn FieldName="IncreaseType" Header="新增类型" Width="80"/>
+            <dxg:GridColumn FieldName="UseDate" Header="启用日期" Width="80"/>
+            <dxg:GridColumn FieldName="Intime" Header="入库日期" Width="80"/>
+            <dxg:GridColumn FieldName="Remarks" Header="备注" Width="100"/>
+        </dxg:GridControl>
+    </DockPanel>
+</UserControl>

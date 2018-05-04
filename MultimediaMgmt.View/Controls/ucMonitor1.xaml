@@ -1,0 +1,59 @@
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+    xmlns:control="clr-namespace:MultimediaMgmt.View.Controls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:wpfVlc="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
+    xmlns:cvt="clr-namespace:MultimediaMgmt.View.Converters"
+    x:Class="MultimediaMgmt.View.Controls.ucMonitor1" 
+    mc:Ignorable="d" 
+    d:DesignHeight="300" d:DesignWidth="400" Unloaded="UserControl_Unloaded">
+    <UserControl.Resources>
+        <cvt:DoubleBoolConverter x:Key="doubleBoolConverter"/>
+    </UserControl.Resources>
+    <Border BorderThickness="0.5" BorderBrush="DarkGray">
+        <dxb:BarManager AllowCustomization="False" AllowHotCustomization="False" AllowQuickCustomization="False" AllowUIAutomationSupport="False">
+            <DockPanel>
+                <dxb:ToolBarControl DockPanel.Dock="Top" Cursor="Hand" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                    <dxb:BarStaticItem Content="一号教学楼101" ShowBorder="False"/>
+                    <dxb:BarItemSeparator/>
+                    <dxb:BarButtonItem x:Name="mediaPlay" Content="播放" Glyph="{StaticResource imgPlay}" ItemClick="play_ItemClick"/>
+                    <dxb:BarEditItem x:Name="volumnChange" Content="音量:" ClosePopupOnChangingEditValue="True" EditWidth="65"
+                              EditValue="0" Alignment="Far" EditValueChanged="volumnChange_EditValueChanged" >
+                        <dxb:BarEditItem.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image>
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=volumnChange,Path=EditValue,Converter={StaticResource doubleBoolConverter}}" Value="False">
+                                                        <Setter Property="Source" Value="{StaticResource imgMute}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=volumnChange,Path=EditValue,Converter={StaticResource doubleBoolConverter}}" Value="True">
+                                                        <Setter Property="Source" Value="{StaticResource imgVoice}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock Margin="5,0" Text="{Binding EditValue,ElementName=volumnChange}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxb:BarEditItem.ContentTemplate>
+                        <dxb:BarEditItem.EditSettings>
+                            <dxe:TrackBarEditSettings />
+                        </dxb:BarEditItem.EditSettings>
+                    </dxb:BarEditItem>
+                    <dxb:BarCheckItem x:Name="statusChange" Alignment="Far" Glyph="{dx:DXImageOffice2013 Image=Merge_16x16.png}" CheckedChanged="showDetail_CheckedChanged"/>
+                </dxb:ToolBarControl>
+                <Grid>
+                    <wpfVlc:VlcControl x:Name="vlcTest"/>
+                </Grid>
+            </DockPanel>
+        </dxb:BarManager>
+    </Border>
+</UserControl>

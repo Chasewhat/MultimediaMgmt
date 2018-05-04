@@ -1,0 +1,66 @@
+﻿<UserControl 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" 
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxbt="http://schemas.devexpress.com/winfx/2008/xaml/bars/themekeys"
+    xmlns:control="clr-namespace:MultimediaMgmt.View.Controls"
+    x:Class="MultimediaMgmt.View.Controls.ucEquipmentControl"
+    mc:Ignorable="d" 
+    d:DesignHeight="300" d:DesignWidth="400">
+    <Border BorderThickness="0.5" BorderBrush="DarkGray">
+        <dxb:BarManager AllowCustomization="False" AllowHotCustomization="False" AllowQuickCustomization="False" AllowUIAutomationSupport="False">
+            <DockPanel>
+                <dxb:ToolBarControl Cursor="Hand" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                    <dxb:ToolBarControl.Resources>
+                        <ControlTemplate x:Key="{dxbt:BarControlThemeKey ResourceKey=BarTemplate, ThemeName=MetropolisDark}" TargetType="{x:Type ContentControl}">
+                            <Border Background="{Binding HeadColor}">
+                                <ContentPresenter />
+                            </Border>
+                        </ControlTemplate>
+                    </dxb:ToolBarControl.Resources>
+                    <dxb:BarStaticItem Content="一号教学楼101" ShowBorder="False"/>
+                    <dxb:BarCheckItem x:Name="statusChange" Alignment="Far" Glyph="{dx:DXImageOffice2013 Image=Merge_16x16.png}" CheckedChanged="showDetail_CheckedChanged"/>
+                </dxb:ToolBarControl>
+                <Grid>
+                    <Grid x:Name="infoOverview" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Image Source="{Binding Status1}" Stretch="None" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="{Binding Status2}" Stretch="None" Grid.Row="0" Grid.Column="2"/>
+                        <Image Source="{Binding Status3}" Stretch="None" Grid.Row="0" Grid.Column="4"/>
+                        <Image Source="{Binding Status4}" Stretch="None" Grid.Row="2" Grid.Column="0"/>
+                        <Image Source="{Binding Status5}" Stretch="None" Grid.Row="2" Grid.Column="2"/>
+                        <Image Source="{Binding Status6}" Stretch="None" Grid.Row="2" Grid.Column="4"/>
+                        <Image Source="{Binding Status7}" Stretch="None" Grid.Row="4" Grid.Column="0"/>
+                        <Image Source="{Binding Status8}" Stretch="None" Grid.Row="4" Grid.Column="2"/>
+                        <Image Source="{Binding Status9}" Stretch="None" Grid.Row="4" Grid.Column="4"/>
+                        <Border Margin="0,10,0,0" Grid.Row="5" Grid.ColumnSpan="5" 
+                                BorderThickness="0,0.5,0,0" BorderBrush="DarkGray">
+                            <StackPanel>
+                                <TextBlock Foreground="White" Margin="0,3,0,3" Text="张三丰" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Foreground="White" Text="毛泽东思想" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                    <control:ucEquipmentControlDetail x:Name="infoDetail" Visibility="Collapsed"/>
+                </Grid>
+            </DockPanel>
+        </dxb:BarManager>
+    </Border>
+</UserControl>
