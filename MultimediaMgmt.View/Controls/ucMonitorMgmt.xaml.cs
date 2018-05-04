@@ -133,6 +133,10 @@ namespace MultimediaMgmt.View.Controls
             currMonitor.Value.StatusChanged -= StatusChangedExec;
             currMonitor.Value.StatusChanged += RoomStatusChangedExec;
             isShowRoom = true;
+            if (roomMonitors.Count <= 0)
+                this.listPanel.ItemWidth = new GridLength(0);
+            else
+                this.listPanel.ItemWidth = new GridLength(monitorWidth + 40);
         }
 
         private void RestoreInit()
@@ -153,7 +157,6 @@ namespace MultimediaMgmt.View.Controls
             {
                 currMonitor = new KeyValuePair<int, ucMonitor>(monitors.IndexOf(ucc), ucc);
                 RoomMonitorInit(ucc.Id);
-                this.listPanel.ItemWidth = new GridLength(monitorWidth + 40);
                 this.detailPanel.Visibility = Visibility.Visible;
                 this.overviewRoomPanel.Columns = 1;
                 this.overviewRoomPanel.Rows = roomMonitors.Count;//最大视频数
@@ -172,7 +175,6 @@ namespace MultimediaMgmt.View.Controls
             if (isDetail)
             {
                 this.detailPanel.Visibility = Visibility.Visible;
-                this.listPanel.ItemWidth = new GridLength(monitorWidth + 40);
                 if (this.detailPanel.Content != null)
                 {
                     ucMonitor temp = this.detailPanel.Content as ucMonitor;
