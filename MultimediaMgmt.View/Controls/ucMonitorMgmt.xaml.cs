@@ -114,7 +114,7 @@ namespace MultimediaMgmt.View.Controls
                     i++;
                     continue;
                 }
-                string info = string.Format("{0}{1}{2}#视频源",
+                string info = string.Format("{0}{1} {2}#视频源",
                     cr.BuildingName, cr.TerminalId, i + 1);
                 ucMonitor monitor = new ucMonitor(info, address, cr.Id);
                 monitor.Margin = new Thickness(2);

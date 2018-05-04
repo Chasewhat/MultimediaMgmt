@@ -1,0 +1,2 @@
+1.如何根据ClassRoom获取到当前班级、当前老师、当前课程、班级人数、当前人数、教室温度？
+2.TerminalCurrentInfo表的ProjectionSignal与ComputerSignal字段的数据类型是否正确?

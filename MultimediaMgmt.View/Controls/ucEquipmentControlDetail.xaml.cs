@@ -75,7 +75,7 @@ namespace MultimediaMgmt.View.Controls
                     classControlDetailViewModel.CurrClassRoom.BuildingName,
                     classControlDetailViewModel.CurrClassRoom.TerminalId);
                 if (i > 0)
-                    info += string.Format("{0}#视频源", i + 1);
+                    info += string.Format(" {0}#视频源", i + 1);
                 ucMonitor monitor = new ucMonitor(info, ad, classControlDetailViewModel.CurrClassRoom.Id);
                 monitor.Margin = new Thickness(5);
                 monitor.Width = double.NaN;
