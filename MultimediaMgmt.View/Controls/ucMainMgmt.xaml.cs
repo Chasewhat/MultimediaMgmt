@@ -4,17 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MultimediaMgmt.View.Controls
 {
@@ -23,12 +13,82 @@ namespace MultimediaMgmt.View.Controls
     /// </summary>
     public partial class ucMainMgmt : UserControl
     {
-        private MainControlViewModel mainControlViewModel;
+        private MainMgmtViewModel mainMgmtViewModel;
 
         public ucMainMgmt()
         {
             InitializeComponent();
-            this.DataContext = mainControlViewModel = ViewModelSource.Create<MainControlViewModel>();
+            this.DataContext = mainMgmtViewModel = ViewModelSource.Create<MainMgmtViewModel>();
+        }
+
+        private void buildCb1_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
+        {
+            PiesInit(e.NewValue, e.OldValue, 1);
+        }
+
+        private void buildCb2_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
+        {
+            PiesInit(e.NewValue, e.OldValue, 2);
+        }
+
+        private void buildCb3_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
+        {
+
+            PiesInit(e.NewValue, e.OldValue, 3);
+        }
+
+        private void PiesInit(object newb, object oldb, int type)
+        {
+            switch (type)
+            {
+                case 1:
+                    pies1.Children.Clear();
+                    break;
+                case 2:
+                    pies2.Children.Clear();
+                    break;
+                case 3:
+                    pies3.Children.Clear();
+                    break;
+            }
+            if (newb == null)
+                return;
+            List<int> buildings = ((List<object>)newb).Cast<int>().ToList();
+            if (buildings.Count <= 0)
+                return;
+            double sq = Math.Sqrt(buildings.Count);
+            switch (type)
+            {
+                case 1:
+                    pies1.Columns = (int)Math.Ceiling(sq);
+                    pies1.Rows = (int)Math.Round(sq);
+                    break;
+                case 2:
+                    pies2.Columns = (int)Math.Ceiling(sq);
+                    pies2.Rows = (int)Math.Round(sq);
+                    break;
+                case 3:
+                    pies3.Columns = (int)Math.Ceiling(sq);
+                    pies3.Rows = (int)Math.Round(sq);
+                    break;
+            }
+            foreach (int id in buildings)
+            {
+                ucPieControl pie = new ucPieControl();
+                pie.Init(id, type);
+                switch (type)
+                {
+                    case 1:
+                        pies1.Children.Add(pie);
+                        break;
+                    case 2:
+                        pies2.Children.Add(pie);
+                        break;
+                    case 3:
+                        pies3.Children.Add(pie);
+                        break;
+                }
+            }
         }
     }
 }

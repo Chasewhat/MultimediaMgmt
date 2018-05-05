@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Controls\IcCardRealtimeViewModel.cs" />
+    <Compile Include="Controls\PieControlViewModel.cs" />
     <Compile Include="Controls\Stocks\EquipmentStatusViewModel.cs" />
     <Compile Include="Controls\Stocks\SurveillanceLogViewModel.cs" />
     <Compile Include="Controls\Stocks\EquipmentTransferLogViewModel.cs" />
@@ -110,7 +111,7 @@
     <Compile Include="PopWindows\IcCardAddEditViewModel.cs" />
     <Compile Include="PopWindows\PermitAddEditViewModel.cs" />
     <Compile Include="Controls\WarnOperateViewModel.cs" />
-    <Compile Include="Controls\MainControlViewModel.cs" />
+    <Compile Include="Controls\MainMgmtViewModel.cs" />
     <Compile Include="Controls\EquipmentControlDetailViewModel.cs" />
     <Compile Include="Controls\IcCardHistoryViewModel.cs" />
     <Compile Include="Controls\IcCardMaintanceViewModel.cs" />

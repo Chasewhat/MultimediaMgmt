@@ -16,7 +16,7 @@
             <dxc:ChartControl.Diagram>
                 <dxc:SimpleDiagram2D>
                     <dxc:SimpleDiagram2D.Series>
-                        <dxc:PieSeries2D ArgumentScaleType="Qualitative" DataSource="{Binding EquipmentOnlineRates}"
+                        <dxc:PieSeries2D ArgumentScaleType="Qualitative" DataSource="{Binding Rates}"
                                                          ArgumentDataMember="Key" ValueDataMember="Value" ColorDataMember="PColor"
                                                          SweepDirection="Counterclockwise" ValueScaleType="Numerical">
                             <dxc:PieSeries2D.Label>
@@ -25,8 +25,8 @@
                                                                  TextPattern="{}{A}, {VP:P0}" />
                             </dxc:PieSeries2D.Label>
                             <dxc:PieSeries2D.Titles>
-                                <dxc:Title Content="1111"
-                                        HorizontalAlignment="Center" />
+                                <dxc:Title Content="{Binding Title}" FontSize="13"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </dxc:PieSeries2D.Titles>
                         </dxc:PieSeries2D>
                     </dxc:SimpleDiagram2D.Series>

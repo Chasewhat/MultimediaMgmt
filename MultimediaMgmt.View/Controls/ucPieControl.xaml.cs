@@ -23,12 +23,22 @@ namespace MultimediaMgmt.View.Controls
     /// </summary>
     public partial class ucPieControl : UserControl
     {
-        private MainControlViewModel mainControlViewModel;
+        private PieControlViewModel pieControlViewModel;
 
         public ucPieControl()
         {
             InitializeComponent();
-            this.DataContext = mainControlViewModel = ViewModelSource.Create<MainControlViewModel>();
+            this.DataContext = pieControlViewModel = ViewModelSource.Create<PieControlViewModel>();
+        }
+
+        /// <summary>
+        /// 图表初始化
+        /// </summary>
+        /// <param name="buildingId">教学楼ID</param>
+        /// <param name="type">1--设备在线率 2--教室上课率 3--设备在修</param>
+        public void Init(int buildingId, int type)
+        {
+            pieControlViewModel.Init(buildingId, type);
         }
     }
 }

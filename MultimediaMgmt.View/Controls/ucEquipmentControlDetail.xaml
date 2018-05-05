@@ -15,6 +15,7 @@
     d:DesignHeight="500" d:DesignWidth="1000">
     <UserControl.Resources>
         <Style TargetType="dxlc:LayoutItem">
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="ElementSpace" Value="3"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
