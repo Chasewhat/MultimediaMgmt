@@ -17,13 +17,14 @@ namespace MultimediaMgmt.Model.Models
         public int BuildingId { get; set; }
         public string VedioAddress { get; set; }
         public string BuildingName { get; set; }
+        public string Location { get; set; }
         public string PersonId { get; set; }
         public string CourseName { get; set; }
         public string PersonName { get; set; }
         public string ClassName { get; set; }
         public int StudentSum { get; set; }
         public int RealStudentSum { get; set; }
-        public string Location { get; set; }
+        public string Temperature { get; set; }
         public bool? System { get; set; }
         public bool? FPD { get; set; }
         public bool? ComputerStatus { get; set; }
@@ -38,8 +39,8 @@ namespace MultimediaMgmt.Model.Models
         public bool? ACRelay1 { get; set; }
         public bool? Large_Screen { get; set; }
         public bool? AirConitioner { get; set; }
-        public bool? ProjectionSignal { get; set; }
-        public bool? ComputerSignal { get; set; }
+        public byte? ProjectionSignal { get; set; }
+        public byte? ComputerSignal { get; set; }
         public bool? LAN1 { get; set; }
         public bool? LAN2 { get; set; }
         public bool? LAN3 { get; set; }

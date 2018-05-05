@@ -17,7 +17,7 @@ namespace MultimediaMgmt.Model
         /// <summary>
         /// 信号源
         /// </summary>
-        public static readonly Dictionary<int, string> Signals = new Dictionary<int, string>() {
+        public static readonly Dictionary<byte, string> Signals = new Dictionary<byte, string>() {
             { 1,"台式电脑" },
             { 2,"手提电脑" },
             { 3,"展台" },
@@ -83,8 +83,8 @@ namespace MultimediaMgmt.Model
             { "ComputerStatuso", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dno.png") as ImageSource },
             { "Projectorc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/tyjc.png") as ImageSource },
             { "Projectoro", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/tyjo.png") as ImageSource },
-            { "ProjectionScreenc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mbc.png") as ImageSource },
-            { "ProjectionScreeno", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mbo.png") as ImageSource },
+            { "ProjectorScreenc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mbc.png") as ImageSource },
+            { "ProjectorScreeno", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/mbo.png") as ImageSource },
             { "Curtainc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/clc.png") as ImageSource },
             { "Curtaino", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/clo.png") as ImageSource },
             { "Lampc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/zmc.png") as ImageSource },

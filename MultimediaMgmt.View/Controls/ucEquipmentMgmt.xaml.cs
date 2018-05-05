@@ -30,6 +30,7 @@ namespace MultimediaMgmt.View.Controls
             classRoomTree.CheckedChanged += CheckedChangedExec;
             this.detailPanel.CloseCommand = new DelegateCommand(() =>
              {
+                 DetailClear();
                  this.detailPanel.Visibility = Visibility.Collapsed;
                  this.listPanel.ItemWidth = new GridLength(1, GridUnitType.Star);
              });
@@ -61,7 +62,8 @@ namespace MultimediaMgmt.View.Controls
             if (isChecked)
             {
                 //新增设备
-                classRoomMgmtViewModel.ids.Add(classRoom.ID);
+                if (!classRoomMgmtViewModel.ids.Contains(classRoom.ID))
+                    classRoomMgmtViewModel.ids.Add(classRoom.ID);
                 classRoomMgmtViewModel.ClassRoomListRefresh();
                 ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID);
                 if (cr == null)

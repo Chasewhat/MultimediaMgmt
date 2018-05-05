@@ -15,7 +15,7 @@ namespace MultimediaMgmt.ViewModel.Controls
     public class EquipmentControlDetailViewModel : BaseViewModel
     {
         public virtual ClassRoomEx CurrClassRoom { get; set; }
-        public virtual Dictionary<int, string> Signals { get; set; }
+        public virtual Dictionary<byte, string> Signals { get; set; }
         public virtual List<DataStandard> EnergyConsumptions { get; protected set; }
 
         public EquipmentControlDetailViewModel()

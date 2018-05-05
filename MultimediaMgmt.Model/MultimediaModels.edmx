@@ -400,8 +400,8 @@
           <Property Name="ACRelay1" Type="bit" />
           <Property Name="Large_Screen" Type="bit" />
           <Property Name="AirConitioner" Type="bit" />
-          <Property Name="ProjectionSignal" Type="bit" />
-          <Property Name="ComputerSignal" Type="bit" />
+          <Property Name="ProjectionSignal" Type="tinyint" />
+          <Property Name="ComputerSignal" Type="tinyint" />
           <Property Name="LAN1" Type="bit" />
           <Property Name="LAN2" Type="bit" />
           <Property Name="LAN3" Type="bit" />
@@ -965,8 +965,8 @@
           <Property Name="ACRelay1" Type="Boolean" />
           <Property Name="Large_Screen" Type="Boolean" />
           <Property Name="AirConitioner" Type="Boolean" />
-          <Property Name="ProjectionSignal" Type="Boolean" />
-          <Property Name="ComputerSignal" Type="Boolean" />
+          <Property Name="ProjectionSignal" Type="Byte" />
+          <Property Name="ComputerSignal" Type="Byte" />
           <Property Name="LAN1" Type="Boolean" />
           <Property Name="LAN2" Type="Boolean" />
           <Property Name="LAN3" Type="Boolean" />

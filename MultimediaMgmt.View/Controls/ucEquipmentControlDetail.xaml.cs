@@ -66,11 +66,6 @@ namespace MultimediaMgmt.View.Controls
             int i = 0;
             foreach (string ad in address)
             {
-                if (i == 0)
-                {
-                    i++;
-                    continue;
-                }
                 string info = string.Format("{0}{1}",
                     classControlDetailViewModel.CurrClassRoom.BuildingName,
                     classControlDetailViewModel.CurrClassRoom.TerminalId);

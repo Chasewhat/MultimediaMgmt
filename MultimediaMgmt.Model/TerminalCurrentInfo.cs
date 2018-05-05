@@ -29,8 +29,8 @@ namespace MultimediaMgmt.Model
         public Nullable<bool> ACRelay1 { get; set; }
         public Nullable<bool> Large_Screen { get; set; }
         public Nullable<bool> AirConitioner { get; set; }
-        public Nullable<bool> ProjectionSignal { get; set; }
-        public Nullable<bool> ComputerSignal { get; set; }
+        public Nullable<byte> ProjectionSignal { get; set; }
+        public Nullable<byte> ComputerSignal { get; set; }
         public Nullable<bool> LAN1 { get; set; }
         public Nullable<bool> LAN2 { get; set; }
         public Nullable<bool> LAN3 { get; set; }

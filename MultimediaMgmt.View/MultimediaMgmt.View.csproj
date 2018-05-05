@@ -148,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\ucPieControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\ucMonitorStatic.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
@@ -265,6 +269,9 @@
     </Compile>
     <Compile Include="Controls\ucIcCardRealtime.xaml.cs">
       <DependentUpon>ucIcCardRealtime.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucPieControl.xaml.cs">
+      <DependentUpon>ucPieControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ucMonitorStatic.xaml.cs">
       <DependentUpon>ucMonitorStatic.xaml</DependentUpon>

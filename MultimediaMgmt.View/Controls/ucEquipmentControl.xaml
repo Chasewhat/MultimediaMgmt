@@ -53,8 +53,8 @@
                         <Border Margin="0,10,0,0" Grid.Row="5" Grid.ColumnSpan="5" 
                                 BorderThickness="0,0.5,0,0" BorderBrush="DarkGray">
                             <StackPanel>
-                                <TextBlock Foreground="White" Margin="0,3,0,3" Text="{Binding PersonName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBlock Foreground="White" Text="{Binding CourseName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Foreground="White" Margin="0,3,0,3" Text="{Binding CurrClassRoom.PersonName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Foreground="White" Text="{Binding CurrClassRoom.CourseName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                     </Grid>

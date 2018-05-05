@@ -14,7 +14,7 @@
     <dxg:GridControl x:Name="buildingTree" ShowBorder="False" AllowInitiallyFocusedRow="False"
                          ItemsSource="{Binding ClassRooms}">
         <dxg:GridControl.View>
-            <dxg:TreeListView ShowSearchPanelMode="Always" SearchColumns="Name" SearchPanelNullText="搜索"
+            <dxg:TreeListView ShowSearchPanelMode="Always" EnableDynamicLoading="False" SearchColumns="Name" SearchPanelNullText="搜索"
                                                   SearchPanelAllowFilter="True" SearchPanelHighlightResults="True" AllowEditing="False" ImageFieldName="Image" ShowNodeImages="True"
                                                   TreeDerivationMode="HierarchicalDataTemplate" ShowFocusedRectangle="False"
                                                   ShowHorizontalLines="False" ShowVerticalLines="False" ShowIndicator="False" AutoWidth="True" 

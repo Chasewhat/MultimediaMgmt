@@ -15,7 +15,7 @@ namespace MultimediaMgmt.ViewModel.Controls
     {
         public virtual SmartObservableCollection<ClassRoomEx> ClassRoomExs { get; set; }
         public virtual ClassRoomEx SelectedClassRoomEx { get; set; }
-        public virtual Dictionary<int, string> Signals { get; set; }
+        public virtual Dictionary<byte, string> Signals { get; set; }
         public List<int> ids = new List<int>();
         public EquipmentMgmtViewModel()
         {
@@ -30,6 +30,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             var data = from c in multimediaEntities.ClassRoom
                        join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
                        join t in multimediaEntities.TerminalCurrentInfo on c.TerminalId equals t.TerminalID
+                       //join g in multimediaEntities.ClassGrade on c.Id equals g.ClassID
                        where ids.Contains(c.Id)
                        select new ClassRoomEx()
                        {
@@ -71,34 +72,43 @@ namespace MultimediaMgmt.ViewModel.Controls
                            IN_STATUS2 = t.IN_STATUS2,
                            IN_STATUS3 = t.IN_STATUS3,
                            HexCode = t.HexCode,
-                           Opereate_Last = t.Opereate_Last
+                           Opereate_Last = t.Opereate_Last,
+                           //暂时不知如何获取  取默认值
+                           PersonId = "11111",
+                           PersonName = "张三丰",
+                           CourseName = "数据库系统概论",
+                           ClassName = "2017级自动化1班",
+                           StudentSum = 30,
+                           RealStudentSum = 25,
+                           Temperature = "25℃"
                        };
             //获取正在上的课及老师
-            int weekDay = (int)DateTime.Now.DayOfWeek;
-            var course = multimediaEntities.StdCourseTable;
-            var person = multimediaEntities.Person;
-            DateTime now = DateTime.Now;
-            foreach (ClassRoomEx cr in data)
-            {
-                var temp = (from s in course
-                            join p in person on s.PersonId equals p.PersonId
-                            where s.DayOfWeek == weekDay &&
-                            DateTime.ParseExact(s.BeginTime, "HH:mm", null) <= now &&
-                            DateTime.ParseExact(s.BeginTime, "HH:mm", null) <= now
-                            select new
-                            {
-                                s.CourseName,
-                                p.PersonId,
-                                p.Name
-                            }).FirstOrDefault();
-                if (temp != null)
-                {
-                    cr.PersonId = temp.PersonId;
-                    cr.PersonName = temp.Name;
-                    cr.CourseName = temp.CourseName;
-                }
-            }
+            //int weekDay = (int)DateTime.Now.DayOfWeek;
+            //var course = multimediaEntities.StdCourseTable;
+            //var person = multimediaEntities.Person;
+            //DateTime now = DateTime.Now;
+            //foreach (ClassRoomEx cr in data)
+            //{
+            //    var temp = (from s in course
+            //                join p in person on s.PersonId equals p.PersonId
+            //                where s.DayOfWeek == weekDay &&
+            //                DateTime.ParseExact(s.BeginTime, "HH:mm", null) <= now &&
+            //                DateTime.ParseExact(s.BeginTime, "HH:mm", null) <= now
+            //                select new
+            //                {
+            //                    s.CourseName,
+            //                    p.PersonId,
+            //                    p.Name
+            //                }).FirstOrDefault();
+            //    if (temp != null)
+            //    {
+            //        cr.PersonId = temp.PersonId;
+            //        cr.PersonName = temp.Name;
+            //        cr.CourseName = temp.CourseName;
+            //    }
+            //}
             ClassRoomExs = data.ToSmartObservableCollection();
+
         }
     }
 }

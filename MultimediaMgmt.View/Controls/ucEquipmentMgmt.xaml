@@ -55,10 +55,10 @@
                             <dxg:GridColumn Binding="{Binding Projector,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="投影机" Width="60"/>
                             <dxg:GridColumn Binding="{Binding Curtain,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="窗帘" Width="60"/>
                             <dxg:GridColumn Binding="{Binding Lamp,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="照明" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding ProjectionScreen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="幕布" Width="60"/>
+                            <dxg:GridColumn Binding="{Binding ProjectorScreen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="幕布" Width="60"/>
                             <dxg:GridColumn Binding="{Binding Volume,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="音响" Width="60"/>
                             <dxg:GridColumn Binding="{Binding Record,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="录播" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding AirConditioner,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="空调" Width="60"/>
+                            <dxg:GridColumn Binding="{Binding AirConitioner,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="空调" Width="60"/>
                             <dxg:GridColumn Binding="{Binding Lock_Status,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电控柜门" Width="60"/>
                             <dxg:GridColumn Binding="{Binding Door_Status,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="门禁" Width="60"/>
                             <dxg:GridColumn Binding="{Binding Large_Screen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="大屏" Width="60"/>

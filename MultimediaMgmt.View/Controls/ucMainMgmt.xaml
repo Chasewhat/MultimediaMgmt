@@ -97,7 +97,7 @@
                                     <dxc:AxisX2D Visible="False" GridLinesVisible="True" TickmarksMinorVisible="True" TickmarksVisible="True" GridLinesMinorVisible="True"/>
                                 </dxc:XYDiagram2D.AxisX>
                                 <dxc:SplineSeries2D Brush="{StaticResource NewYellow}" ArgumentScaleType="DateTime" DisplayName="能耗" DataSource="{Binding EnergyConsumptions}" 
-                                              ArgumentDataMember="Date" ValueDataMember="Value" CrosshairLabelPattern="{}Date：{A:yyyy-MM-dd}&#xA;{S}：{V:F3}"
+                                              ArgumentDataMember="Date" ValueDataMember="Value" CrosshairLabelPattern="{}Date：{A:yyyy-MM-dd}&#xA;{S}：{V:F3}KWH"
                                                   MarkerVisible="True">
                                     <dxc:SplineSeries2D.LineStyle>
                                         <dxc:LineStyle DashCap="Triangle" Thickness="1"/>
