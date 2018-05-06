@@ -129,6 +129,7 @@
     <Compile Include="PopWindows\Stocks\EquipmentScrapLogAddEditViewModel.cs" />
     <Compile Include="PopWindows\Stocks\EquipmentLoanLogAddEditViewModel.cs" />
     <Compile Include="PopWindows\Stocks\EquipmentRepairLogAddEditViewModel.cs" />
+    <Compile Include="PopWindows\SystemConfigViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

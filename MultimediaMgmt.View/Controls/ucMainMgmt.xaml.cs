@@ -31,12 +31,6 @@ namespace MultimediaMgmt.View.Controls
             PiesInit(e.NewValue, e.OldValue, 2);
         }
 
-        private void buildCb3_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
-        {
-
-            PiesInit(e.NewValue, e.OldValue, 3);
-        }
-
         private void PiesInit(object newb, object oldb, int type)
         {
             switch (type)
@@ -46,9 +40,6 @@ namespace MultimediaMgmt.View.Controls
                     break;
                 case 2:
                     pies2.Children.Clear();
-                    break;
-                case 3:
-                    pies3.Children.Clear();
                     break;
             }
             if (newb == null)
@@ -67,10 +58,6 @@ namespace MultimediaMgmt.View.Controls
                     pies2.Columns = (int)Math.Ceiling(sq);
                     pies2.Rows = (int)Math.Round(sq);
                     break;
-                case 3:
-                    pies3.Columns = (int)Math.Ceiling(sq);
-                    pies3.Rows = (int)Math.Round(sq);
-                    break;
             }
             foreach (int id in buildings)
             {
@@ -84,11 +71,13 @@ namespace MultimediaMgmt.View.Controls
                     case 2:
                         pies2.Children.Add(pie);
                         break;
-                    case 3:
-                        pies3.Children.Add(pie);
-                        break;
                 }
             }
+        }
+
+        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            repairPie.Init(0, 3);
         }
     }
 }

@@ -9,7 +9,7 @@
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
-             x:Class="MultimediaMgmt.View.Controls.ucMainMgmt"
+             x:Class="MultimediaMgmt.View.Controls.ucMainMgmt" Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <dxdo:DockLayoutManager>
@@ -42,16 +42,7 @@
                 </dxdo:LayoutGroup>
                 <dxdo:LayoutGroup Orientation="Horizontal" ItemHeight="*">
                     <dxdo:LayoutPanel Caption="设备在修率" ItemWidth="*">
-                        <DockPanel>
-                            <dxe:ComboBoxEdit x:Name="buildCb3" ItemsSource="{Binding Buildings}" EditValueChanged="buildCb3_EditValueChanged"
-                                             DockPanel.Dock="Top" IsTextEditable="False" ValueMember="Key" DisplayMember="Value">
-                                <dxe:ComboBoxEdit.StyleSettings>
-                                    <dxe:CheckedTokenComboBoxStyleSettings/>
-                                </dxe:ComboBoxEdit.StyleSettings>
-                            </dxe:ComboBoxEdit>
-                            <UniformGrid x:Name="pies3" Rows="1" Columns="1">
-                            </UniformGrid>
-                        </DockPanel>
+                        <control:ucPieControl x:Name="repairPie"/>
                     </dxdo:LayoutPanel>
                     <dxdo:LayoutPanel Caption="能耗曲线" ItemWidth="*">
                         <dxc:ChartControl Padding="0" Margin="0" BorderThickness="0">

@@ -385,6 +385,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PopWindows\wndSystemConfig.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -423,6 +427,9 @@
     <Compile Include="PopWindows\wndPermitAddEdit.xaml.cs">
       <DependentUpon>wndPermitAddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PopWindows\wndSystemConfig.xaml.cs">
+      <DependentUpon>wndSystemConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -440,6 +447,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="bin\Debug\Config\Main.ini" />
+    <None Include="bin\Release\Config\Main.ini" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

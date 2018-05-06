@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MultimediaModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MultimediaModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccessCardLog">
           <Key>
             <PropertyRef Name="Id" />
@@ -337,13 +337,9 @@
           <Property Name="ClassID" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="EntryTime" Type="date" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“dmtjsgl3.dbo.SurveillanceLog”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="SurveillanceLog">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="LogContent" />
-            <PropertyRef Name="LogDate" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LogContent" Type="varchar" MaxLength="1000" Nullable="false" />
@@ -550,6 +546,7 @@
           <EntitySet Name="StdClassPeriod" EntityType="Self.StdClassPeriod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StdCourseTable" EntityType="Self.StdCourseTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveillanceLog" EntityType="Self.SurveillanceLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SwipeCardLog" EntityType="Self.SwipeCardLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysParameter" EntityType="Self.SysParameter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TerminalActiveTime" EntityType="Self.TerminalActiveTime" Schema="dbo" store:Type="Tables" />
@@ -565,13 +562,6 @@
     [LessonLog].[LogDate] AS [LogDate]
     FROM [dbo].[LessonLog] AS [LessonLog]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="SurveillanceLog" EntityType="Self.SurveillanceLog" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [SurveillanceLog].[ID] AS [ID], 
-    [SurveillanceLog].[LogContent] AS [LogContent], 
-    [SurveillanceLog].[LogDate] AS [LogDate]
-    FROM [dbo].[SurveillanceLog] AS [SurveillanceLog]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId" Association="Self.FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId">
             <End Role="ClassroomReservation" EntitySet="ClassroomReservation" />
             <End Role="ClassroomReservationApproval" EntitySet="ClassroomReservationApproval" />
@@ -585,8 +575,7 @@
             <End Role="ReservationCourseTable" EntitySet="ReservationCourseTable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MultimediaModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1061,16 +1050,6 @@
           <Property Name="Num" Type="Int32" Nullable="false" />
           <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
-        <EntityType Name="SurveillanceLog">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="LogContent" />
-            <PropertyRef Name="LogDate" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LogContent" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
         <Association Name="FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId">
           <End Role="ClassroomReservation" Type="Self.ClassroomReservation" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1145,7 +1124,6 @@
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" />
           <EntitySet Name="WeeklyCourseTable" EntityType="Self.WeeklyCourseTable" />
           <EntitySet Name="LessonLog" EntityType="Self.LessonLog" />
-          <EntitySet Name="SurveillanceLog" EntityType="Self.SurveillanceLog" />
           <AssociationSet Name="FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId" Association="Self.FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId">
             <End Role="ClassroomReservation" EntitySet="ClassroomReservation" />
             <End Role="ClassroomReservationApproval" EntitySet="ClassroomReservationApproval" />
@@ -1158,7 +1136,16 @@
             <End Role="MenuItem" EntitySet="MenuItem" />
             <End Role="MenuItem1" EntitySet="MenuItem" />
           </AssociationSet>
+          <EntitySet Name="SurveillanceLog" EntityType="MultimediaModels.SurveillanceLog" />
         </EntityContainer>
+        <EntityType Name="SurveillanceLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogContent" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1663,9 +1650,9 @@
           <EntitySetMapping Name="SurveillanceLog">
             <EntityTypeMapping TypeName="MultimediaModels.SurveillanceLog">
               <MappingFragment StoreEntitySet="SurveillanceLog">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="LogContent" ColumnName="LogContent" />
                 <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="LogContent" ColumnName="LogContent" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

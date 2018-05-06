@@ -25,7 +25,7 @@
                                                                  TextPattern="{}{A}, {VP:P0}" />
                             </dxc:PieSeries2D.Label>
                             <dxc:PieSeries2D.Titles>
-                                <dxc:Title Content="{Binding Title}" FontSize="13"
+                                <dxc:Title Visible="{Binding TitleVisible}" Content="{Binding Title}" FontSize="13"
                                         HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </dxc:PieSeries2D.Titles>
                         </dxc:PieSeries2D>

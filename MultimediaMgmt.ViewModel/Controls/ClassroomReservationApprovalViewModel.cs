@@ -98,6 +98,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             ClassroomReservation reser = multimediaEntities.ClassroomReservation.FirstOrDefault(s => s.Id == rid);
             multimediaEntities.ClassroomReservation.Remove(reser);
             multimediaEntities.SaveChanges();
+            Query();
         }
 
         [Command]
@@ -112,6 +113,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             appro.ApprovalPersonId = Constants.CurrUser.PersonId;
             multimediaEntities.Entry(appro).State = System.Data.Entity.EntityState.Modified;
             multimediaEntities.SaveChanges();
+            Query();
         }
 
         [Command]
@@ -125,6 +127,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             appro.ApprovalPersonId = Constants.CurrUser.PersonId;
             multimediaEntities.Entry(appro).State = System.Data.Entity.EntityState.Modified;
             multimediaEntities.SaveChanges();
+            Query();
         }
     }
 }

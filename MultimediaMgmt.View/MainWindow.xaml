@@ -12,7 +12,7 @@
         xmlns:control="clr-namespace:MultimediaMgmt.View.Controls"
         x:Class="MultimediaMgmt.View.MainWindow" Background="Black"
         Padding="0" Margin="0" WindowStyle="None" AllowsTransparency="True"
-        Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" 
+        Height="600" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" 
         Loaded="DXWindow_Loaded" ContentRendered="Window_ContentRendered" StateChanged="Window_StateChanged">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="1" ResizeBorderThickness="4" CaptionHeight="30" CornerRadius="0"/>
@@ -31,19 +31,26 @@
     </Window.Resources>
     <Border BorderBrush="#6E6E6E" BorderThickness="1.5">
         <DockPanel>
-            <StackPanel DockPanel.Dock="Left" Width="50" Orientation="Vertical">
+            <Grid DockPanel.Dock="Left" Width="50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <Image Source="{StaticResource imgMultimedia}" Stretch="Fill" Margin="5"/>
-                <dxb:ToolBarControl Margin="5" Cursor="Hand" ShowBackground="False" Caption="tool" Orientation="Vertical" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="1|主页" x:Name="biMain" GroupIndex="1" Hint="主页" LargeGlyph="{StaticResource imgHome}"/>
-                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="2|设备监控" x:Name="biEquipment" GroupIndex="1" Hint="设备监控" LargeGlyph="{StaticResource imgComp}"/>
-                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="3|视频监控" x:Name="biMonitor" GroupIndex="1" Hint="视频监控" LargeGlyph="{StaticResource imgMonitor}"/>
-                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="4|设备集控" x:Name="biCentralized" GroupIndex="1" Hint="设备集控" LargeGlyph="{StaticResource imgSwitch}"/>
-                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="5|报警信息管理" x:Name="biWarn" GroupIndex="1" Hint="报警信息管理" LargeGlyph="{StaticResource imgWarn}"/>
-                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="6|卡控及预约管理" x:Name="biPermit" GroupIndex="1" Hint="卡控及预约管理" LargeGlyph="{StaticResource imgPermit}"/>
-                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="7|刷卡记录" x:Name="biCard" GroupIndex="1" Hint="刷卡记录" LargeGlyph="{StaticResource imgCard}"/>
-                    <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="8|设备资产管理" x:Name="biStock" GroupIndex="1" Hint="设备资产管理" LargeGlyph="{StaticResource imgStock}"/>
-                </dxb:ToolBarControl>
-            </StackPanel>
+                <Grid Grid.Row="1" x:Name="toolGrid" Margin="0">
+                    <dxb:ToolBarControl Height="{Binding ActualHeight,ElementName=toolGrid}" Margin="5,0" Cursor="Hand" ShowBackground="False" Caption="tool" Orientation="Vertical" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                        <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="1|主页" x:Name="biMain" GroupIndex="1" Hint="主页" LargeGlyph="{StaticResource imgHome}"/>
+                        <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="2|设备监控" x:Name="biEquipment" GroupIndex="1" Hint="设备监控" LargeGlyph="{StaticResource imgComp}"/>
+                        <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="3|视频监控" x:Name="biMonitor" GroupIndex="1" Hint="视频监控" LargeGlyph="{StaticResource imgMonitor}"/>
+                        <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="4|设备集控" x:Name="biCentralized" GroupIndex="1" Hint="设备集控" LargeGlyph="{StaticResource imgSwitch}"/>
+                        <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="5|报警信息管理" x:Name="biWarn" GroupIndex="1" Hint="报警信息管理" LargeGlyph="{StaticResource imgWarn}"/>
+                        <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="6|卡控及预约管理" x:Name="biPermit" GroupIndex="1" Hint="卡控及预约管理" LargeGlyph="{StaticResource imgPermit}"/>
+                        <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="7|刷卡记录" x:Name="biCard" GroupIndex="1" Hint="刷卡记录" LargeGlyph="{StaticResource imgCard}"/>
+                        <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="8|设备资产管理" x:Name="biStock" GroupIndex="1" Hint="设备资产管理" LargeGlyph="{StaticResource imgStock}"/>
+                        <dxb:BarButtonItem ItemClick="SystemConfig" Alignment="Far" Hint="系统配置" Glyph="{dx:DXImageOffice2013 Image=Properties_16x16.png}"/>
+                    </dxb:ToolBarControl>
+                </Grid>
+            </Grid>
             <StackPanel DockPanel.Dock="Top" Background="#383838">
                 <dxb:ToolBarControl Margin="5,5,5,0" ShowBackground="False" AllowCustomizationMenu="False" AllowQuickCustomization="False">
                     <dxb:BarStaticItem Content="{Binding CurrOper}" ShowBorder="False" Glyph="{dx:DXImage Image=Attachment_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>

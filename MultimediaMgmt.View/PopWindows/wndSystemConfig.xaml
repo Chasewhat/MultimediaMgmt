@@ -1,0 +1,21 @@
+﻿<dx:DXWindow 
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    Height="100" Width="370" SizeToContent="Height"
+    x:Class="MultimediaMgmt.View.PopWindows.wndSystemConfig" WindowStyle="ToolWindow"
+    Title="{Binding WindowTitle}" ResizeBorderThickness="1"
+    WindowStartupLocation="CenterScreen" 
+    >
+    <Grid Margin="10,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="Web服务地址:" Width="80" VerticalAlignment="Center"/>
+            <dxe:TextEdit Margin="10,0,0,0" Width="200" EditValue="{Binding WebUrl}"/>
+        </StackPanel>
+    </Grid>
+</dx:DXWindow>

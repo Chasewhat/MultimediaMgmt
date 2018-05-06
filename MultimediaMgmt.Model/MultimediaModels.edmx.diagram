@@ -38,10 +38,10 @@
         <EntityTypeShape EntityType="MultimediaModels.UserProfile" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MultimediaModels.WeeklyCourseTable" Width="1.5" PointX="15.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MultimediaModels.LessonLog" Width="1.5" PointX="16.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MultimediaModels.SurveillanceLog" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="MultimediaModels.FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId" ManuallyRouted="false" />
         <AssociationConnector Association="MultimediaModels.FK_dbo_ReservationCourseTable_dbo_ClassroomReservation_ClassroomReservationId" ManuallyRouted="false" />
         <AssociationConnector Association="MultimediaModels.FK_dbo_MenuItem_dbo_MenuItem_ParentId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MultimediaModels.SurveillanceLog" Width="1.5" PointX="7.375" PointY="17.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
