@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm.POCO;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
+using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.ViewModel.Controls;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,14 @@ namespace MultimediaMgmt.View.Controls
     /// </summary>
     public partial class ucStdCourseTable : UserControl
     {
-        private StdCourseTableViewModel stdCourseTableViewModel;
         public ucStdCourseTable()
         {
             InitializeComponent();
-            this.DataContext = stdCourseTableViewModel = ViewModelSource.Create<StdCourseTableViewModel>();
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            classRoomTree.SelectChanged += courseControl.SelectChangedExec;
+        }
     }
 }

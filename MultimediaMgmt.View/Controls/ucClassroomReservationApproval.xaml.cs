@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm.POCO;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
+using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.ViewModel.Controls;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,15 @@ namespace MultimediaMgmt.View.Controls
             this.DataContext = classroomReservationApprovalViewModel = ViewModelSource.Create<ClassroomReservationApprovalViewModel>();
         }
 
-        private void gridView_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            classroomReservationApprovalViewModel.Edit();
+            classRoomTree.SelectChanged += SelectChangedExec;
+        }
+
+        public void SelectChangedExec(CommonTree classRoom)
+        {
+            courseControl.SelectChangedExec(classRoom);
+            classroomReservationApprovalViewModel.RoomId = classRoom.ID;
         }
     }
 }

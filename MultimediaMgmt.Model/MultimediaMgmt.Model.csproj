@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Mvvm.v17.1, Version=17.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -118,6 +121,9 @@
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ClassRoomEx.cs" />
+    <Compile Include="Models\ClassroomReservationEx.cs" />
+    <Compile Include="Models\CourseWeekEx.cs" />
+    <Compile Include="Models\CourseEx.cs" />
     <Compile Include="Models\ReservationEx.cs" />
     <Compile Include="Models\CardLogEx.cs" />
     <Compile Include="Models\EquipmentStatusEx.cs" />

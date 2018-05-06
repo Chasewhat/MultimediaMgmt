@@ -1,0 +1,71 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    x:Class="MultimediaMgmt.View.Controls.ucCourseControl" 
+    mc:Ignorable="d" 
+    d:DesignHeight="300" d:DesignWidth="800">
+    <DockPanel>
+        <dxb:ToolBarControl Height="35" Padding="0" Margin="0" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+            <dxb:BarEditItem Content="日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding Date}">
+                <dxb:BarEditItem.EditSettings>
+                    <dxe:DateEditSettings/>
+                </dxb:BarEditItem.EditSettings>
+            </dxb:BarEditItem>
+            <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+        </dxb:ToolBarControl>
+        <dxg:GridControl ItemsSource="{Binding CourseExs}"
+                                    AllowInitiallyFocusedRow="False"
+                                    >
+            <dxg:GridControl.View>
+                <dxg:TableView AllowEditing="False">
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridControl.Bands>
+                <dxg:GridControlBand Header="课序" OverlayHeaderByChildren="True">
+                    <dxg:GridColumn FieldName="ClassOrd" Header="课序" Width="40"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="上课时间" OverlayHeaderByChildren="True">
+                    <dxg:GridColumn FieldName="BeginTime" Header="上课时间" Width="60"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="下课时间" OverlayHeaderByChildren="True">
+                    <dxg:GridColumn FieldName="EndTime" Header="下课时间" Width="60"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="{Binding Week1}" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn FieldName="PersonName1" Header="老师" Width="60"/>
+                    <dxg:GridColumn FieldName="CourseName1" Header="课程" Width="60"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="{Binding Week2}" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn FieldName="PersonName2" Header="老师" Width="60"/>
+                    <dxg:GridColumn FieldName="CourseName2" Header="课程" Width="60"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="{Binding Week3}" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn FieldName="PersonName3" Header="老师" Width="60"/>
+                    <dxg:GridColumn FieldName="CourseName3" Header="课程" Width="60"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="{Binding Week4}" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn FieldName="PersonName4" Header="老师" Width="60"/>
+                    <dxg:GridColumn FieldName="CourseName4" Header="课程" Width="60"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="{Binding Week5}" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn FieldName="PersonName5" Header="老师" Width="60"/>
+                    <dxg:GridColumn FieldName="CourseName5" Header="课程" Width="60"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="{Binding Week6}" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn FieldName="PersonName6" Header="老师" Width="60"/>
+                    <dxg:GridColumn FieldName="CourseName6" Header="课程" Width="60"/>
+                </dxg:GridControlBand>
+                <dxg:GridControlBand Header="{Binding Week7}" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn FieldName="PersonName7" Header="老师" Width="60"/>
+                    <dxg:GridColumn FieldName="CourseName7" Header="课程" Width="60"/>
+                </dxg:GridControlBand>
+            </dxg:GridControl.Bands>
+        </dxg:GridControl>
+    </DockPanel>
+</UserControl>

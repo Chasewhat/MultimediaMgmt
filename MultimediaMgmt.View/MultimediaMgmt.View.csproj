@@ -136,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\ucClassRoomSingle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\ucIcCardMaintance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -155,6 +159,10 @@
     <Page Include="Controls\ucMonitorStatic.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\ucCourseControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ucStdCourseTable.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -261,6 +269,9 @@
     <Compile Include="Controls\Stocks\ucEquipmentInStock.xaml.cs">
       <DependentUpon>ucEquipmentInStock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ucClassRoomSingle.xaml.cs">
+      <DependentUpon>ucClassRoomSingle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ucIcCardMaintance.xaml.cs">
       <DependentUpon>ucIcCardMaintance.xaml</DependentUpon>
     </Compile>
@@ -275,6 +286,9 @@
     </Compile>
     <Compile Include="Controls\ucMonitorStatic.xaml.cs">
       <DependentUpon>ucMonitorStatic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucCourseControl.xaml.cs">
+      <DependentUpon>ucCourseControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ucStdCourseTable.xaml.cs">
       <DependentUpon>ucStdCourseTable.xaml</DependentUpon>

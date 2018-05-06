@@ -3,32 +3,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+    xmlns:control="clr-namespace:MultimediaMgmt.View.Controls"
     x:Class="MultimediaMgmt.View.Controls.ucStdCourseTable" 
     mc:Ignorable="d" 
-    d:DesignHeight="300" d:DesignWidth="400">
-    <DockPanel>
-        <dxb:ToolBarControl Height="35" Padding="0" Margin="0" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-            <dxb:BarEditItem Content="用户:" ClosePopupOnChangingEditValue="True" EditWidth="100"
-                              EditValue="{Binding PersonId}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:TextEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-        </dxb:ToolBarControl>
-        <dxg:GridControl ItemsSource="{Binding StdCourseTables}"
-                		x:Name="gridControl"
-                        AllowInitiallyFocusedRow="False" 
-                         AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True"
-                        >
-            <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" AllowEditing="False">
-                </dxg:TableView>
-            </dxg:GridControl.View>
-        </dxg:GridControl>
-    </DockPanel>
+    d:DesignHeight="300" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <dxdo:DockLayoutManager>
+        <dxdo:LayoutGroup Orientation="Horizontal">
+            <dxdo:LayoutPanel Caption="请选择教室" ItemWidth="220">
+                <control:ucClassRoomSingle x:Name="classRoomTree" DockPanel.Dock="Left"/>
+            </dxdo:LayoutPanel>
+            <dxdo:LayoutPanel ShowBorder="False" ShowCaption="False">
+                <control:ucCourseControl x:Name="courseControl"/>
+            </dxdo:LayoutPanel>
+        </dxdo:LayoutGroup>
+    </dxdo:DockLayoutManager>
 </UserControl>

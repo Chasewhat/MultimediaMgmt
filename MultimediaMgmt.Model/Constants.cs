@@ -65,6 +65,35 @@ namespace MultimediaMgmt.Model
             {"A","(A)管理员卡" },
             {"L","(L)临时卡" }
         };
+
+        /// <summary>
+        /// 日期选项
+        /// </summary>
+        public static readonly Dictionary<int, string> DateItems = new Dictionary<int, string>() {
+            //{ 0,"全部" },
+            { 1,"预约日期" },
+            { 2,"课程日期" }};
+        /// <summary>
+        /// 教室选项
+        /// </summary>
+        public static readonly Dictionary<int, string> RoomItems = new Dictionary<int, string>() {
+            //{ 0,"全部教室" },
+            { 1,"当前教室" }};
+        /// <summary>
+        /// 预约状态
+        /// </summary>
+        public static readonly Dictionary<byte, string> ReserveState = new Dictionary<byte, string>() {
+            //{ 2,"全部" },
+            { 0,"预约中" },
+            { 1,"取消" }};
+        /// <summary>
+        /// 审批状态
+        /// </summary>
+        public static readonly Dictionary<byte, string> ApproveState = new Dictionary<byte, string>() {
+            //{ 0,"全部" },
+            { 1,"待审批" },
+            { 2,"已审批" },
+            { 3,"未批准" }};
         /// <summary>
         /// 公共图片资源
         /// </summary>

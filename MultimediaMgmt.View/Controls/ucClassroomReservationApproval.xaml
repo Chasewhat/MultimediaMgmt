@@ -7,41 +7,108 @@
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+    xmlns:control="clr-namespace:MultimediaMgmt.View.Controls"
     x:Class="MultimediaMgmt.View.Controls.ucClassroomReservationApproval" 
     mc:Ignorable="d" 
-    d:DesignHeight="300" d:DesignWidth="400">
-    <DockPanel>
-        <dxb:ToolBarControl Height="35" Padding="0" Margin="0" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-            <dxb:BarEditItem Content="用户:" ClosePopupOnChangingEditValue="True" EditWidth="100"
-                              EditValue="{Binding PersonId}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:TextEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarEditItem Content="日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+    d:DesignHeight="300" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <dxdo:DockLayoutManager>
+        <dxdo:LayoutGroup Orientation="Vertical">
+            <dxdo:LayoutGroup Orientation="Horizontal">
+                <dxdo:LayoutPanel Caption="请选择教室" ItemWidth="220">
+                    <control:ucClassRoomSingle x:Name="classRoomTree" DockPanel.Dock="Left"/>
+                </dxdo:LayoutPanel>
+                <dxdo:LayoutPanel ShowBorder="False" ShowCaption="False">
+                    <DockPanel>
+                        <dxb:ToolBarControl Height="35" Padding="0" Margin="0" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                            <dxb:BarEditItem ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding SelectedDateItem}">
+                                <dxb:BarEditItem.EditSettings>
+                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding DateItems}" IsTextEditable="False" DisplayMember="Value" ValueMember="Value"/>
+                                </dxb:BarEditItem.EditSettings>
+                            </dxb:BarEditItem>
+                            <dxb:BarEditItem Content="日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding BeginDate}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:DateEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarEditItem Content="至" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                                <dxb:BarEditItem.EditSettings>
+                                    <dxe:DateEditSettings/>
+                                </dxb:BarEditItem.EditSettings>
+                            </dxb:BarEditItem>
+                            <dxb:BarEditItem Content="至" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding EndDate}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:DateEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-        </dxb:ToolBarControl>
-        <dxg:GridControl ItemsSource="{Binding ClassroomReservationApprovals}"
-                         SelectedItem="{Binding SelectedClassroomReservationApproval}"
-                		x:Name="gridControl"
-                        AllowInitiallyFocusedRow="False" 
-                         AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True"
-                        >
-            <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" AllowEditing="True" CellValueChanged="gridView_CellValueChanged">
-                </dxg:TableView>
-            </dxg:GridControl.View>
-        </dxg:GridControl>
-    </DockPanel>
+                                <dxb:BarEditItem.EditSettings>
+                                    <dxe:DateEditSettings/>
+                                </dxb:BarEditItem.EditSettings>
+                            </dxb:BarEditItem>
+                            <dxb:BarEditItem Content="教室:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding SelectedRoomItem}">
+                                <dxb:BarEditItem.EditSettings>
+                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding RoomItems}" IsTextEditable="False" DisplayMember="Value" ValueMember="Value"/>
+                                </dxb:BarEditItem.EditSettings>
+                            </dxb:BarEditItem>
+                            <dxb:BarEditItem Content="预约状态:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding SelectedReserveState}">
+                                <dxb:BarEditItem.EditSettings>
+                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding ReserveState}" IsTextEditable="False" DisplayMember="Value" ValueMember="Value"/>
+                                </dxb:BarEditItem.EditSettings>
+                            </dxb:BarEditItem>
+                            <dxb:BarEditItem Content="审批状态:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding SelectedApproveState}">
+                                <dxb:BarEditItem.EditSettings>
+                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding ApproveState}" IsTextEditable="False" DisplayMember="Value" ValueMember="Value"/>
+                                </dxb:BarEditItem.EditSettings>
+                            </dxb:BarEditItem>
+                            <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                        </dxb:ToolBarControl>
+                        <dxg:GridControl ItemsSource="{Binding ClassroomReservationExs}"
+                                     SelectedItem="{Binding SelectedClassroomReservationEx}"
+                		            x:Name="gridControl"
+                                    AllowInitiallyFocusedRow="False"
+                                    >
+                            <dxg:GridControl.View>
+                                <dxg:TableView x:Name="gridView" AllowEditing="False" >
+                                    <dxg:TableView.RowCellMenuCustomizations>
+                                        <dxb:BarButtonItem Content="删除" Command="{Binding View.DataContext.DeleteCommand}" Glyph="{dx:DXImageOffice2013 Image=Delete_16x16.png}" Hint="删除选中记录"/>
+                                    </dxg:TableView.RowCellMenuCustomizations>
+                                </dxg:TableView>
+                            </dxg:GridControl.View>
+                            <dxg:GridColumn FieldName="ReservationTime" Header="预约时间" Width="150"/>
+                            <dxg:GridColumn FieldName="ReservationPersonName" Header="预约人" Width="80"/>
+                            <dxg:GridColumn FieldName="Description" Header="预约说明" Width="200"/>
+                            <dxg:GridColumn FieldName="ReservationState" Header="预约状态" Width="80">
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.ReserveState}" DisplayMember="Value" ValueMember="Key"/>
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="ApprovalState" Header="审批状态" Width="80">
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.ApproveState}" DisplayMember="Value" ValueMember="Key"/>
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn Header="审批" Width="150">
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <dx:SimpleButton Margin="5,2" Content="批准" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Apply_16x16.png}"
+                                         Command="{Binding View.DataContext.ApproveCommand}"
+                                         CommandParameter="False"/>
+                                            <dx:SimpleButton Margin="10,2,5,2" Content="驳回" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Cancel_16x16.png}"
+                                         Command="{Binding View.DataContext.RejectCommand}"
+                                         CommandParameter="False"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
+                        </dxg:GridControl>
+                    </DockPanel>
+                </dxdo:LayoutPanel>
+            </dxdo:LayoutGroup>
+            <dxdo:LayoutPanel ShowBorder="False" ShowCaption="False">
+                <control:ucCourseControl x:Name="courseControl"/>
+            </dxdo:LayoutPanel>
+        </dxdo:LayoutGroup>
+    </dxdo:DockLayoutManager>
 </UserControl>

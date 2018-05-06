@@ -9,7 +9,7 @@
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     x:Class="MultimediaMgmt.View.Controls.ucWarnOperate" 
     mc:Ignorable="d" 
-    d:DesignHeight="300" d:DesignWidth="400">
+    d:DesignHeight="300" d:DesignWidth="800">
     <DockPanel>
         <dxb:ToolBarControl Height="35" Padding="0" Margin="0" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
             <dxb:BarEditItem Content="教学楼:" ClosePopupOnChangingEditValue="True" EditWidth="100"
@@ -44,7 +44,7 @@
             <dxg:GridColumn Header="撤防操作" Width="100">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dx:SimpleButton Content="撤防" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Cancel_16x16.png}"
+                        <dx:SimpleButton Margin="10,2" Content="撤防" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Cancel_16x16.png}"
                                          Command="{Binding View.DataContext.AlarmControlCommand}"
                                          CommandParameter="False"/>
                     </DataTemplate>
@@ -53,7 +53,7 @@
             <dxg:GridColumn FieldName="TerminalIp" Header="布防操作" Width="100">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dx:SimpleButton Content="布防" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Apply_16x16.png}"
+                        <dx:SimpleButton Margin="10,2" Content="布防" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Apply_16x16.png}"
                                          Command="{Binding View.DataContext.AlarmControlCommand}"
                                          CommandParameter="True"/>
                     </DataTemplate>

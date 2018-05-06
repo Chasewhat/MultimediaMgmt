@@ -91,8 +91,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Controls\ClassRoomSingleViewModel.cs" />
     <Compile Include="Controls\IcCardRealtimeViewModel.cs" />
     <Compile Include="Controls\PieControlViewModel.cs" />
+    <Compile Include="Controls\CourseControlViewModel.cs" />
     <Compile Include="Controls\Stocks\EquipmentStatusViewModel.cs" />
     <Compile Include="Controls\Stocks\SurveillanceLogViewModel.cs" />
     <Compile Include="Controls\Stocks\EquipmentTransferLogViewModel.cs" />
@@ -100,7 +102,6 @@
     <Compile Include="Controls\Stocks\EquipmentLoanLogViewModel.cs" />
     <Compile Include="Controls\Stocks\EquipmentRepairLogViewModel.cs" />
     <Compile Include="Controls\Stocks\EquipmentInStockViewModel .cs" />
-    <Compile Include="Controls\StdCourseTableViewModel.cs" />
     <Compile Include="Controls\ReservationViewModel.cs" />
     <Compile Include="Controls\ClassroomReservationApprovalViewModel.cs" />
     <Compile Include="Controls\WarnHistoryViewModel.cs" />

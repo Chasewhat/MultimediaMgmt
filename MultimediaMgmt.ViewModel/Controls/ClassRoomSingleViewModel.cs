@@ -11,12 +11,12 @@ using MultimediaMgmt.Model;
 namespace MultimediaMgmt.ViewModel.Controls
 {
     [POCOViewModel]
-    public class ClassRoomViewModel : BaseViewModel
+    public class ClassRoomSingleViewModel : BaseViewModel
     {
-        public virtual List<CommonTree> ClassRooms { get; set; }
-        public virtual List<CommonTree> SelectedClassRooms { get; set; }
+        public virtual List<CommonTree> ClassRoomSingles { get; set; }
+        public virtual List<CommonTree> SelectedClassRoomSingles { get; set; }
 
-        public ClassRoomViewModel()
+        public ClassRoomSingleViewModel()
         {
             try
             {
@@ -51,10 +51,10 @@ namespace MultimediaMgmt.ViewModel.Controls
                     }
                     temp.Add(tr);
                 }
-                ClassRooms = temp;
+                ClassRoomSingles = temp;
             }
             catch { }
-            SelectedClassRooms = new List<CommonTree>();
+            SelectedClassRoomSingles = new List<CommonTree>();
         }
     }
 }
