@@ -21,6 +21,14 @@ namespace MultimediaMgmt.View.Controls
             InitializeComponent();
             //DataControlBase.AllowInfiniteGridSize = true;
             this.DataContext = centralizedControlMgmtViewModel = ViewModelSource.Create<CentralizedControlMgmtViewModel>();
+            centralizedControlMgmtViewModel.MessageShowFail = (s) =>
+            {
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            };
+            centralizedControlMgmtViewModel.MessageShowSucc = (s) =>
+            {
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            };
         }
 
         private void gridView_CellValueChanged(object sender, CellValueChangedEventArgs e)

@@ -9,6 +9,7 @@ using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.Model;
 using MultimediaMgmt.Common.Helper;
 using Newtonsoft.Json.Linq;
+using System.Dynamic;
 
 namespace MultimediaMgmt.ViewModel.Controls
 {
@@ -26,9 +27,13 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual bool AllControlSwitch { get; set; }
         public virtual bool AllAirConditionerSwitch { get; set; }
         public virtual bool AllLightingSwitch { get; set; }
-        public virtual bool SystemCheck { get; set; }
-        public virtual bool AirConitionerCheck { get; set; }
-        public virtual bool LampCheck { get; set; }
+        //public virtual bool SystemCheck { get; set; }
+        //public virtual bool AirConitionerCheck { get; set; }
+        //public virtual bool LampCheck { get; set; }
+        public Action<string> MessageShowFail;
+        public Action<string> MessageShowSucc;
+
+        private IRestConnection restConnection = null;
 
         public CentralizedControlMgmtViewModel()
         {
@@ -38,6 +43,10 @@ namespace MultimediaMgmt.ViewModel.Controls
                 Value = s.BuildingName
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
+
+            string url = MultimediaMgmt.Common.Helper.ConfigHelper.Main.WebUrl;
+            if (!string.IsNullOrEmpty(url))
+                restConnection = new RestConnection(url);
         }
 
         [Command]
@@ -65,6 +74,27 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
+        public void CopyIcCardToTerminal()
+        {
+            if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0||
+                restConnection == null)
+                return;
+            foreach (var cc in SelectedCentralizedControls)
+            {
+                dynamic dy = new ExpandoObject();
+                dy.TerminalId = cc.TerminalId;
+                JObject jo = restConnection.Post("api/TerminalOperate/CopyIcCardToTerminal", dy);
+                if (jo == null)
+                {
+                    MessageShowFail("写入未返回结果");
+                    return;
+                }
+                string result = jo["message"].ToString();
+                MessageShowSucc(result);
+            }
+        }
+
+        [Command]
         public void ControlExec()
         {
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0)
@@ -73,21 +103,21 @@ namespace MultimediaMgmt.ViewModel.Controls
             StringBuilder temp = new StringBuilder();
             foreach (var cc in SelectedCentralizedControls)
             {
-                if (SystemCheck && cc.System.HasValue)
+                if (cc.System.HasValue)
                 {
                     if (GetExec(cc.TerminalIp, cc.System.Value, "System"))
                         temp.Append("中控执行成功,");
                     else
                         temp.Append("中控执行失败,");
                 }
-                if (AirConitionerCheck && cc.AirConitioner.HasValue)
+                if (cc.AirConitioner.HasValue)
                 {
                     if (GetExec(cc.TerminalIp, cc.AirConitioner.Value, "AirConitioner"))
                         temp.Append("空调执行成功,");
                     else
                         temp.Append("空调执行失败,");
                 }
-                if (LampCheck && cc.Lamp.HasValue)
+                if (cc.Lamp.HasValue)
                 {
                     if (GetExec(cc.TerminalIp, cc.Lamp.Value, "Lamp"))
                         temp.Append("照明执行成功,");

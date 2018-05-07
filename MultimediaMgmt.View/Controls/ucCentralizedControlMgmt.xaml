@@ -31,6 +31,7 @@
                                 ShowCheckBoxSelectorColumn="True" CheckBoxSelectorColumnWidth="40" CellValueChanged="gridView_CellValueChanged">
                     <dxg:TableView.RowCellMenuCustomizations>
                         <dxb:BarButtonItem Command="{Binding View.DataContext.ControlExecCommand}" Content="执行" Glyph="{dx:DXImageOffice2013 Image=DoubleNext_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                        <dxb:BarButtonItem Command="{Binding View.DataContext.CopyIcCardToTerminalCommand}" Content="远程写卡" Glyph="{dx:DXImageOffice2013 Image=EditContact_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
                     </dxg:TableView.RowCellMenuCustomizations>
                 </dxg:TableView>
             </dxg:GridControl.View>
@@ -40,7 +41,7 @@
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <dxe:CheckEdit IsChecked="{Binding SystemCheck}" HorizontalAlignment="Center"/>
+                            <!--<dxe:CheckEdit IsChecked="{Binding SystemCheck}" HorizontalAlignment="Center"/>-->
                             <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <dxe:ToggleSwitch ToggleSwitchWidth="40" Background="Transparent" 
                                               IsChecked="{Binding Path=DataContext.AllControlSwitch, ElementName=mainUc}" AllowDrop="False" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -63,14 +64,14 @@
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.EditSettings>
-                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center"/>
+                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center" IsThreeState="True"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="AirConitioner" Header="空调开关" Width="150" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <dxe:CheckEdit IsChecked="{Binding AirConitionerCheck}" HorizontalAlignment="Center"/>
+                            <!--<dxe:CheckEdit IsChecked="{Binding AirConitionerCheck}" HorizontalAlignment="Center"/>-->
                             <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <dxe:ToggleSwitch ToggleSwitchWidth="40" Background="Transparent" 
                                               IsChecked="{Binding Path=DataContext.AllAirConditionerSwitch, ElementName=mainUc}" AllowDrop="False" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -93,14 +94,14 @@
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.EditSettings>
-                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center"/>
+                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center" IsThreeState="True"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="Lamp" Header="照明开关" Width="150" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <dxe:CheckEdit IsChecked="{Binding LampCheck}" HorizontalAlignment="Center"/>
+                            <!--<dxe:CheckEdit IsChecked="{Binding LampCheck}" HorizontalAlignment="Center"/>-->
                             <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <dxe:ToggleSwitch ToggleSwitchWidth="40" Background="Transparent" 
                                               IsChecked="{Binding Path=DataContext.AllLightingSwitch, ElementName=mainUc}" AllowDrop="False" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -123,7 +124,7 @@
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.EditSettings>
-                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center"/>
+                    <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center" IsThreeState="True"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="ExecResult" Header="命令执行结果" Width="150" AllowEditing="False"/>
