@@ -63,12 +63,11 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             if (SelectedReservation == null)
                 return;
-            if (string.Format("{0} {1}",
-                SelectedReservation.Date,
-                SelectedReservation.EndTime).ToDateTime("yyyy-MM-dd HH:mm")
-                > DateTime.Now)
+            if (string.Format("{0}",
+                SelectedReservation.Date).ToDateTime("yyyy-MM-dd")
+                <= DateTime.Now.Date)
             {
-                MessageShow("未来预约无法删除");
+                MessageShow("只能删除今日之后的预约记录");
                 return;
             }
             ReservationCourseTable res = multimediaEntities.ReservationCourseTable.FirstOrDefault(s => s.Id == SelectedReservation.Id);

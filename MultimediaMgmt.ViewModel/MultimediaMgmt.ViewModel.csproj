@@ -125,6 +125,7 @@
     <Compile Include="Controls\MonitorMgmtViewModel.cs" />
     <Compile Include="Controls\ClassRoomViewModel.cs" />
     <Compile Include="Notice\NOTICE.cs" />
+    <Compile Include="PopWindows\Stocks\EquipmentInStockAddEditViewModel.cs" />
     <Compile Include="PopWindows\Stocks\EquipmentUseDateEditViewModel.cs" />
     <Compile Include="PopWindows\Stocks\SurveillanceLogAddEditViewModel.cs" />
     <Compile Include="PopWindows\Stocks\EquipmentTransferLogAddEditViewModel.cs" />

@@ -35,7 +35,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void WarnOperateQuery()
         {
-            //NOTICE.Publish_Notify(new Notify("警告", "当前为测试弹窗!", 0, NotifyType.Warn));
+            NOTICE.Publish_Notify(new Notify("警告", "当前为测试弹窗!", 0, NotifyType.Warn));
             var data = from b in multimediaEntities.ClassroomBuilding
                        join c in multimediaEntities.ClassRoom on b.id equals c.BuildingId
                        join t in multimediaEntities.TerminalCurrentInfo on c.TerminalId equals t.TerminalID

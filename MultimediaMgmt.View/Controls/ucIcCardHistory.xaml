@@ -93,6 +93,13 @@
             </dxg:GridControl.View>
             <dxg:GridColumn FieldName="HexCode" Header="IC卡号" Width="80"/>
             <dxg:GridColumn FieldName="CardNum" Header="IC卡编号" Width="80" />
+            <dxg:GridColumn FieldName="CardType" Header="卡类别" Width="80">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.CardTypes}" DisplayMember="Value" ValueMember="Key"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
             <dxg:GridColumn FieldName="PersonId" Header="工号" Width="80"/>
             <dxg:GridColumn FieldName="Name" Header="姓名" Width="80"/>
             <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" />

@@ -15,6 +15,7 @@ namespace MultimediaMgmt.ViewModel.Controls
     public class EquipmentInStockViewModel : BaseViewModel
     {
         public virtual SmartObservableCollection<EquipmentInStock> EquipmentInStocks { get; set; }
+        public virtual EquipmentLoanLogEx SelectedEquipmentInStock { get; set; }
         public virtual string SerialNumber { get; set; }
 
         public EquipmentInStockViewModel()

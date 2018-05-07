@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
-    Height="165" Width="240" SizeToContent="Height"
+    Height="165" Width="300" SizeToContent="Height"
     x:Class="MultimediaMgmt.View.PopWindows.wndEquipmentUseDateEdit" WindowStyle="ToolWindow"
     Title="{Binding WindowTitle}" ResizeBorderThickness="1"
     WindowStartupLocation="CenterScreen" 
@@ -15,7 +15,7 @@
         </StackPanel>
         <dxlc:LayoutControl Orientation="Horizontal">
             <dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical" Width="180" ItemSpace="10">
+                <dxlc:LayoutGroup Orientation="Vertical" Width="240" ItemSpace="10">
                     <dxlc:LayoutItem Label="设备编码:" Foreground="Red" IsRequired="True">
                         <dxe:TextEdit EditValue="{Binding SerialNumber}" IsReadOnly="True"/>
                     </dxlc:LayoutItem>

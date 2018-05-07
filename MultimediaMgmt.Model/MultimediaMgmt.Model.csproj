@@ -140,6 +140,7 @@
     <Compile Include="Models\WarnInfoEntity.cs" />
     <Compile Include="Models\CentralizedControlEx.cs" />
     <Compile Include="Models\CommonTree.cs" />
+    <Compile Include="Models\WebTerminalInfo.cs" />
     <Compile Include="MultimediaModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

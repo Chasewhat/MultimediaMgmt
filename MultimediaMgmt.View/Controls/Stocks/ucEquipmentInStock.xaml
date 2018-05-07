@@ -19,13 +19,19 @@
                 </dxb:BarEditItem.EditSettings>
             </dxb:BarEditItem>
             <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+            <dxb:BarItemSeparator/>
+            <dxb:BarButtonItem Content="增加" ItemClick="Add_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Add_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
         </dxb:ToolBarControl>
         <dxg:GridControl ItemsSource="{Binding EquipmentInStocks}"
+                         SelectedItem="{Binding SelectedEquipmentInStock}"
                 		x:Name="gridControl"
                         AllowInitiallyFocusedRow="False" 
                         >
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gridView" AllowEditing="False">
+                    <dxg:TableView.RowCellMenuCustomizations>
+                        <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                    </dxg:TableView.RowCellMenuCustomizations>
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridColumn FieldName="SerialNumber" Header="设备编码" Width="80" Fixed="Left"/>

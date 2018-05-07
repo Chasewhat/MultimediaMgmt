@@ -22,5 +22,26 @@ namespace MultimediaMgmt.View.Controls
             this.DataContext = equipmentInStockViewModel = ViewModelSource.Create<EquipmentInStockViewModel>();
         }
 
+        private void Edit_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            if (equipmentInStockViewModel.SelectedEquipmentInStock == null)
+                return;
+            new PopWindows.wndEquipmentInStockAddEdit(equipmentInStockViewModel.SelectedEquipmentInStock.ID)
+            {
+                Owner = Window.GetWindow(this),
+                ShowInTaskbar = false
+            }.ShowDialog();
+            equipmentInStockViewModel.Query();
+        }
+
+        private void Add_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            new PopWindows.wndEquipmentInStockAddEdit()
+            {
+                Owner = Window.GetWindow(this),
+                ShowInTaskbar = false
+            }.ShowDialog();
+            equipmentInStockViewModel.Query();
+        }
     }
 }

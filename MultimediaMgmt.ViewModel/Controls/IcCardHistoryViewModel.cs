@@ -28,6 +28,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             else
                 CardStatuss = Constants.CardStatuss;
         }
+        public virtual Dictionary<string, string> CardTypes { get; set; }
         public virtual DateTime? BeginDate { get; set; }
         public virtual DateTime? EndDate { get; set; }
         public virtual string HexCode { get; set; }
@@ -47,6 +48,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
             SwCardTypes = Constants.SwCardTypes;
             CardStatuss = Constants.CardStatuss;
+            CardTypes = Constants.CardTypes;
             SelectedSwCardType = 0;
             BeginDate = EndDate = DateTime.Now.Date;
         }
