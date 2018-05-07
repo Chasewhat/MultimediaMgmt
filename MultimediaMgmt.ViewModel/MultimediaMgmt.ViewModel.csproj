@@ -109,6 +109,8 @@
     <Compile Include="Helpers\RestConnection.cs" />
     <Compile Include="Interfaces\IRestConnection.cs" />
     <Compile Include="LoginViewModel.cs" />
+    <Compile Include="Notice\Notify.cs" />
+    <Compile Include="NotifyViewModel.cs" />
     <Compile Include="PopWindows\IcCardAddEditViewModel.cs" />
     <Compile Include="PopWindows\PermitAddEditViewModel.cs" />
     <Compile Include="Controls\WarnOperateViewModel.cs" />

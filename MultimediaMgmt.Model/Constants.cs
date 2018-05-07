@@ -99,6 +99,9 @@ namespace MultimediaMgmt.Model
         /// </summary>
         public static Dictionary<string, ImageSource> Images = new Dictionary<string, ImageSource>()
         {
+            { "warnnotify", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/warn1.png") as ImageSource },
+            { "errornotify", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/error.png") as ImageSource },
+            { "promptnotify", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/prompt.png") as ImageSource },
             { "home16", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/home16.png") as ImageSource },
             { "build16", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/build16.png") as ImageSource },
             { "floor16", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/floor16.png") as ImageSource },

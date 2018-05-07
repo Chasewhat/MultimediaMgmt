@@ -2,6 +2,7 @@
 using DevExpress.Xpf.Core;
 using MultimediaMgmt.View.Controls;
 using MultimediaMgmt.ViewModel;
+using MultimediaMgmt.ViewModel.Notice;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +27,7 @@ namespace MultimediaMgmt.View
     public partial class MainWindow : Window
     {
         private MainViewModel mainViewModel;
+        private wndNotify currNotify = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -107,6 +109,21 @@ namespace MultimediaMgmt.View
             mainViewModel.OperationSelectAction = (para) => { OperationSelect(para); };
             biMain.IsChecked = true;
             mainViewModel.OperationSelect(biMain.CommandParameter.ToString());
+            //订阅弹窗提示
+            NOTICE.GetEvent<NotifyShowEvent>().Subscribe(NotifyShow);
+        }
+
+        public void NotifyShow(Notify notify)
+        {
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                if (currNotify != null)
+                    currNotify.ImmediatelyClose();
+                wndNotify dialog = new wndNotify(notify);
+                dialog.Topmost = true;
+                dialog.Show();
+                currNotify = dialog;
+            }));
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

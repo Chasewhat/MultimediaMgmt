@@ -108,6 +108,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="wndNotify.xaml.cs">
+      <DependentUpon>wndNotify.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\Stocks\ucEquipmentStatus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -401,6 +404,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="wndNotify.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PopWindows\Stocks\wndEquipmentUseDateEdit.xaml.cs">
@@ -575,6 +582,12 @@
     <Resource Include="Resources\4.png" />
     <Resource Include="Resources\9.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\prompt.png" />
+    <Resource Include="Resources\warn1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

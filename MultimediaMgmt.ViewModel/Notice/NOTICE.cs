@@ -11,9 +11,22 @@ namespace MultimediaMgmt.ViewModel.Notice
         {
             return EA.GetEvent<TEventType>();
         }
+
+        /// <summary>
+        /// 弹出右下角提示窗
+        /// </summary>
+        public static void Publish_Notify(Notify notify)
+        {
+            GetEvent<NotifyShowEvent>().Publish(notify);
+        }
     }
     /// <summary>
     /// 主窗口状态栏信息更改事件
     /// </summary>
     public class StatusInfoChangedEvent : Prism.Events.PubSubEvent<string> { }
+
+    /// <summary>
+    /// 右下角提示窗事件
+    /// </summary>
+    public class NotifyShowEvent : Prism.Events.PubSubEvent<Notify> { }
 }
