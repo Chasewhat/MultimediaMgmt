@@ -62,8 +62,8 @@ namespace MultimediaMgmt.View.Controls
             }
             else if (monitorCount > 1)
             {
-                monitorsPanel.Rows = monitorRows = 1;
-                monitorsPanel.Columns = monitorColumns = 2;
+                monitorsPanel.Rows = monitorRows = 2;
+                monitorsPanel.Columns = monitorColumns = 1;
             }
             else
             {

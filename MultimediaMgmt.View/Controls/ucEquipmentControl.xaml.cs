@@ -34,6 +34,11 @@ namespace MultimediaMgmt.View.Controls
             classControlViewModel.Init(cr);
         }
 
+        public void DetailInit(ClassRoomEx cr)
+        {
+            this.infoDetail.Init(cr);
+        }
+
         private void showDetail_CheckedChanged(object sender, ItemClickEventArgs e)
         {
             if (statusChange.IsChecked == true)

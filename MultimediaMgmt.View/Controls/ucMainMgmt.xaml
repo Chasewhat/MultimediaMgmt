@@ -15,7 +15,7 @@
         <dxdo:DockLayoutManager>
             <dxdo:LayoutGroup Orientation="Vertical">
                 <dxdo:LayoutGroup Orientation="Horizontal" ItemHeight="*">
-                    <dxdo:LayoutPanel Caption="设备在线率" ItemWidth="*" AllowFloat="False">
+                    <dxdo:LayoutPanel Caption="设备在线率" ItemWidth="*" AllowFloat="False" AllowClose="False">
                         <DockPanel>
                             <dxe:ComboBoxEdit x:Name="buildCb1" ItemsSource="{Binding Buildings}" EditValueChanged="buildCb1_EditValueChanged"
                                               DockPanel.Dock="Top" IsTextEditable="False" ValueMember="Key" DisplayMember="Value">
@@ -27,7 +27,7 @@
                             </UniformGrid>
                         </DockPanel>
                     </dxdo:LayoutPanel>
-                    <dxdo:LayoutPanel Caption="教室上课率" ItemWidth="*">
+                    <dxdo:LayoutPanel Caption="教室上课率" ItemWidth="*" AllowFloat="False" AllowClose="False">
                         <DockPanel>
                             <dxe:ComboBoxEdit x:Name="buildCb2" ItemsSource="{Binding Buildings}" EditValueChanged="buildCb2_EditValueChanged"
                                               DockPanel.Dock="Top" IsTextEditable="False" ValueMember="Key" DisplayMember="Value">
@@ -41,10 +41,10 @@
                     </dxdo:LayoutPanel>
                 </dxdo:LayoutGroup>
                 <dxdo:LayoutGroup Orientation="Horizontal" ItemHeight="*">
-                    <dxdo:LayoutPanel Caption="设备在修率" ItemWidth="*">
+                    <dxdo:LayoutPanel Caption="设备在修率" ItemWidth="*" AllowFloat="False" AllowClose="False">
                         <control:ucPieControl x:Name="repairPie"/>
                     </dxdo:LayoutPanel>
-                    <dxdo:LayoutPanel Caption="能耗曲线" ItemWidth="*">
+                    <dxdo:LayoutPanel Caption="能耗曲线" ItemWidth="*" AllowFloat="False" AllowClose="False">
                         <dxc:ChartControl Padding="0" Margin="0" BorderThickness="0">
                             <dxc:ChartControl.Legends>
                                 <dxc:Legend HorizontalPosition="Right" VerticalPosition="BottomOutside" Orientation="Horizontal" IndentFromDiagram="0" Padding="2"/>

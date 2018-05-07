@@ -51,9 +51,22 @@ namespace MultimediaMgmt.View.Controls
             }
             if (detailPanel.Content != null)
             {
-                ucEquipmentControlDetail temp = this.detailPanel.Content as ucEquipmentControlDetail;
-                ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
-                temp.Init(cr);
+                try
+                {
+                    if (this.detailPanel.Content is ucEquipmentControlDetail)
+                    {
+                        ucEquipmentControlDetail temp = this.detailPanel.Content as ucEquipmentControlDetail;
+                        ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
+                        temp.Init(cr);
+                    }
+                    else if (this.detailPanel.Content is ucEquipmentControl)
+                    {
+                        ucEquipmentControl temp = this.detailPanel.Content as ucEquipmentControl;
+                        ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
+                        temp.DetailInit(cr);
+                    }
+                }
+                catch { }
             }
         }
 
@@ -76,6 +89,8 @@ namespace MultimediaMgmt.View.Controls
                 equipments.Add(ucc);
                 this.overviewPanel.Children.Add(ucc);
                 ucc.Init(cr);
+                //if (this.listPanel.ItemWidth == new GridLength(0))
+                //    this.listPanel.ItemWidth = new GridLength(220);
             }
             else
             {
@@ -85,6 +100,8 @@ namespace MultimediaMgmt.View.Controls
                     return;
                 equipments.Remove(eq);
                 this.overviewPanel.Children.Remove(eq);
+                //if (this.overviewPanel.Children.Count <= 0)
+                //    this.listPanel.ItemWidth = new GridLength(0);
             }
         }
 
@@ -92,11 +109,15 @@ namespace MultimediaMgmt.View.Controls
         {
             if (isDetail)
             {
-                this.listPanel.ItemWidth = new GridLength(220);
+                this.overviewPanel.Children.Remove(ucc);
+                this.listPanel.ItemWidth = new GridLength(0);
+                //if (this.overviewPanel.Children.Count <= 0)
+                //    this.listPanel.ItemWidth = new GridLength(0);
+                //else
+                //    this.listPanel.ItemWidth = new GridLength(220);
                 this.detailPanel.Visibility = Visibility.Visible;
                 this.detailPanel.ShowCaption = false;
                 DetailClear(true);
-                this.overviewPanel.Children.Remove(ucc);
                 ucc.Width = double.NaN;
                 ucc.Height = double.NaN;
                 this.detailPanel.Content = ucc;
@@ -149,7 +170,8 @@ namespace MultimediaMgmt.View.Controls
             if (classRoomMgmtViewModel.SelectedClassRoomEx == null)
                 return;
             DetailClear();
-            this.listPanel.ItemWidth = new GridLength(220);
+            //this.listPanel.ItemWidth = new GridLength(220);
+            this.listPanel.ItemWidth = new GridLength(0);
             this.detailPanel.Visibility = Visibility.Visible;
             this.detailPanel.Caption = string.Format("{0}{1}",
                     classRoomMgmtViewModel.SelectedClassRoomEx.BuildingName,

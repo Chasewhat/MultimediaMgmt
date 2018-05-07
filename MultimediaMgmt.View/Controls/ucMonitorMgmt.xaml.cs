@@ -83,8 +83,8 @@ namespace MultimediaMgmt.View.Controls
                     this.overviewPanel.Rows = this.overviewPanel.Columns = 4;
                     break;
                 case 32:
-                    this.overviewPanel.Rows = 8;
-                    this.overviewPanel.Columns = 4;
+                    this.overviewPanel.Rows = 4;
+                    this.overviewPanel.Columns = 8;
                     break;
             }
             monitorMax = count;
