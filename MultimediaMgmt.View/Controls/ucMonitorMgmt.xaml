@@ -14,7 +14,7 @@
     d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded">
     <dxdo:DockLayoutManager>
         <dxdo:LayoutGroup>
-            <dxdo:LayoutPanel Caption="教学楼列表" ItemWidth="220">
+            <dxdo:LayoutPanel Caption="教学楼列表" ItemWidth="220" AllowClose="False" AllowFloat="False">
                 <control:ucClassRoom x:Name="classRoomTree"/>
             </dxdo:LayoutPanel>
             <dxdo:DocumentGroup x:Name="docGroup" Background="Transparent" ShowTabHeaders="False" Margin="0" Padding="0"

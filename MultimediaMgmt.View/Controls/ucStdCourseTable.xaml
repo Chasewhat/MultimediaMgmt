@@ -10,7 +10,7 @@
     d:DesignHeight="300" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <dxdo:DockLayoutManager>
         <dxdo:LayoutGroup Orientation="Horizontal">
-            <dxdo:LayoutPanel Caption="请选择教室" ItemWidth="220">
+            <dxdo:LayoutPanel Caption="请选择教室" ItemWidth="220" AllowClose="False" AllowFloat="False">
                 <control:ucClassRoomSingle x:Name="classRoomTree" DockPanel.Dock="Left"/>
             </dxdo:LayoutPanel>
             <dxdo:LayoutPanel ShowBorder="False" ShowCaption="False">

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MultimediaMgmt.Model.Models
 {
-    public class TerminalInfo
+    public class WebTerminalInfo
     {
         public int Id { get; set; }
         public string TerminalId { get; set; }

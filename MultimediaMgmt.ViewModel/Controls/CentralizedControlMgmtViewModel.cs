@@ -44,7 +44,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
 
-            string url = MultimediaMgmt.Common.Helper.ConfigHelper.Main.WebUrl;
+            string url = ConfigHelper.Main.WebUrl;
             if (!string.IsNullOrEmpty(url))
                 restConnection = new RestConnection(url);
         }

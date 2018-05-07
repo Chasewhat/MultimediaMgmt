@@ -44,6 +44,8 @@ namespace MultimediaMgmt.View.Controls
         public void Refresh()
         {
             classRoomMgmtViewModel.ClassRoomListRefresh();
+            if (classRoomMgmtViewModel.ClassRoomExs == null)
+                return;
             foreach (ucEquipmentControl ucc in equipments)
             {
                 ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == ucc.Id);
@@ -78,6 +80,8 @@ namespace MultimediaMgmt.View.Controls
                 if (!classRoomMgmtViewModel.ids.Contains(classRoom.ID))
                     classRoomMgmtViewModel.ids.Add(classRoom.ID);
                 classRoomMgmtViewModel.ClassRoomListRefresh();
+                if (classRoomMgmtViewModel.ClassRoomExs == null)
+                    return;
                 ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID);
                 if (cr == null)
                     return;

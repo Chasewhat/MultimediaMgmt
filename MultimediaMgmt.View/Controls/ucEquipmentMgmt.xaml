@@ -18,7 +18,7 @@
     </UserControl.Resources>
     <dxdo:DockLayoutManager>
         <dxdo:LayoutGroup>
-            <dxdo:LayoutPanel Caption="教学楼列表" ItemWidth="220" AllowClose="False">
+            <dxdo:LayoutPanel Caption="教学楼列表" ItemWidth="220" AllowClose="False" AllowFloat="False">
                 <control:ucClassRoom x:Name="classRoomTree"/>
             </dxdo:LayoutPanel>
             <dxdo:LayoutGroup ItemWidth="*" Orientation="Horizontal">
