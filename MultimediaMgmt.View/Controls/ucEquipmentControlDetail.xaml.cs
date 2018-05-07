@@ -48,8 +48,14 @@ namespace MultimediaMgmt.View.Controls
                 || string.IsNullOrEmpty(classControlDetailViewModel.CurrClassRoom.VedioAddress))
                 return;
             string[] address = classControlDetailViewModel.CurrClassRoom.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            
             monitorCount = address.Length;
+            //最多取前四个
+            if (monitorCount > 4)
+            {
+                string[] temp = new string[4];
+                Array.Copy(address, temp, 4);
+                address = temp;
+            }
             if (monitorCount > 2)
             {
                 monitorsPanel.Rows = monitorsPanel.Columns = monitorRows = monitorColumns = 2;

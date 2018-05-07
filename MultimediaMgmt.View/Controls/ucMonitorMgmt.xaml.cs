@@ -114,6 +114,9 @@ namespace MultimediaMgmt.View.Controls
                     i++;
                     continue;
                 }
+                //最多取前四个
+                if (i > 3)
+                    break;
                 string info = string.Format("{0}{1} {2}#视频源",
                     cr.BuildingName, cr.TerminalId, i + 1);
                 ucMonitor monitor = new ucMonitor(info, address, cr.Id);
