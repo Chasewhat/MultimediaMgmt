@@ -14,7 +14,7 @@ namespace MultimediaMgmt.ViewModel.Controls
     [POCOViewModel]
     public class CourseControlViewModel : BaseViewModel
     {
-        public virtual List<CourseEx> CourseExs { get; set; }
+        public virtual SmartObservableCollection<CourseEx> CourseExs { get; set; }
         public virtual CourseEx SelectedCourseEx { get; set; }
         public virtual DateTime? Date { get; set; }
 
@@ -27,6 +27,10 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual string Week7 { get; set; }
 
         public virtual bool IsChange { get; set; }
+        public virtual bool IsEnable { get; set; }
+
+        private List<CourseChange> ChangedCourses = new List<CourseChange>();
+        private List<KeyValuePair<int, string>> weeks = new List<KeyValuePair<int, string>>();
 
         public int RoomId = 0;
 
@@ -34,6 +38,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             Date = DateTime.Now.Date;
             IsChange = true;
+            IsEnable = false;
         }
 
         public void NotChange()
@@ -46,8 +51,10 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             if (RoomId <= 0 || !Date.HasValue || Date.Value == default(DateTime))
                 return;
+            IsEnable = false;
+            ChangedCourses.Clear();
             //先获取WeeklyCourseTable
-            List<KeyValuePair<int, string>> weeks = GetCurrWeek();
+            weeks = GetCurrWeek();
             var weekCourses = (from w in multimediaEntities.WeeklyCourseTable
                                join p in multimediaEntities.Person on w.PersonId equals p.PersonId into temp
                                from t in temp.DefaultIfEmpty()
@@ -126,7 +133,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            PersonName7 = weekCourses.Where(s => s.DayOfWeek == 7 && s.ClassOrd == p.ClassOrd).Select(s => s.Name).FirstOrDefault(),
                            CourseName7 = weekCourses.Where(s => s.DayOfWeek == 7 && s.ClassOrd == p.ClassOrd).Select(s => s.CourseName).FirstOrDefault()
                        });
-            CourseExs = data.OrderBy(s=>s.ClassOrd).ToList();
+            CourseExs = data.OrderBy(s => s.ClassOrd).ToSmartObservableCollection();
         }
 
         private List<KeyValuePair<int, string>> GetCurrWeek()
@@ -158,5 +165,234 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
+        public void Save()
+        {
+            if (RoomId <= 0 || ChangedCourses.Count<=0)
+                return;
+            var courses = multimediaEntities.WeeklyCourseTable.AsEnumerable();
+            var period = multimediaEntities.StdClassPeriod.AsEnumerable();
+            StdClassPeriod per = null;
+            string date = string.Empty;
+            foreach (CourseChange cc in ChangedCourses)
+            {
+                per = period.FirstOrDefault(s => s.ClassOrd == cc.ClassOrd);
+                date = weeks[cc.Index - 1].Value;
+                if (per == null||string.IsNullOrEmpty(date))
+                    continue;
+                WeeklyCourseTable wct = courses.FirstOrDefault(s => s.RoomId == RoomId &&
+                s.ClassOrd == cc.ClassOrd && s.Date == date);
+                if (wct != null)
+                {
+                    wct.PersonId = cc.PersonId;
+                    wct.CourseName = cc.CourseName;
+                    multimediaEntities.Entry(wct).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    wct = new WeeklyCourseTable()
+                    {
+                        Date = date,
+                        ClassOrd = cc.ClassOrd,
+                        BeginTime = per.BeginTime,
+                        EndTime = per.EndTime,
+                        RoomId = RoomId,
+                        PersonId = cc.PersonId,
+                        CourseName = cc.CourseName
+                    };
+                    multimediaEntities.WeeklyCourseTable.Add(wct);
+                }
+            }
+            multimediaEntities.SaveChanges();
+
+            IsEnable = false;
+            ChangedCourses.Clear();
+        }
+
+        public string GetPerson(string personId)
+        {
+            var person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == personId);
+            if (person != null)
+                return person.Name;
+            else
+                return null;
+        }
+
+        public void UpdatePerson(string field)
+        {
+            if (SelectedCourseEx == null)
+                return;
+            string name = string.Empty;
+            int index = 0;
+            CourseExs.BeginUpdate();
+            switch (field)
+            {
+                case "PersonName1":
+                    name = GetPerson(SelectedCourseEx.PersonName1);
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        SelectedCourseEx.PersonName1 = "";
+                    }
+                    else
+                    {
+                        SelectedCourseEx.PersonId1 = SelectedCourseEx.PersonName1;
+                        SelectedCourseEx.PersonName1 = name;
+                        index = 1;
+                    }
+                    break;
+                case "PersonName2":
+                    name = GetPerson(SelectedCourseEx.PersonName2);
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        SelectedCourseEx.PersonName2 = "";
+                    }
+                    else
+                    {
+                        SelectedCourseEx.PersonId2 = SelectedCourseEx.PersonName2;
+                        SelectedCourseEx.PersonName2 = name;
+                        index = 2;
+                    }
+                    break;
+                case "PersonName3":
+                    name = GetPerson(SelectedCourseEx.PersonName3);
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        SelectedCourseEx.PersonName3 = "";
+                    }
+                    else
+                    {
+                        SelectedCourseEx.PersonId3 = SelectedCourseEx.PersonName3;
+                        SelectedCourseEx.PersonName3 = name;
+                        index = 3;
+                    }
+                    break;
+                case "PersonName4":
+                    name = GetPerson(SelectedCourseEx.PersonName4);
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        SelectedCourseEx.PersonName4 = "";
+                    }
+                    else
+                    {
+                        SelectedCourseEx.PersonId4 = SelectedCourseEx.PersonName4;
+                        SelectedCourseEx.PersonName4 = name;
+                        index = 4;
+                    }
+                    break;
+                case "PersonName5":
+                    name = GetPerson(SelectedCourseEx.PersonName5);
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        SelectedCourseEx.PersonName5 = "";
+                    }
+                    else
+                    {
+                        SelectedCourseEx.PersonId5 = SelectedCourseEx.PersonName5;
+                        SelectedCourseEx.PersonName5 = name;
+                        index = 5;
+                    }
+                    break;
+                case "PersonName6":
+                    name = GetPerson(SelectedCourseEx.PersonName6);
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        SelectedCourseEx.PersonName6 = "";
+                    }
+                    else
+                    {
+                        SelectedCourseEx.PersonId6 = SelectedCourseEx.PersonName6;
+                        SelectedCourseEx.PersonName6 = name;
+                        index = 6;
+                    }
+                    break;
+                case "PersonName7":
+                    name = GetPerson(SelectedCourseEx.PersonName7);
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        SelectedCourseEx.PersonName7 = "";
+                    }
+                    else
+                    {
+                        SelectedCourseEx.PersonId7 = SelectedCourseEx.PersonName7;
+                        SelectedCourseEx.PersonName7 = name;
+                        index = 7;
+                    }
+                    break;
+                default:
+                    if (field.IndexOf("CourseName") >= 0)
+                    {
+                        index = field.Replace("CourseName", "").ToInt();
+                    }
+                    break;
+            }
+            CourseExs.EndUpdate();
+            if (index > 0)
+            {
+                switch (index)
+                {
+                    case 1:
+                        ChangeSet(SelectedCourseEx.ClassOrd, index,
+                            SelectedCourseEx.PersonId1, SelectedCourseEx.PersonName1, 
+                            SelectedCourseEx.CourseName1);
+                        break;
+                    case 2:
+                        ChangeSet(SelectedCourseEx.ClassOrd, index,
+                            SelectedCourseEx.PersonId2, SelectedCourseEx.PersonName2,
+                            SelectedCourseEx.CourseName2);
+                        break;
+                    case 3:
+                        ChangeSet(SelectedCourseEx.ClassOrd, index,
+                            SelectedCourseEx.PersonId3, SelectedCourseEx.PersonName3,
+                            SelectedCourseEx.CourseName3);
+                        break;
+                    case 4:
+                        ChangeSet(SelectedCourseEx.ClassOrd, index,
+                            SelectedCourseEx.PersonId4, SelectedCourseEx.PersonName4,
+                            SelectedCourseEx.CourseName4);
+                        break;
+                    case 5:
+                        ChangeSet(SelectedCourseEx.ClassOrd, index,
+                            SelectedCourseEx.PersonId5, SelectedCourseEx.PersonName5,
+                            SelectedCourseEx.CourseName5);
+                        break;
+                    case 6:
+                        ChangeSet(SelectedCourseEx.ClassOrd, index,
+                            SelectedCourseEx.PersonId6, SelectedCourseEx.PersonName6,
+                            SelectedCourseEx.CourseName6);
+                        break;
+                    case 7:
+                        ChangeSet(SelectedCourseEx.ClassOrd, index,
+                            SelectedCourseEx.PersonId7, SelectedCourseEx.PersonName7,
+                            SelectedCourseEx.CourseName7);
+                        break;
+                }
+
+                IsEnable = true;
+            }
+        }
+
+        private void ChangeSet(byte classOrd,int index,string pid,string pname,string cname)
+        {
+            CourseChange change = ChangedCourses.FirstOrDefault(s => s.ClassOrd == classOrd && s.Index == index);
+            if (change != null)
+                ChangedCourses.Remove(change);
+            ChangedCourses.Add(new CourseChange() {
+                ClassOrd = classOrd,
+                Index = index,
+                PersonId = pid,
+                PersonName = pname,
+                CourseName = cname
+            });
+        }
+
+
+    }
+
+    public class CourseChange
+    {
+        public byte ClassOrd { get; set; }
+        public int Index { get; set; }
+        public string PersonId { get; set; }
+        public string PersonName { get; set; }
+        public string CourseName { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace MultimediaMgmt.View.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             classRoomTree.SelectChanged += SelectChangedExec;
+            courseControl.NotChange();
         }
 
         public void SelectChangedExec(CommonTree classRoom)

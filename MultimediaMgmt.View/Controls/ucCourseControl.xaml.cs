@@ -33,5 +33,10 @@ namespace MultimediaMgmt.View.Controls
         {
             courseControlViewModel.NotChange();
         }
+
+        private void gridView_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            courseControlViewModel.UpdatePerson(e.Column.FieldName);
+        }
     }
 }
