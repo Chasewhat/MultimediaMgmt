@@ -24,7 +24,7 @@
                             <dxb:BarEditItem ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding SelectedDateItem}">
                                 <dxb:BarEditItem.EditSettings>
-                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding DateItems}" IsTextEditable="False" DisplayMember="Value" ValueMember="Value"/>
+                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding DateItems}" IsTextEditable="True" DisplayMember="Value" ValueMember="Value"/>
                                 </dxb:BarEditItem.EditSettings>
                             </dxb:BarEditItem>
                             <dxb:BarEditItem Content="日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
@@ -42,19 +42,19 @@
                             <dxb:BarEditItem Content="教室:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding SelectedRoomItem}">
                                 <dxb:BarEditItem.EditSettings>
-                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding RoomItems}" IsTextEditable="False" DisplayMember="Value" ValueMember="Value"/>
+                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding RoomItems}" IsTextEditable="True" DisplayMember="Value" ValueMember="Value"/>
                                 </dxb:BarEditItem.EditSettings>
                             </dxb:BarEditItem>
                             <dxb:BarEditItem Content="预约状态:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding SelectedReserveState}">
                                 <dxb:BarEditItem.EditSettings>
-                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding ReserveState}" IsTextEditable="False" DisplayMember="Value" ValueMember="Value"/>
+                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding ReserveState}" IsTextEditable="True" DisplayMember="Value" ValueMember="Value"/>
                                 </dxb:BarEditItem.EditSettings>
                             </dxb:BarEditItem>
                             <dxb:BarEditItem Content="审批状态:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding SelectedApproveState}">
                                 <dxb:BarEditItem.EditSettings>
-                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding ApproveState}" IsTextEditable="False" DisplayMember="Value" ValueMember="Value"/>
+                                    <dxe:ComboBoxEditSettings ItemsSource="{Binding ApproveState}" IsTextEditable="True" DisplayMember="Value" ValueMember="Value"/>
                                 </dxb:BarEditItem.EditSettings>
                             </dxb:BarEditItem>
                             <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>

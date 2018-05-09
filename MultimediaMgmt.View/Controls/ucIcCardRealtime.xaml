@@ -19,7 +19,7 @@
                 </dxb:BarEditItem.EditSettings>
             </dxb:BarEditItem>
             <dxb:BarItemSeparator/>
-            <dxb:BarButtonItem Content="刷新" Command="{Binding RefreshCommand}" Glyph="{dx:DXImageOffice2013 Image=Refresh_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+            <!--<dxb:BarButtonItem Content="刷新" Command="{Binding RefreshCommand}" Glyph="{dx:DXImageOffice2013 Image=Refresh_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>-->
         </dxb:ToolBarControl>
         <dxg:GridControl ItemsSource="{Binding CardLogExs}"
                 		SelectionMode="Row" x:Name="gridControl"

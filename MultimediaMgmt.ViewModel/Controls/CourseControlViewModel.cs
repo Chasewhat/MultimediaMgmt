@@ -26,11 +26,19 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual string Week6 { get; set; }
         public virtual string Week7 { get; set; }
 
+        public virtual bool IsChange { get; set; }
+
         public int RoomId = 0;
 
         public CourseControlViewModel()
         {
             Date = DateTime.Now.Date;
+            IsChange = true;
+        }
+
+        public void NotChange()
+        {
+            IsChange = false;
         }
 
         [Command]
@@ -142,5 +150,13 @@ namespace MultimediaMgmt.ViewModel.Controls
 
             return weeks;
         }
+
+        [Command]
+        public void Cancel()
+        {
+            Query();
+        }
+
+        [Command]
     }
 }

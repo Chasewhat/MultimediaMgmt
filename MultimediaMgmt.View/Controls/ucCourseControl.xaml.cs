@@ -28,5 +28,10 @@ namespace MultimediaMgmt.View.Controls
             courseControlViewModel.RoomId = classRoom.ID;
             courseControlViewModel.Query();
         }
+
+        public void NotChange()
+        {
+            courseControlViewModel.NotChange();
+        }
     }
 }

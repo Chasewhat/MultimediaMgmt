@@ -18,13 +18,17 @@
                     <dxe:DateEditSettings/>
                 </dxb:BarEditItem.EditSettings>
             </dxb:BarEditItem>
-            <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+            <dxb:BarButtonItem Content="刷新" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Refresh_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+            <dxb:BarButtonItem Content="保存" Command="{Binding SaveCommand}" Glyph="{dx:DXImage Image=Save_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}"/>
+            <dxb:BarButtonItem Content="取消" Command="{Binding CancelCommand}" Glyph="{dx:DXImage Image=Delete_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}"/>
+            <dxb:BarButtonItem Content="导出Excel" Command="{Binding ExportExcelCommand}" Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}"/>
+            <dxb:BarButtonItem Content="导入Excel" Command="{Binding ImportExcelCommand}" Glyph="{dx:DXImage Image=SaveTo_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}"/>
         </dxb:ToolBarControl>
         <dxg:GridControl ItemsSource="{Binding CourseExs}"
                                     AllowInitiallyFocusedRow="False"
                                     >
             <dxg:GridControl.View>
-                <dxg:TableView AllowEditing="False">
+                <dxg:TableView x:Name="gridView" AllowEditing="{Binding IsChange}">
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridControl.Bands>
