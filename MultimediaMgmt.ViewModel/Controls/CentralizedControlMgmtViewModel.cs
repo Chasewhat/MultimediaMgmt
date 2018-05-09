@@ -10,6 +10,7 @@ using MultimediaMgmt.Model;
 using MultimediaMgmt.Common.Helper;
 using Newtonsoft.Json.Linq;
 using System.Dynamic;
+using System.Threading;
 
 namespace MultimediaMgmt.ViewModel.Controls
 {
@@ -34,6 +35,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public Action<string> MessageShowSucc;
 
         private IRestConnection restConnection = null;
+        private CancellationTokenSource TokenSource;
 
         public CentralizedControlMgmtViewModel()
         {
@@ -76,7 +78,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void CopyIcCardToTerminal()
         {
-            if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0||
+            if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0 ||
                 restConnection == null)
                 return;
             foreach (var cc in SelectedCentralizedControls)
@@ -93,31 +95,39 @@ namespace MultimediaMgmt.ViewModel.Controls
                 MessageShowSucc(result);
             }
         }
+        [Command]
+        public void ControlStop()
+        {
+            TokenSource?.Cancel();
+        }
 
         [Command]
         public void ControlExec()
         {
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0)
                 return;
-            CentralizedControls.BeginUpdate();
-            StringBuilder temp = new StringBuilder();
+            TokenSource = new CancellationTokenSource();
+            CentralizedControls.BeginUpdate();           
             foreach (var cc in SelectedCentralizedControls)
             {
-                if (cc.System.HasValue)
+                if (TokenSource.IsCancellationRequested)
+                    break;
+                StringBuilder temp = new StringBuilder();
+                if (cc.System.HasValue && !TokenSource.IsCancellationRequested)
                 {
                     if (GetExec(cc.TerminalIp, cc.System.Value, "System"))
                         temp.Append("中控执行成功,");
                     else
                         temp.Append("中控执行失败,");
                 }
-                if (cc.AirConitioner.HasValue)
+                if (cc.AirConitioner.HasValue && !TokenSource.IsCancellationRequested)
                 {
                     if (GetExec(cc.TerminalIp, cc.AirConitioner.Value, "AirConitioner"))
                         temp.Append("空调执行成功,");
                     else
                         temp.Append("空调执行失败,");
                 }
-                if (cc.Lamp.HasValue)
+                if (cc.Lamp.HasValue && !TokenSource.IsCancellationRequested)
                 {
                     if (GetExec(cc.TerminalIp, cc.Lamp.Value, "Lamp"))
                         temp.Append("照明执行成功,");
@@ -131,6 +141,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                 }
             }
             CentralizedControls.EndUpdate();
+            TokenSource = null;
         }
 
         private bool GetExec(string ip, bool status, string target)

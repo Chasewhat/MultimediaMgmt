@@ -41,8 +41,7 @@
         <dxg:GridControl ItemsSource="{Binding Reservations}"
                          SelectedItem="{Binding SelectedReservation}"
                 		x:Name="gridControl"
-                        AllowInitiallyFocusedRow="False" 
-                         AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True"
+                        AllowInitiallyFocusedRow="False"
                         >
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gridView" AllowEditing="False">

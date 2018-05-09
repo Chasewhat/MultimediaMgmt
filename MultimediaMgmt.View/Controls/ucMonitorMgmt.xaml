@@ -81,7 +81,7 @@
                         <dxdo:LayoutGroup Orientation="Horizontal">
                             <dxdo:LayoutPanel ItemWidth="*" x:Name="detailPanel" Visibility="Collapsed" ShowCaption="False" ShowBorder="False" AllowHide="False"/>
                             <dxdo:LayoutPanel ItemWidth="*" x:Name="listPanel" ShowCaption="False">
-                                <UniformGrid x:Name="overviewRoomPanel" Rows="1" Columns="1">
+                                <UniformGrid x:Name="overviewRoomPanel" Rows="1" Columns="1" VerticalAlignment="Top">
                                 </UniformGrid>
                             </dxdo:LayoutPanel>
                         </dxdo:LayoutGroup>

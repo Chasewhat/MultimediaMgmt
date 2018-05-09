@@ -33,7 +33,7 @@ namespace MultimediaMgmt.Model.Models
         public bool? Alarm_Control { get; set; }
         public bool? Alarm_In1 { get; set; }
         public bool? Alarm_In2 { get; set; }
-        public DateTime? LogTime { get; set; }
+        //public DateTime? LogTime { get; set; }
         public bool IsConnected { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace MultimediaMgmt.Model
     public partial class EquipmentType
     {
         public int ID { get; set; }
-        public byte[] EquipmentName { get; set; }
-        public byte[] EquipmentCategory { get; set; }
+        public string EquipmentName { get; set; }
+        public string EquipmentCategory { get; set; }
     }
 }

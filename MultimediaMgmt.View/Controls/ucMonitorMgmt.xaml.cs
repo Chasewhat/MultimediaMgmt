@@ -163,6 +163,7 @@ namespace MultimediaMgmt.View.Controls
                 this.detailPanel.Visibility = Visibility.Visible;
                 this.overviewRoomPanel.Columns = 1;
                 this.overviewRoomPanel.Rows = roomMonitors.Count;//最大视频数
+                this.overviewRoomPanel.Height = ((monitorWidth + 40) * 0.75 + 4) * roomMonitors.Count;
                 ucc.Width = double.NaN;
                 ucc.Height = double.NaN;
                 this.detailPanel.Content = ucc;

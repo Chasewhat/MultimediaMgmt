@@ -32,7 +32,7 @@
                         </dxe:ButtonEdit>
                     </dxlc:LayoutItem>-->
                     <dxlc:LayoutItem Label="教室编号:" Foreground="Red" IsRequired="True">
-                        <dxe:ComboBoxEdit HorizontalAlignment="Left" Width="120" IsTextEditable="False" EditValue="{Binding TerminalId}" ItemsSource="{Binding TerminalIds}" DisplayMember="Value" ValueMember="Key"/>
+                        <dxe:ComboBoxEdit HorizontalAlignment="Left" Width="120" IsTextEditable="False" EditValue="{Binding TerminalId}" ItemsSource="{Binding TerminalIds}"/>
                         <!--<dxe:TextEdit EditValue="{Binding TerminalId}" IsReadOnly="True" HorizontalAlignment="Left" Width="120"/>-->
                     </dxlc:LayoutItem>
                     <dxlc:GroupSeparator Height="8"/>

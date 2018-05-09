@@ -40,7 +40,6 @@ namespace MultimediaMgmt.Model
         public virtual DbSet<EquipmentRepairLog> EquipmentRepairLog { get; set; }
         public virtual DbSet<EquipmentScrapLog> EquipmentScrapLog { get; set; }
         public virtual DbSet<EquipmentTransferLog> EquipmentTransferLog { get; set; }
-        public virtual DbSet<EquipmentType> EquipmentType { get; set; }
         public virtual DbSet<IcCard> IcCard { get; set; }
         public virtual DbSet<LossCard> LossCard { get; set; }
         public virtual DbSet<Majors> Majors { get; set; }
@@ -59,5 +58,6 @@ namespace MultimediaMgmt.Model
         public virtual DbSet<WeeklyCourseTable> WeeklyCourseTable { get; set; }
         public virtual DbSet<LessonLog> LessonLog { get; set; }
         public virtual DbSet<SurveillanceLog> SurveillanceLog { get; set; }
+        public virtual DbSet<EquipmentType> EquipmentType { get; set; }
     }
 }

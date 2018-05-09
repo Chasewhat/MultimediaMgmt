@@ -31,6 +31,7 @@
                                 ShowCheckBoxSelectorColumn="True" CheckBoxSelectorColumnWidth="40" CellValueChanged="gridView_CellValueChanged">
                     <dxg:TableView.RowCellMenuCustomizations>
                         <dxb:BarButtonItem Command="{Binding View.DataContext.ControlExecCommand}" Content="执行" Glyph="{dx:DXImageOffice2013 Image=DoubleNext_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                        <dxb:BarButtonItem Command="{Binding View.DataContext.ControlStopCommand}" Content="停止" Glyph="{dx:DXImageOffice2013 Image=Cancel_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
                         <dxb:BarButtonItem Command="{Binding View.DataContext.CopyIcCardToTerminalCommand}" Content="远程写卡" Glyph="{dx:DXImageOffice2013 Image=EditContact_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
                     </dxg:TableView.RowCellMenuCustomizations>
                 </dxg:TableView>
@@ -127,7 +128,7 @@
                     <dxe:ToggleSwitchEditSettings HorizontalContentAlignment="Center" IsThreeState="True"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="ExecResult" Header="命令执行结果" Width="150" AllowEditing="False"/>
+            <dxg:GridColumn FieldName="ExecResult" Header="命令执行结果" Width="300" AllowEditing="False"/>
         </dxg:GridControl>
     </DockPanel>
 </UserControl>

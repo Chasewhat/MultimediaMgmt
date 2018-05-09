@@ -46,7 +46,7 @@
                         AllowInitiallyFocusedRow="False" 
                         >
             <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" EditorShowMode="Default"
+                <dxg:TableView x:Name="gridView" EditorShowMode="Default" AllowEditing="False"
                                 ShowCheckBoxSelectorColumn="True" CheckBoxSelectorColumnWidth="40">
                     <dxg:TableView.RowCellMenuCustomizations>
                         <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>

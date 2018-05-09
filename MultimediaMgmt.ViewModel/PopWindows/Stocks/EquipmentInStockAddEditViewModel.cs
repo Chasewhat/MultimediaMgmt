@@ -38,8 +38,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 Value = s.EquipmentCategory
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<string, string>(
-                                Encoding.Default.GetString(s.Key),
-                                Encoding.Default.GetString(s.Key))).ToList();
+                                s.Key,
+                                s.Key)).ToList();
             if (id > 0)
             {
                 CurrInStock = multimediaEntities.EquipmentInStock.FirstOrDefault(s => s.ID == id);

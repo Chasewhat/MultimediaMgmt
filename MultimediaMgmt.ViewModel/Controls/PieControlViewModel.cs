@@ -51,14 +51,14 @@ namespace MultimediaMgmt.ViewModel.Controls
                     TitleVisible = false;
                     tcount = multimediaEntities.ClassRoom.Count();
                     EquipmentType etype = multimediaEntities.EquipmentType.AsEnumerable().FirstOrDefault(
-                        s => Encoding.Default.GetString(s.EquipmentCategory) == "中控");
+                        s => s.EquipmentCategory == "中控");
                     if (etype == null)
                     {
                         count = 0;
                     }
                     else
                     {
-                        string typeName = Encoding.Default.GetString(etype.EquipmentName);
+                        string typeName = etype.EquipmentName;
                         count = (from e in multimediaEntities.EquipmentRepairLog
                                  join i in multimediaEntities.EquipmentInStock on e.SerialNumber equals i.SerialNumber
                                  where !e.RepairDate.HasValue && i.Name == typeName

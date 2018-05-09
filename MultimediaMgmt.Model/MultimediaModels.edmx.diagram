@@ -20,7 +20,6 @@
         <EntityTypeShape EntityType="MultimediaModels.EquipmentRepairLog" Width="1.5" PointX="11.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MultimediaModels.EquipmentScrapLog" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MultimediaModels.EquipmentTransferLog" Width="1.5" PointX="6.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MultimediaModels.EquipmentType" Width="1.5" PointX="11.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MultimediaModels.IcCard" Width="1.5" PointX="11.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MultimediaModels.LossCard" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MultimediaModels.Majors" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
@@ -42,6 +41,7 @@
         <AssociationConnector Association="MultimediaModels.FK_dbo_ReservationCourseTable_dbo_ClassroomReservation_ClassroomReservationId" ManuallyRouted="false" />
         <AssociationConnector Association="MultimediaModels.FK_dbo_MenuItem_dbo_MenuItem_ParentId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MultimediaModels.SurveillanceLog" Width="1.5" PointX="7.375" PointY="17.75" />
+        <EntityTypeShape EntityType="MultimediaModels.EquipmentType" Width="1.5" PointX="17.375" PointY="17.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,6 +12,7 @@ namespace MultimediaMgmt.ViewModel
         public virtual string Password { get; set; }
         public LoginViewModel()
         {
+            UserName = Password = "admin";
             //初始化用户信息
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "Id", "LoginName", false);
         }

@@ -129,6 +129,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 if (permit != null)
                 {
                     permit.TerminalId = TerminalId;
+                    permit.PermitTime = CurrPermit.PermitTime;
+                    permit.PersonId = CurrPermit.PersonId;
                     multimediaEntities.Entry(permit).State = EntityState.Modified;
                 }
             }
@@ -159,9 +161,9 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         [Command]
         public void TimeAdd()
         {
-            if (TimeBegin==null || TimeEnd==null)
+            if (TimeBegin == null || TimeEnd == null)
                 return;
-            string time = string.Format("{0}-{1}", 
+            string time = string.Format("{0}-{1}",
                 TimeBegin.Value.ToString("HH:mm"), TimeEnd.Value.ToString("HH:mm"));
             if (Times.FirstOrDefault(s => s == time) == null)
                 Times.Add(time);
@@ -179,10 +181,13 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         public void QueryPerson()
         {
             Persons = (from p in multimediaEntities.Person
-                        join m in multimediaEntities.Majors on p.FacultyId equals m.FacultyId
-                        where p.ClassId == ClassId && p.Sex == Sex &&
-                             m.CollegeName == CollegeName && m.MajorsName == MajorsName
-                        select p).ToSmartObservableCollection();
+                       join m in multimediaEntities.Majors on p.FacultyId equals m.FacultyId into temp
+                       from t in temp.DefaultIfEmpty()
+                       where (string.IsNullOrEmpty(ClassId) || p.ClassId == ClassId) &&
+                            (string.IsNullOrEmpty(Sex) || p.Sex == Sex) &&
+                            (string.IsNullOrEmpty(CollegeName) || (t != null && t.CollegeName == CollegeName)) &&
+                            (string.IsNullOrEmpty(MajorsName) || (t != null && t.MajorsName == MajorsName))
+                       select p).ToSmartObservableCollection();
         }
 
         [Command]

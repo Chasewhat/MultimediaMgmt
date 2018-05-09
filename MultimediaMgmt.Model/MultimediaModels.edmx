@@ -210,8 +210,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EquipmentName" Type="varbinary" MaxLength="50" Nullable="false" />
-          <Property Name="EquipmentCategory" Type="varbinary" MaxLength="50" Nullable="false" />
+          <Property Name="EquipmentName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EquipmentCategory" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="IcCard">
           <Key>
@@ -782,14 +782,6 @@
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Principal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="EquipmentType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EquipmentName" Type="Binary" MaxLength="50" FixedLength="false" Nullable="false" />
-          <Property Name="EquipmentCategory" Type="Binary" MaxLength="50" FixedLength="false" Nullable="false" />
-        </EntityType>
         <EntityType Name="IcCard">
           <Key>
             <PropertyRef Name="HexCode" />
@@ -1106,7 +1098,6 @@
           <EntitySet Name="EquipmentRepairLog" EntityType="Self.EquipmentRepairLog" />
           <EntitySet Name="EquipmentScrapLog" EntityType="Self.EquipmentScrapLog" />
           <EntitySet Name="EquipmentTransferLog" EntityType="Self.EquipmentTransferLog" />
-          <EntitySet Name="EquipmentType" EntityType="Self.EquipmentType" />
           <EntitySet Name="IcCard" EntityType="Self.IcCard" />
           <EntitySet Name="LossCard" EntityType="Self.LossCard" />
           <EntitySet Name="Majors" EntityType="Self.Majors" />
@@ -1137,6 +1128,7 @@
             <End Role="MenuItem1" EntitySet="MenuItem" />
           </AssociationSet>
           <EntitySet Name="SurveillanceLog" EntityType="MultimediaModels.SurveillanceLog" />
+          <EntitySet Name="EquipmentType" EntityType="MultimediaModels.EquipmentType" />
         </EntityContainer>
         <EntityType Name="SurveillanceLog">
           <Key>
@@ -1145,6 +1137,14 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LogContent" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="EquipmentType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EquipmentCategory" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1364,15 +1364,6 @@
                 <ScalarProperty Name="Department" ColumnName="Department" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Principal" ColumnName="Principal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EquipmentType">
-            <EntityTypeMapping TypeName="MultimediaModels.EquipmentType">
-              <MappingFragment StoreEntitySet="EquipmentType">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
-                <ScalarProperty Name="EquipmentCategory" ColumnName="EquipmentCategory" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1652,6 +1643,15 @@
               <MappingFragment StoreEntitySet="SurveillanceLog">
                 <ScalarProperty Name="LogDate" ColumnName="LogDate" />
                 <ScalarProperty Name="LogContent" ColumnName="LogContent" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentType">
+            <EntityTypeMapping TypeName="MultimediaModels.EquipmentType">
+              <MappingFragment StoreEntitySet="EquipmentType">
+                <ScalarProperty Name="EquipmentCategory" ColumnName="EquipmentCategory" />
+                <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
