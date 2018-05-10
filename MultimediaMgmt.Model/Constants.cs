@@ -91,9 +91,9 @@ namespace MultimediaMgmt.Model
         /// </summary>
         public static readonly Dictionary<byte, string> ApproveState = new Dictionary<byte, string>() {
             //{ 0,"全部" },
-            { 1,"待审批" },
-            { 2,"已审批" },
-            { 3,"未批准" }};
+            { 0,"待审批" },
+            { 1,"已审批" },
+            { 2,"未批准" }};
         /// <summary>
         /// 公共图片资源
         /// </summary>

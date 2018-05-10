@@ -19,11 +19,12 @@ namespace MultimediaMgmt.View.Controls
         public ucStdCourseTable()
         {
             InitializeComponent();
+            classRoomTree.SelectChanged += courseControl.SelectChangedExec;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            classRoomTree.SelectChanged += courseControl.SelectChangedExec;
+            
         }
     }
 }

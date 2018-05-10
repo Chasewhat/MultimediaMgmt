@@ -29,7 +29,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         protected void OnDateChanged()
         {
             if (Date.HasValue && Date.Value != default(DateTime))
-                weeks = GetCurrWeek();
+                GetCurrWeek();
         }
 
         public virtual string Week1 { get; set; }
@@ -71,12 +71,16 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Query(int roomId = 0)
         {
-            if (RoomId <= 0 || !Date.HasValue || Date.Value == default(DateTime))
+            if (RoomId <= 0 || !Date.HasValue || Date.Value == default(DateTime)
+                || weeks.Count != 7)
                 return;
             IsEnable = false;
             ChangedCourses.Clear();
             //先获取WeeklyCourseTable
-            CourseExs = GetCourses(RoomId).ToSmartObservableCollection();
+            if (IsChange)
+                CourseExs = GetCourses(RoomId).ToSmartObservableCollection();
+            else
+                CourseExs = GetCoursesReservation(RoomId).ToSmartObservableCollection();
         }
 
         private IEnumerable<CourseEx> GetCourses(int roomid)
@@ -171,11 +175,139 @@ namespace MultimediaMgmt.ViewModel.Controls
             return data.OrderBy(s => s.ClassOrd);
         }
 
-        private List<KeyValuePair<int, string>> GetCurrWeek()
+        private IEnumerable<CourseEx> GetCoursesReservation(int roomid)
+        {
+            var test = multimediaEntities.ReservationCourseTable.FirstOrDefault();
+                var reserCourses = (from w in multimediaEntities.ReservationCourseTable
+                                    join p in multimediaEntities.Person on w.PersonId equals p.PersonId into temp
+                                    from t in temp.DefaultIfEmpty()
+                                    where w.RoomId == roomid
+                                 &&
+                                    w.ClassroomReservation.ReservationState != 1 &&
+                                 w.ClassroomReservation.ClassroomReservationApproval.Count(a => a.ApprovalLevel == 1 && a.ApprovalState == 1) > 0
+                                    select new
+                                    {
+                                        w.RoomId,
+                                        w.ClassOrd,
+                                        w.Date,
+                                        w.PersonId,
+                                        w.BeginTime,
+                                        w.EndTime,
+                                        Name = t == null ? "" : t.Name,
+                                        w.CourseName
+                                    }).AsEnumerable().Where(s => weeks.Any(w => w.Value == s.Date)).Select(s => new
+                                     CourseWeekEx
+                                    {
+                                        RoomId = s.RoomId,
+                                        ClassOrd = s.ClassOrd,
+                                        DayOfWeek = (byte)weeks.First(w => w.Value == s.Date).Key,
+                                        PersonId = s.PersonId,
+                                        BeginTime = s.BeginTime,
+                                        EndTime = s.EndTime,
+                                        Name = s.Name,
+                                        CourseName = s.CourseName
+                                    }).ToList();
+            var weekCourses = (from w in multimediaEntities.WeeklyCourseTable
+                               join p in multimediaEntities.Person on w.PersonId equals p.PersonId into temp
+                               from t in temp.DefaultIfEmpty()
+                               where w.RoomId == roomid
+                               select new
+                               {
+                                   w.RoomId,
+                                   w.ClassOrd,
+                                   w.Date,
+                                   w.PersonId,
+                                   w.BeginTime,
+                                   w.EndTime,
+                                   Name = t == null ? "" : t.Name,
+                                   w.CourseName
+                               }).AsEnumerable().Where(s => weeks.Any(w => w.Value == s.Date)).Select(s => new
+                                CourseWeekEx
+                               {
+                                   RoomId = s.RoomId,
+                                   ClassOrd = s.ClassOrd,
+                                   DayOfWeek = (byte)weeks.First(w => w.Value == s.Date).Key,
+                                   PersonId = s.PersonId,
+                                   BeginTime = s.BeginTime,
+                                   EndTime = s.EndTime,
+                                   Name = s.Name,
+                                   CourseName = s.CourseName
+                               }).ToList();
+            var stdCourses = from s in multimediaEntities.StdCourseTable
+                             join p in multimediaEntities.Person on s.PersonId equals p.PersonId into temp
+                             from t in temp.DefaultIfEmpty()
+                             where s.RoomId == roomid
+                             select new CourseWeekEx
+                             {
+                                 RoomId = s.RoomId,
+                                 ClassOrd = s.ClassOrd,
+                                 DayOfWeek = s.DayOfWeek,
+                                 PersonId = s.PersonId,
+                                 BeginTime = s.BeginTime,
+                                 EndTime = s.EndTime,
+                                 Name = t == null ? "" : t.Name,
+                                 CourseName = s.CourseName,
+                             };
+            foreach (var week in weekCourses)
+            {
+                if (week.PersonId.Equals("UNRESERVED", StringComparison.OrdinalIgnoreCase))
+                {
+                    week.PersonId = "";
+                    week.Name = "";
+                    week.CourseName = "";
+                }
+            }
+            foreach (var week in weekCourses)
+            {
+                if (reserCourses.FirstOrDefault(s => s.DayOfWeek == week.DayOfWeek &&
+                            s.ClassOrd == week.ClassOrd) == null)
+                    reserCourses.Add(week);
+            }
+            foreach (var std in stdCourses)
+            {
+                if (reserCourses.FirstOrDefault(s => s.DayOfWeek == std.DayOfWeek &&
+                            s.ClassOrd == std.ClassOrd) == null)
+                    reserCourses.Add(std);
+            }
+
+            var data = (from p in multimediaEntities.StdClassPeriod
+                        select p).AsEnumerable().Select(
+                       p => new CourseEx()
+                       {
+                           RoomId = roomid,
+                           ClassOrd = p.ClassOrd,
+                           BeginTime = p.BeginTime,
+                           EndTime = p.EndTime,
+                           PersonId1 = reserCourses.Where(s => s.DayOfWeek == 1 && s.ClassOrd == p.ClassOrd).Select(s => s.PersonId).FirstOrDefault(),
+                           Name1 = reserCourses.Where(s => s.DayOfWeek == 1 && s.ClassOrd == p.ClassOrd).Select(s => s.Name).FirstOrDefault(),
+                           CourseName1 = reserCourses.Where(s => s.DayOfWeek == 1 && s.ClassOrd == p.ClassOrd).Select(s => s.CourseName).FirstOrDefault(),
+                           PersonId2 = reserCourses.Where(s => s.DayOfWeek == 2 && s.ClassOrd == p.ClassOrd).Select(s => s.PersonId).FirstOrDefault(),
+                           Name2 = reserCourses.Where(s => s.DayOfWeek == 2 && s.ClassOrd == p.ClassOrd).Select(s => s.Name).FirstOrDefault(),
+                           CourseName2 = reserCourses.Where(s => s.DayOfWeek == 2 && s.ClassOrd == p.ClassOrd).Select(s => s.CourseName).FirstOrDefault(),
+                           PersonId3 = reserCourses.Where(s => s.DayOfWeek == 3 && s.ClassOrd == p.ClassOrd).Select(s => s.PersonId).FirstOrDefault(),
+                           Name3 = reserCourses.Where(s => s.DayOfWeek == 3 && s.ClassOrd == p.ClassOrd).Select(s => s.Name).FirstOrDefault(),
+                           CourseName3 = reserCourses.Where(s => s.DayOfWeek == 3 && s.ClassOrd == p.ClassOrd).Select(s => s.CourseName).FirstOrDefault(),
+                           PersonId4 = reserCourses.Where(s => s.DayOfWeek == 4 && s.ClassOrd == p.ClassOrd).Select(s => s.PersonId).FirstOrDefault(),
+                           Name4 = reserCourses.Where(s => s.DayOfWeek == 4 && s.ClassOrd == p.ClassOrd).Select(s => s.Name).FirstOrDefault(),
+                           CourseName4 = reserCourses.Where(s => s.DayOfWeek == 4 && s.ClassOrd == p.ClassOrd).Select(s => s.CourseName).FirstOrDefault(),
+                           PersonId5 = reserCourses.Where(s => s.DayOfWeek == 5 && s.ClassOrd == p.ClassOrd).Select(s => s.PersonId).FirstOrDefault(),
+                           Name5 = reserCourses.Where(s => s.DayOfWeek == 5 && s.ClassOrd == p.ClassOrd).Select(s => s.Name).FirstOrDefault(),
+                           CourseName5 = reserCourses.Where(s => s.DayOfWeek == 5 && s.ClassOrd == p.ClassOrd).Select(s => s.CourseName).FirstOrDefault(),
+                           PersonId6 = reserCourses.Where(s => s.DayOfWeek == 6 && s.ClassOrd == p.ClassOrd).Select(s => s.PersonId).FirstOrDefault(),
+                           Name6 = reserCourses.Where(s => s.DayOfWeek == 6 && s.ClassOrd == p.ClassOrd).Select(s => s.Name).FirstOrDefault(),
+                           CourseName6 = reserCourses.Where(s => s.DayOfWeek == 6 && s.ClassOrd == p.ClassOrd).Select(s => s.CourseName).FirstOrDefault(),
+                           PersonId7 = reserCourses.Where(s => s.DayOfWeek == 7 && s.ClassOrd == p.ClassOrd).Select(s => s.PersonId).FirstOrDefault(),
+                           Name7 = reserCourses.Where(s => s.DayOfWeek == 7 && s.ClassOrd == p.ClassOrd).Select(s => s.Name).FirstOrDefault(),
+                           CourseName7 = reserCourses.Where(s => s.DayOfWeek == 7 && s.ClassOrd == p.ClassOrd).Select(s => s.CourseName).FirstOrDefault()
+                       });
+            return data.OrderBy(s => s.ClassOrd);
+        }
+
+        private void GetCurrWeek()
         {
             DateTime week1 = Date.Value.AddDays(1 -
                 (Date.Value.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)Date.Value.DayOfWeek));//本周周一
-            List<KeyValuePair<int, string>> weeks = new List<KeyValuePair<int, string>>();
+            weeks.Clear();
             for (int i = 0; i < 7; i++)
             {
                 weeks.Add(new KeyValuePair<int, string>(i + 1,
@@ -189,8 +321,6 @@ namespace MultimediaMgmt.ViewModel.Controls
             Week5 = string.Format("星期五({0})", weeks[4].Value);
             Week6 = string.Format("星期六({0})", weeks[5].Value);
             Week7 = string.Format("星期日({0})", weeks[6].Value);
-
-            return weeks;
         }
 
         [Command]

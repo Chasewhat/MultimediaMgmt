@@ -21,11 +21,15 @@ namespace MultimediaMgmt.View.Controls
         {
             InitializeComponent();
             this.DataContext = classroomReservationApprovalViewModel = ViewModelSource.Create<ClassroomReservationApprovalViewModel>();
+            classroomReservationApprovalViewModel.MessageShow = (s) =>
+            {
+                return DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            };
+            classRoomTree.SelectChanged += SelectChangedExec;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            classRoomTree.SelectChanged += SelectChangedExec;
+        {            
             courseControl.NotChange();
         }
 
