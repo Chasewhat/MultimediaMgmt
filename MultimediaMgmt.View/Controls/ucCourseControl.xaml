@@ -10,67 +10,74 @@
     x:Class="MultimediaMgmt.View.Controls.ucCourseControl" 
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="800">
-    <DockPanel>
-        <dxb:ToolBarControl Height="35" Padding="0" Margin="0" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-            <dxb:BarEditItem Content="日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+    <UserControl.Resources>
+        <DataTemplate x:Key="splashScreenTemplate">
+            <dx:WaitIndicator DeferedVisibility="True" Content="{Binding WaitIndiContent}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <dx:LoadingDecorator x:Name="loadWait" IsSplashScreenShown="{Binding IsLoad}" SplashScreenDataContext="{Binding}" OwnerLock="LoadingContent" SplashScreenTemplate="{StaticResource splashScreenTemplate}">
+        <DockPanel>
+            <dxb:ToolBarControl Height="35" Padding="0" Margin="0" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                <dxb:BarEditItem Content="日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding Date}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:DateEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarButtonItem Content="刷新" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Refresh_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-            <dxb:BarButtonItem Content="保存" Command="{Binding SaveCommand}" Glyph="{dx:DXImage Image=Save_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}" IsEnabled="{Binding IsEnable}"/>
-            <dxb:BarButtonItem Content="取消" Command="{Binding CancelCommand}" Glyph="{dx:DXImage Image=Delete_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}" IsEnabled="{Binding IsEnable}"/>
-            <dxb:BarButtonItem Content="导出Excel" Command="{Binding ExportExcelCommand}" Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}"/>
-            <dxb:BarButtonItem Content="导入Excel" Command="{Binding ImportExcelCommand}" Glyph="{dx:DXImage Image=SaveTo_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}"/>
-        </dxb:ToolBarControl>
-        <dxg:GridControl ItemsSource="{Binding CourseExs}"
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarButtonItem Content="刷新" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Refresh_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarButtonItem Content="保存" Command="{Binding SaveCommand}" Glyph="{dx:DXImage Image=Save_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}" IsEnabled="{Binding IsEnable}"/>
+                <dxb:BarButtonItem Content="取消" Command="{Binding CancelCommand}" Glyph="{dx:DXImage Image=Delete_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}" IsEnabled="{Binding IsEnable}"/>
+                <dxb:BarButtonItem Content="导出Excel" Command="{Binding ExportExcelCommand}" Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}"/>
+                <dxb:BarButtonItem Content="导入Excel" Command="{Binding ImportExcelCommand}" Glyph="{dx:DXImage Image=SaveTo_16x16.png}" BarItemDisplayMode="ContentAndGlyph" IsVisible="{Binding IsChange}"/>
+            </dxb:ToolBarControl>
+            <dxg:GridControl ItemsSource="{Binding CourseExs}"
                          SelectedItem="{Binding SelectedCourseEx}"
                                     AllowInitiallyFocusedRow="False"
                                     >
-            <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" AllowEditing="{Binding IsChange}" CellValueChanged="gridView_CellValueChanged">
-                </dxg:TableView>
-            </dxg:GridControl.View>
-            <dxg:GridControl.Bands>
-                <dxg:GridControlBand Header="课序" OverlayHeaderByChildren="True">
-                    <dxg:GridColumn FieldName="ClassOrd" Header="课序" Width="40" AllowEditing="False"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="上课时间" OverlayHeaderByChildren="True">
-                    <dxg:GridColumn FieldName="BeginTime" Header="上课时间" Width="60" AllowEditing="False"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="下课时间" OverlayHeaderByChildren="True">
-                    <dxg:GridColumn FieldName="EndTime" Header="下课时间" Width="60" AllowEditing="False"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="{Binding Week1}" HorizontalHeaderContentAlignment="Center">
-                    <dxg:GridColumn FieldName="PersonName1" Header="老师" Width="60"/>
-                    <dxg:GridColumn FieldName="CourseName1" Header="课程" Width="60"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="{Binding Week2}" HorizontalHeaderContentAlignment="Center">
-                    <dxg:GridColumn FieldName="PersonName2" Header="老师" Width="60"/>
-                    <dxg:GridColumn FieldName="CourseName2" Header="课程" Width="60"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="{Binding Week3}" HorizontalHeaderContentAlignment="Center">
-                    <dxg:GridColumn FieldName="PersonName3" Header="老师" Width="60"/>
-                    <dxg:GridColumn FieldName="CourseName3" Header="课程" Width="60"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="{Binding Week4}" HorizontalHeaderContentAlignment="Center">
-                    <dxg:GridColumn FieldName="PersonName4" Header="老师" Width="60"/>
-                    <dxg:GridColumn FieldName="CourseName4" Header="课程" Width="60"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="{Binding Week5}" HorizontalHeaderContentAlignment="Center">
-                    <dxg:GridColumn FieldName="PersonName5" Header="老师" Width="60"/>
-                    <dxg:GridColumn FieldName="CourseName5" Header="课程" Width="60"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="{Binding Week6}" HorizontalHeaderContentAlignment="Center">
-                    <dxg:GridColumn FieldName="PersonName6" Header="老师" Width="60"/>
-                    <dxg:GridColumn FieldName="CourseName6" Header="课程" Width="60"/>
-                </dxg:GridControlBand>
-                <dxg:GridControlBand Header="{Binding Week7}" HorizontalHeaderContentAlignment="Center">
-                    <dxg:GridColumn FieldName="PersonName7" Header="老师" Width="60"/>
-                    <dxg:GridColumn FieldName="CourseName7" Header="课程" Width="60"/>
-                </dxg:GridControlBand>
-            </dxg:GridControl.Bands>
-        </dxg:GridControl>
-    </DockPanel>
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gridView" AllowEditing="{Binding IsChange}" CellValueChanged="gridView_CellValueChanged">
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+                <dxg:GridControl.Bands>
+                    <dxg:GridControlBand Header="课序" OverlayHeaderByChildren="True">
+                        <dxg:GridColumn FieldName="ClassOrd" Header="课序" Width="40" AllowEditing="False"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="上课时间" OverlayHeaderByChildren="True">
+                        <dxg:GridColumn FieldName="BeginTime" Header="上课时间" Width="60" AllowEditing="False"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="下课时间" OverlayHeaderByChildren="True">
+                        <dxg:GridColumn FieldName="EndTime" Header="下课时间" Width="60" AllowEditing="False"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="{Binding Week1}" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn FieldName="Name1" Header="老师" Width="60"/>
+                        <dxg:GridColumn FieldName="CourseName1" Header="课程" Width="60"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="{Binding Week2}" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn FieldName="Name2" Header="老师" Width="60"/>
+                        <dxg:GridColumn FieldName="CourseName2" Header="课程" Width="60"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="{Binding Week3}" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn FieldName="Name3" Header="老师" Width="60"/>
+                        <dxg:GridColumn FieldName="CourseName3" Header="课程" Width="60"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="{Binding Week4}" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn FieldName="Name4" Header="老师" Width="60"/>
+                        <dxg:GridColumn FieldName="CourseName4" Header="课程" Width="60"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="{Binding Week5}" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn FieldName="Name5" Header="老师" Width="60"/>
+                        <dxg:GridColumn FieldName="CourseName5" Header="课程" Width="60"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="{Binding Week6}" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn FieldName="Name6" Header="老师" Width="60"/>
+                        <dxg:GridColumn FieldName="CourseName6" Header="课程" Width="60"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="{Binding Week7}" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn FieldName="Name7" Header="老师" Width="60"/>
+                        <dxg:GridColumn FieldName="CourseName7" Header="课程" Width="60"/>
+                    </dxg:GridControlBand>
+                </dxg:GridControl.Bands>
+            </dxg:GridControl>
+        </DockPanel>
+    </dx:LoadingDecorator>
 </UserControl>

@@ -4,229 +4,609 @@ using System.IO;
 using System.Data;
 using System.Text;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using Newtonsoft.Json.Linq;
+using NPOI.XSSF.UserModel;
+using NPOI.HSSF.UserModel;
+using System.Reflection;
 
 namespace Common.Helper
 {
-    /// <summary>
-    /// Excel读取帮助类,执行将CSV/Excel文件读取至DataTable中
-    /// </summary>
     public class ExcelHelper
     {
-        /// <summary>
-        /// 将CSV格式字符流数据读取到DataTable中
-        /// </summary>
-        /// <param name="path">CSV文件路径</param>
-        /// <returns>返回读取了CSV文件的DataTable</returns>
-        public static DataTable CSV2DataTable(string path)
+
+        public static int MergedRegion(IWorkbook workbook, ISheet sheet, JObject cellCfg, int iCol, int iRow, IList<string> lstCols)
         {
+            int result = 1;
+            IRow row = sheet.GetRow(iRow);
+            if (null == row)
+            {
+                row = sheet.CreateRow(iRow);
+            }
+
+            ICell cell = row.GetCell(iCol);
+            if (null == cell)
+            {
+                cell = row.CreateCell(iCol);
+            }
+            cell.SetCellValue(cellCfg.Value<string>("caption"));
+
+            ICellStyle cellstyle = workbook.CreateCellStyle();//设置垂直居中格式
+            cellstyle.VerticalAlignment = VerticalAlignment.Center;//垂直居中
+            cellstyle.Alignment = HorizontalAlignment.Center;//水平居中
+            cellstyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+            cellstyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+            cellstyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+            cellstyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+            NPOI.SS.UserModel.IFont font = workbook.CreateFont();
+            //设置字体加粗样式
+            font.FontHeightInPoints = 11;
+            font.Boldweight = short.MaxValue;
+            //使用SetFont方法将字体样式添加到单元格样式中 
+            cellstyle.SetFont(font);
+            cell.CellStyle = cellstyle;
+            if (null != cellCfg["cols"] && cellCfg.Value<JArray>("cols").Count > 0)
+            {
+                int iSubCol = iCol;
+                int iSubRow = iRow + cellCfg.Value<int>("rowspan");
+                for (int i = 0; i < cellCfg.Value<JArray>("cols").Count; i++)
+                {
+                    int iRowSpan = MergedRegion(workbook, sheet, cellCfg.Value<JArray>("cols")[i] as JObject, iSubCol, iSubRow, lstCols);
+                    //找出子表头中占用的行数
+                    if (iRowSpan > result)
+                    {
+                        result = iRowSpan;
+                    }
+                    iSubCol = iSubCol + cellCfg["cols"][i].Value<int>("colspan");
+                }
+                result = result + cellCfg.Value<int>("rowspan");
+                //通过子标题累计colspan
+                cellCfg["colspan"] = iSubCol - iCol;
+            }
+            else
+            {
+                lstCols.Add(cellCfg.Value<string>("filedName"));
+                if (null != cellCfg["width"] && cellCfg.Value<int>("width") > 0)
+                {
+                    sheet.SetColumnWidth(iCol, (int)((cellCfg.Value<int>("width") + 0.72) * 256));
+                }
+                else
+                {
+                    sheet.SetColumnWidth(iCol, (int)((9 + 0.72) * 256));
+                }
+                result = cellCfg.Value<int>("rowspan");
+            }
+            //存在合并单元格
+            if (cellCfg.Value<int>("rowspan") > 1 || cellCfg.Value<int>("colspan") > 1)
+            {
+                CellRangeAddress region = new CellRangeAddress(iRow, iRow + cellCfg.Value<int>("rowspan") - 1,
+                    iCol, iCol + cellCfg.Value<int>("colspan") - 1);
+                sheet.AddMergedRegion(region);
+                ((HSSFSheet)sheet).SetEnclosedBorderOfRegion(region, NPOI.SS.UserModel.BorderStyle.Thin, NPOI.HSSF.Util.HSSFColor.Black.Index);
+            }
+            return result;
+        }
+
+        public static int CreatHeader(IWorkbook workbook, ISheet sheet, JObject cfgHeader, IList<string> lstCols)
+        {
+            int result = 1;
+            IRow row = sheet.CreateRow(0);
+            ICell cell = row.CreateCell(0);
+            cell.SetCellValue(cfgHeader.Value<string>("header"));
+
+            ICellStyle cellstyle = workbook.CreateCellStyle();//设置垂直居中格式
+            cellstyle.VerticalAlignment = VerticalAlignment.Center;//垂直居中
+            cellstyle.Alignment = HorizontalAlignment.Center;//水平居中
+            NPOI.SS.UserModel.IFont font = workbook.CreateFont();
+            //设置字体加粗样式
+            font.FontHeightInPoints = 18;
+            font.Boldweight = short.MaxValue;
+            //使用SetFont方法将字体样式添加到单元格样式中 
+            cellstyle.SetFont(font);
+            cell.CellStyle = cellstyle;
+            if (null != cfgHeader["cols"] && cfgHeader.Value<JArray>("cols").Count > 0)
+            {
+                int iCol = 0;
+                int iRow = 1;
+                for (int i = 0; i < cfgHeader.Value<JArray>("cols").Count; i++)
+                {
+                    int iRowSpan = MergedRegion(workbook, sheet, cfgHeader.Value<JArray>("cols")[i] as JObject, iCol, iRow, lstCols);
+                    if (iRowSpan > result)
+                    {
+                        result = iRowSpan;
+                    }
+                    iCol = iCol + cfgHeader["cols"][i].Value<int>("colspan");
+                }
+                result = result + 1;
+                //合并标题
+                sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, iCol - 1));
+            }
+            return result;
+        }
+        /// <summary>
+        /// 复杂表头导出Excel
+        /// </summary>
+        /// <param name="TData">数据源</param>
+        /// <param name="filePath">文件存放路径</param>
+        /// <param name="jsonfilepath">json文件路径 如："G:\WorkSite\WorkS\Cwyjjgs\Cwyjjgs\Scripts\app\data\datxpjl.json"</param>
+        public static void SaveListDataToExcelFileNPOI(IList<dynamic> listdata, string filePath, JObject jsonHeader)
+        {
+            List<string> lstCols = new List<string>();
             try
             {
-                using (FileStream fs = new FileStream(path, FileMode.Open))
-                {
-                    return CSV2DataTable(fs);
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
+                if (null == jsonHeader) return;
+                IWorkbook workbook = new HSSFWorkbook();
+                ISheet sheet = workbook.CreateSheet();
+                //建立表头
+                int iDataRow = CreatHeader(workbook, sheet, jsonHeader, lstCols);
+                ICellStyle cellstyle = workbook.CreateCellStyle();
+                cellstyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                sheet.CreateFreezePane(0, iDataRow);
 
-        /// <summary>
-        /// 将CSV格式字符流数据读取到DataTable中
-        /// </summary>
-        /// <param name="csvStream">CSV格式字符流</param>
-        /// <returns>返回读取了CSV数据的DataTable</returns>
-        public static DataTable CSV2DataTable(Stream csvStream)
-        {
-            int intColCount = 0;
-            bool blnFlag = true;
-            DataTable mydt = new DataTable();
-            DataColumn mydc;
-            DataRow mydr;
-            string strline;
-            string[] aryline;
-            StreamReader mysr = new StreamReader(csvStream, Encoding.Default);
-            while ((strline = mysr.ReadLine()) != null)
-            {
-                List<string> ss = new List<string>();
-                aryline = strline.Split(new char[] { ',' });
-                if (strline.IndexOf("\"") > -1)
+                for (int i = 0; i < listdata.Count; i++)
                 {
-                    for (int i = 0; i < aryline.Length; i++)
+                    IRow row = sheet.CreateRow(i + iDataRow);
+                    for (int j = 0; j < lstCols.Count; j++)
                     {
-                        if (aryline[i].Contains("\""))
+                        ICell cell = row.CreateCell(j);
+                        if (!string.IsNullOrEmpty(lstCols[j]))
                         {
-                            ss.Add(aryline[i].Replace("\"", "") + aryline[++i].Replace("\"", ""));
-                            if (i == aryline.Length - 1)
+                            JObject temp = listdata[i];
+
+                            if (temp[lstCols[j]] != null)
                             {
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            ss.Add(aryline[i]);
-                        }
-                    }
-                }
-                else
-                {
-                    ss.AddRange(aryline);
-                }
-                if (blnFlag)
-                {
-                    blnFlag = false;
-                    intColCount = ss.Count;
-                    for (int i = 0; i < intColCount; i++)
-                    {
-                        mydc = new DataColumn(ss[i].Trim());
-                        mydt.Columns.Add(mydc);
-                    }
-                }
-                else
-                {
-                    if (intColCount == ss.Count)
-                    {
-                        mydr = mydt.NewRow();
-                        for (int i = 0; i < intColCount; i++)
-                        {
-                            mydr[i] = ss[i].Trim();
-                        }
-                        mydt.Rows.Add(mydr);
-                    }
-                }
-            }
-            return mydt;
-        }
-
-        /// <summary>
-        /// 将字符串读取到DataTable中
-        /// </summary>
-        /// <param name="text">字符串</param>
-        /// <returns>返回DataTable</returns>
-        public static DataTable Text2DataTable(string text)
-        {
-            DataTable mydt = new DataTable();
-
-            text = text.Replace("\r\n", "#").Replace("\t", "*");
-            string[] rows = text.Split('#');
-            for (int i = 0; i < rows.Length; i++)
-            {
-                string[] cols = rows[i].Split('*');
-                if (i == 0)
-                {
-                    foreach (string col in cols)
-                    {
-                        DataColumn dc = new DataColumn(col.TrimStart().TrimEnd());
-                        mydt.Columns.Add(dc);
-                    }
-                }
-                else
-                {
-                    DataRow dr = mydt.NewRow();
-                    for (int j = 0; j < cols.Length; j++)
-                    {
-                        dr[j] = cols[j];
-                    }
-                    mydt.Rows.Add(dr);
-                }
-            }
-            return mydt;
-        }
-
-        /// <summary>
-        /// 将excel文件内容读取到DataTable数据表中
-        /// </summary>
-        /// <param name="fileName">文件完整路径名</param>
-        /// <param name="sheetName">指定读取excel工作薄sheet的名称</param>
-        /// <param name="isFirstRowColumn">第一行是否是DataTable的列名：true=是，false=否</param>
-        /// <returns>DataTable数据表</returns>
-        public static DataTable Excel2DataTable(string fileName, string sheetName, bool isFirstRowColumn)
-        {
-            //定义要返回的datatable对象
-            DataTable data = new DataTable();
-            //excel工作表
-            ISheet sheet = null;
-            //数据开始行(排除标题行)
-            int startRow = 0;
-            try
-            {
-                if (!File.Exists(fileName))
-                {
-                    return null;
-                }
-                //根据指定路径读取文件
-                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-                //根据文件流创建excel数据结构
-                IWorkbook workbook = WorkbookFactory.Create(fs);
-                //IWorkbook workbook = new HSSFWorkbook(fs);
-                //如果有指定工作表名称
-                if (!string.IsNullOrEmpty(sheetName))
-                {
-                    sheet = workbook.GetSheet(sheetName);
-                    //如果没有找到指定的sheetName对应的sheet，则尝试获取第一个sheet
-                    if (sheet == null)
-                    {
-                        sheet = workbook.GetSheetAt(0);
-                    }
-                }
-                else
-                {
-                    //如果没有指定的sheetName，则尝试获取第一个sheet
-                    sheet = workbook.GetSheetAt(0);
-                }
-                if (sheet != null)
-                {
-                    IRow firstRow = sheet.GetRow(0);
-                    //一行最后一个cell的编号 即总的列数
-                    int cellCount = firstRow.LastCellNum;
-                    //如果第一行是标题列名
-                    if (isFirstRowColumn)
-                    {
-                        for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
-                        {
-                            ICell cell = firstRow.GetCell(i);
-                            if (cell != null)
-                            {
-                                string cellValue = cell.StringCellValue;
-                                if (cellValue != null)
+                                switch (temp[lstCols[j]].Type.ToString())
                                 {
-                                    DataColumn column = new DataColumn(cellValue);
-                                    data.Columns.Add(column);
+                                    case "Float":
+                                        cell.SetCellValue(temp.Value<float>(lstCols[j]));
+                                        break;
+                                    case "String":
+                                        cell.SetCellValue(temp.Value<string>(lstCols[j]));
+                                        break;
+                                    case "Integer":
+                                        cell.SetCellValue(temp.Value<int>(lstCols[j]));
+                                        break;
+                                    default:
+                                        cell.SetCellValue(temp.Value<dynamic>(lstCols[j]));
+                                        break;
                                 }
                             }
                         }
-                        startRow = sheet.FirstRowNum + 1;
-                    }
-                    else
-                    {
-                        startRow = sheet.FirstRowNum;
-                    }
-                    //最后一列的标号
-                    int rowCount = sheet.LastRowNum;
-                    for (int i = startRow; i <= rowCount; ++i)
-                    {
-                        IRow row = sheet.GetRow(i);
-                        if (row == null) continue; //没有数据的行默认是null　　　　　　　
-
-                        DataRow dataRow = data.NewRow();
-                        //由于某些空白列的问题  导致excel列数与dt列数不匹配  导致解析出错
-                        //此处循环以两者最小值为循环数
-                        var tempCount = Math.Min(data.Columns.Count, cellCount);
-                        for (int j = row.FirstCellNum; j < tempCount; ++j)
-                        {
-                            if (row.GetCell(j) != null) //同理，没有数据的单元格都默认是null
-                                dataRow[j] = row.GetCell(j).ToString();
-                        }
-                        data.Rows.Add(dataRow);
+                        cell.CellStyle = cellstyle;
                     }
                 }
-                return data;
+
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    workbook.Write(fs);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
+        }
+
+        public static bool SaveModelDataToExcelNPOI(IList<dynamic> listdata, JObject jsonHeader, Stream stream, string format = "xls")
+        {
+            List<string> lstCols = new List<string>();
+            try
+            {
+                if (null == jsonHeader) return false;
+
+                IWorkbook workbook;
+                if (format.Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
+                {
+                    workbook = new XSSFWorkbook();
+                }
+                else
+                {
+                    workbook = new HSSFWorkbook();
+                }
+                ISheet sheet = workbook.CreateSheet();
+                //建立表头
+                int iDataRow = CreatHeader(workbook, sheet, jsonHeader, lstCols);
+                ICellStyle cellstyle = workbook.CreateCellStyle();
+                cellstyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                sheet.CreateFreezePane(0, iDataRow);
+
+                for (int i = 0; i < listdata.Count; i++)
+                {
+                    IRow row = sheet.CreateRow(i + iDataRow);
+                    dynamic temp = listdata[i];
+                    //System.Reflection.PropertyInfo[] pInfo = temp.GetType().GetProperties();
+                    for (int j = 0; j < lstCols.Count; j++)
+                    {
+                        ICell cell = row.CreateCell(j);
+
+                        if (!string.IsNullOrEmpty(lstCols[j]))
+                        {
+                            //多级属性用点分隔
+                            string[] fields = lstCols[j].Split('.');
+                            dynamic subObject = temp;
+                            PropertyInfo pi = null;
+                            foreach (string field in fields)
+                            {
+                                if (pi != null)
+                                {
+                                    subObject = pi.GetValue(subObject, null);
+                                    if (null == subObject)
+                                    {
+                                        pi = null;
+                                        break;
+                                    }
+                                }
+                                pi = subObject.GetType().GetProperty(field);
+                                if (pi == null) break;
+                            }
+
+                            if (pi != null)
+                            {
+                                object value = pi.GetValue(subObject, null);
+                                if (value != null)
+                                {
+                                    if (pi.PropertyType.Equals(typeof(double)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(float)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(decimal)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(double?)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(float?)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(decimal?)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(int))
+                                        || pi.PropertyType.Equals(typeof(int?)))
+                                    {
+                                        cell.SetCellValue(int.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(string)))
+                                    {
+                                        cell.SetCellValue((string)value);
+                                    }
+                                    else
+                                    {
+                                        cell.SetCellValue(value.ToString());
+                                    }
+                                    /*
+                                    switch (pi.PropertyType.Name.ToString())
+                                    {
+                                        case "Double":
+                                            cell.SetCellValue((double) value);
+                                            break;
+                                        case "String":
+                                            cell.SetCellValue((string) value);
+                                            break;
+                                        case "Integer":
+                                            cell.SetCellValue((int) value);
+                                            break;
+                                        default:
+                                            cell.SetCellValue(value.ToString());
+                                            break;
+                                    }
+                                    */
+                                }
+                            }
+                        }
+                        cell.CellStyle = cellstyle;
+                    }
+                }
+                /*
+                for (int i = 0; i < listdata.Count; i++)
+                {
+                    sheet.AutoSizeColumn(i, true);
+                }
+                */
+
+                workbook.Write(stream);
+                /*
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    workbook.Write(fs);
+                }
+                */
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int MergedRegion(IWorkbook workbook, ISheet sheet, ICellStyle cellstyle, NPOI.SS.UserModel.IFont font, JObject cellCfg, int iCol, int iRow, IList<string> lstCols, ref int lockedCol)
+        {
+            int result = 1;
+            IRow row = sheet.GetRow(iRow);
+            if (null == row)
+            {
+                row = sheet.CreateRow(iRow);
+            }
+
+            ICell cell = row.GetCell(iCol);
+            if (null == cell)
+            {
+                cell = row.CreateCell(iCol);
+            }
+            cell.SetCellValue(cellCfg.Value<string>("caption"));
+
+            //ICellStyle cellstyle = workbook.CreateCellStyle();//设置垂直居中格式
+            cellstyle.VerticalAlignment = VerticalAlignment.Center;//垂直居中
+            cellstyle.Alignment = HorizontalAlignment.Center;//水平居中
+            cellstyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+            cellstyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+            cellstyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+            cellstyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+            //设置字体加粗样式
+            font.FontHeightInPoints = 11;
+            font.Boldweight = short.MaxValue;
+            //使用SetFont方法将字体样式添加到单元格样式中 
+            cellstyle.SetFont(font);
+            cell.CellStyle = cellstyle;
+            if (null != cellCfg["cols"] && cellCfg.Value<JArray>("cols").Count > 0)
+            {
+                int iSubCol = iCol;
+                int iSubRow = iRow + cellCfg.Value<int>("rowspan");
+                for (int i = 0; i < cellCfg.Value<JArray>("cols").Count; i++)
+                {
+                    int iRowSpan = MergedRegion(workbook, sheet, cellstyle, font, cellCfg.Value<JArray>("cols")[i] as JObject, iSubCol, iSubRow, lstCols, ref lockedCol);
+                    //找出子表头中占用的行数
+                    if (iRowSpan > result)
+                    {
+                        result = iRowSpan;
+                    }
+                    iSubCol = iSubCol + cellCfg["cols"][i].Value<int>("colspan");
+                }
+                result = result + cellCfg.Value<int>("rowspan");
+                //通过子标题累计colspan
+                cellCfg["colspan"] = iSubCol - iCol;
+            }
+            else
+            {
+                lstCols.Add(cellCfg.Value<string>("filedName"));
+                //返回锁定列的值
+                if (cellCfg.Value<bool>("locked"))
+                {
+                    lockedCol = lstCols.Count;
+                }
+                result = cellCfg.Value<int>("rowspan");
+            }
+            //存在合并单元格
+            if (cellCfg.Value<int>("rowspan") > 1 || cellCfg.Value<int>("colspan") > 1)
+            {
+                CellRangeAddress region = new CellRangeAddress(iRow, iRow + cellCfg.Value<int>("rowspan") - 1,
+                    iCol, iCol + cellCfg.Value<int>("colspan") - 1);
+                sheet.AddMergedRegion(region);
+                ((HSSFSheet)sheet).SetEnclosedBorderOfRegion(region, NPOI.SS.UserModel.BorderStyle.Thin, NPOI.HSSF.Util.HSSFColor.Black.Index);
+            }
+            return result;
+        }
+
+        public static int CreatHeader(IWorkbook workbook, ISheet sheet, ICellStyle titleCellstyle, NPOI.SS.UserModel.IFont titleFont, ICellStyle headerCellstyle, NPOI.SS.UserModel.IFont headerFont, JObject cfgHeader, IList<string> lstCols, ref int lockedCol)
+        {
+            int result = 1;
+            IRow row = sheet.CreateRow(0);
+            ICell cell = row.CreateCell(0);
+            cell.SetCellValue(cfgHeader.Value<string>("header"));
+
+            titleCellstyle.VerticalAlignment = VerticalAlignment.Center;//垂直居中
+            titleCellstyle.Alignment = HorizontalAlignment.Center;//水平居中
+            //设置字体加粗样式
+            titleFont.FontHeightInPoints = 18;
+            titleFont.Boldweight = short.MaxValue;
+            //使用SetFont方法将字体样式添加到单元格样式中 
+            titleCellstyle.SetFont(titleFont);
+            cell.CellStyle = titleCellstyle;
+            if (null != cfgHeader["cols"] && cfgHeader.Value<JArray>("cols").Count > 0)
+            {
+                int iCol = 0;
+                int iRow = 1;
+                for (int i = 0; i < cfgHeader.Value<JArray>("cols").Count; i++)
+                {
+                    int iRowSpan = MergedRegion(workbook, sheet, headerCellstyle, headerFont, cfgHeader.Value<JArray>("cols")[i] as JObject, iCol, iRow, lstCols, ref lockedCol);
+                    if (iRowSpan > result)
+                    {
+                        result = iRowSpan;
+                    }
+                    iCol = iCol + cfgHeader["cols"][i].Value<int>("colspan");
+                }
+                result = result + 1;
+                //合并标题
+                sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, iCol - 1));
+            }
+            return result;
+        }
+
+        public static bool SaveModelDataToExcelSheetNPOI(IWorkbook workbook, ISheet sheet, ICellStyle cellstyle, ICellStyle titleCellstyle, NPOI.SS.UserModel.IFont titleFont, ICellStyle headerCellstyle, NPOI.SS.UserModel.IFont headerFont, IList<dynamic> listdata, JObject jsonHeader)
+        {
+            List<string> lstCols = new List<string>();
+            try
+            {
+                if (null == jsonHeader) return false;
+                //建立表头
+                int iLockedCol = 0;
+                int iDataRow = CreatHeader(workbook, sheet, titleCellstyle, titleFont, headerCellstyle, headerFont, jsonHeader, lstCols, ref iLockedCol);
+                cellstyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellstyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                sheet.CreateFreezePane(iLockedCol, iDataRow);
+
+                for (int i = 0; i < listdata.Count; i++)
+                {
+                    IRow row = sheet.CreateRow(i + iDataRow);
+                    dynamic temp = listdata[i];
+                    //System.Reflection.PropertyInfo[] pInfo = temp.GetType().GetProperties();
+                    for (int j = 0; j < lstCols.Count; j++)
+                    {
+                        ICell cell = row.CreateCell(j);
+
+                        if (!string.IsNullOrEmpty(lstCols[j]))
+                        {
+                            //PropertyInfo pi = temp.GetType().GetProperty(lstCols[j]);
+                            //多级属性用点分隔
+                            string[] fields = lstCols[j].Split('.');
+                            dynamic subObject = temp;
+                            PropertyInfo pi = null;
+                            foreach (string field in fields)
+                            {
+                                if (pi != null)
+                                {
+                                    subObject = pi.GetValue(subObject, null);
+                                    if (null == subObject)
+                                    {
+                                        pi = null;
+                                        break;
+                                    }
+                                }
+                                pi = subObject.GetType().GetProperty(field);
+                                if (pi == null) break;
+                            }
+                            if (pi != null)
+                            {
+                                object value = pi.GetValue(subObject, null);
+                                if (value != null)
+                                {
+                                    if (pi.PropertyType.Equals(typeof(double)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(float)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(decimal)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(double?)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(float?)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(decimal?)))
+                                    {
+                                        cell.SetCellValue(double.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(int))
+                                        || pi.PropertyType.Equals(typeof(int?)))
+                                    {
+                                        cell.SetCellValue(int.Parse(value.ToString()));
+                                    }
+                                    else if (pi.PropertyType.Equals(typeof(string)))
+                                    {
+                                        cell.SetCellValue((string)value);
+                                    }
+                                    else
+                                    {
+                                        cell.SetCellValue(value.ToString());
+                                    }
+                                    /*
+                                    switch (pi.PropertyType.Name.ToString())
+                                    {
+                                        case "Float":
+                                            cell.SetCellValue((double)value);
+                                            break;
+                                        case "String":
+                                            cell.SetCellValue((string)value);
+                                            break;
+                                        case "Integer":
+                                            cell.SetCellValue((int)value);
+                                            break;
+                                        case "Byte":
+                                            cell.SetCellValue((byte)value);
+                                            break;
+                                        default:
+                                            cell.SetCellValue(value.ToString());
+                                            break;
+                                    }
+                                    */
+                                }
+                            }
+                        }
+                        cell.CellStyle = cellstyle;
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static JObject GetJsonHeaderFromString(string sHeader)
+        {
+            return JObject.Parse(sHeader);
+        }
+
+        public static int GetHeaderRows(JObject headerCfg)
+        {
+            int result = 0;
+            GetColRows(headerCfg, ref result);
+            return result;
+        }
+
+        public static void GetColRows(JObject cellCfg, ref int rows)
+        {
+            rows += cellCfg.Value<int>("rowspan");
+            if (null != cellCfg["cols"] && cellCfg.Value<JArray>("cols").Count > 0)
+            {
+                GetColRows(cellCfg.Value<JArray>("cols")[0] as JObject, ref rows);
+            }
+        }
+        public static int GetHeaderInfo(JObject headerCfg, IList<string> lstCols)
+        {
+            return GetCellInfo(headerCfg, 0, 0, lstCols);
+        }
+        public static int GetCellInfo(JObject cellCfg, int iCol, int iRow, IList<string> lstCols)
+        {
+            int result = 1;
+            if (null != cellCfg["cols"] && cellCfg.Value<JArray>("cols").Count > 0)
+            {
+                int iSubCol = iCol;
+                int iSubRow = iRow + cellCfg.Value<int>("rowspan");
+                for (int i = 0; i < cellCfg.Value<JArray>("cols").Count; i++)
+                {
+                    int iRowSpan = GetCellInfo(cellCfg.Value<JArray>("cols")[i] as JObject, iSubCol, iSubRow, lstCols);
+                    //找出子表头中占用的行数
+                    if (iRowSpan > result)
+                    {
+                        result = iRowSpan;
+                    }
+                    iSubCol = iSubCol + cellCfg["cols"][i].Value<int>("colspan");
+                }
+                result = result + cellCfg.Value<int>("rowspan");
+                //通过子标题累计colspan
+                cellCfg["colspan"] = iSubCol - iCol;
+            }
+            else
+            {
+                lstCols.Add(cellCfg.Value<string>("filedName"));
+                result = cellCfg.Value<int>("rowspan");
+            }
+            return result;
         }
     }
 }

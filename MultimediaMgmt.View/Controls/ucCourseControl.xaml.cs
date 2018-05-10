@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MultimediaMgmt.View.PopWindows;
 
 namespace MultimediaMgmt.View.Controls
 {
@@ -21,6 +22,35 @@ namespace MultimediaMgmt.View.Controls
         {
             InitializeComponent();
             this.DataContext = courseControlViewModel = ViewModelSource.Create<CourseControlViewModel>();
+            courseControlViewModel.FileSave = () => { return FileSave(); };
+            courseControlViewModel.FileOpen = (s) => { FileOpen(s); };
+            courseControlViewModel.MessageShow = (s) =>
+            {
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            };
+        }
+
+        public string FileSave()
+        {
+            System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+            dialog.Filter = "Excel 文件(*.xls)|*.xls|Excel 文件(*.xlsx)|*.xlsx|所有文件(*.*)|*.*";
+            dialog.FilterIndex = 1;
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                return null;
+            return dialog.FileName;
+        }
+
+        public void FileOpen(string info)
+        {
+            wndFileChoose wfc = new wndFileChoose(info);
+            bool? rs = wfc.ShowDialog();
+            if (rs.HasValue && rs.Value)
+            {
+                bool isOverride = false;
+                string file = string.Empty;
+                wfc.GetResult(ref file, ref isOverride);
+                courseControlViewModel.ImportExcel(file, isOverride);
+            }
         }
 
         public void SelectChangedExec(CommonTree classRoom)
