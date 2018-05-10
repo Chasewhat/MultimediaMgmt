@@ -17,7 +17,7 @@
             <dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical" Width="240" ItemSpace="10">
                     <dxlc:LayoutItem Label="设备编码:" Foreground="Red" IsRequired="True">
-                        <dxe:TextEdit EditValue="{Binding SerialName}"/>
+                        <dxe:TextEdit EditValue="{Binding SerialNumber}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="转移日期:" Foreground="Red" IsRequired="True">
                         <dxe:DateEdit EditValue="{Binding TransferDate}"/>

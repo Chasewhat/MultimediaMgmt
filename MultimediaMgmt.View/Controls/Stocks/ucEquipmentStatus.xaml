@@ -18,6 +18,30 @@
                     <dxe:TextEditSettings/>
                 </dxb:BarEditItem.EditSettings>
             </dxb:BarEditItem>
+            <dxb:BarEditItem Content="入库日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding InBegin}">
+                <dxb:BarEditItem.EditSettings>
+                    <dxe:DateEditSettings/>
+                </dxb:BarEditItem.EditSettings>
+            </dxb:BarEditItem>
+            <dxb:BarEditItem Content="至:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding InEnd}">
+                <dxb:BarEditItem.EditSettings>
+                    <dxe:DateEditSettings/>
+                </dxb:BarEditItem.EditSettings>
+            </dxb:BarEditItem>
+            <dxb:BarEditItem Content="启用日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding UseBegin}">
+                <dxb:BarEditItem.EditSettings>
+                    <dxe:DateEditSettings/>
+                </dxb:BarEditItem.EditSettings>
+            </dxb:BarEditItem>
+            <dxb:BarEditItem Content="至:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding UseEnd}">
+                <dxb:BarEditItem.EditSettings>
+                    <dxe:DateEditSettings/>
+                </dxb:BarEditItem.EditSettings>
+            </dxb:BarEditItem>
             <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
         </dxb:ToolBarControl>
         <dxg:GridControl ItemsSource="{Binding EquipmentStatuss}"

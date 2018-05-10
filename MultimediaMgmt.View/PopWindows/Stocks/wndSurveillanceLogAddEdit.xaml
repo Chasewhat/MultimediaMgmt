@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
-    Height="200" Width="300" SizeToContent="Height"
+    Height="260" Width="300" SizeToContent="Height"
     x:Class="MultimediaMgmt.View.PopWindows.wndSurveillanceLogAddEdit" WindowStyle="ToolWindow"
     Title="{Binding WindowTitle}" ResizeBorderThickness="1"
     WindowStartupLocation="CenterScreen" 
@@ -19,8 +19,8 @@
                     <dxlc:LayoutItem Label="日期:" Foreground="Red" IsRequired="True">
                         <dxe:DateEdit EditValue="{Binding LogDate}"/>
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="内容:" VerticalAlignment="Stretch" Foreground="Red" IsRequired="True" MinHeight="60">
-                        <dxe:TextEdit TextWrapping="Wrap" VerticalContentAlignment="Top" />
+                    <dxlc:LayoutItem Label="内容:" VerticalAlignment="Stretch" Foreground="Red" IsRequired="True" MinHeight="120">
+                        <dxe:TextEdit TextWrapping="Wrap" VerticalContentAlignment="Top" EditValue="{Binding LogContent}"/>
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>

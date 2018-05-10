@@ -29,6 +29,7 @@
             <dxb:BarButtonItem Content="增加" ItemClick="Add_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Add_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
         </dxb:ToolBarControl>
         <dxg:GridControl ItemsSource="{Binding SurveillanceLogs}"
+                         SelectedItem="{Binding SelectedSurveillanceLog}"
                 		x:Name="gridControl"
                         AllowInitiallyFocusedRow="False" 
                         >
@@ -39,8 +40,8 @@
                     </dxg:TableView.RowCellMenuCustomizations>
                 </dxg:TableView>
             </dxg:GridControl.View>
-            <dxg:GridColumn FieldName="LogDate" Header="日期" Width="100"/>
-            <dxg:GridColumn FieldName="LogContent" Header="内容" Width="500" />
+            <dxg:GridColumn FieldName="LogDate" Header="日期" Width="*"/>
+            <dxg:GridColumn FieldName="LogContent" Header="内容" Width="8*" />
         </dxg:GridControl>
     </DockPanel>
 </UserControl>

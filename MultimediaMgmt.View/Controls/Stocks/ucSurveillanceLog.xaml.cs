@@ -24,7 +24,7 @@ namespace MultimediaMgmt.View.Controls
 
         private void Edit_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
-            if (surveillanceLogViewModel == null)
+            if (surveillanceLogViewModel.SelectedSurveillanceLog == null)
                 return;
             new PopWindows.wndSurveillanceLogAddEdit(surveillanceLogViewModel.SelectedSurveillanceLog.ID)
             {
