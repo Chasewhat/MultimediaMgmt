@@ -15,81 +15,86 @@
     d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <cvt:StatusBoolConverter x:Key="statusBoolConverter"/>
+        <DataTemplate x:Key="splashScreenTemplate">
+            <dx:WaitIndicator DeferedVisibility="True" Content="{Binding WaitIndiContent}"/>
+        </DataTemplate>
     </UserControl.Resources>
-    <dxdo:DockLayoutManager>
-        <dxdo:LayoutGroup>
-            <dxdo:LayoutPanel Caption="教学楼列表" ItemWidth="220" AllowClose="False" AllowFloat="False">
-                <control:ucClassRoom x:Name="classRoomTree"/>
-            </dxdo:LayoutPanel>
-            <dxdo:LayoutGroup ItemWidth="*" Orientation="Horizontal">
-                <dxdo:LayoutPanel ItemWidth="*" x:Name="detailPanel" Visibility="Collapsed" ShowCaption="False" ShowBorder="False" AllowHide="False"/>
-                <dxdo:LayoutPanel ItemWidth="*" x:Name="listPanel" ShowCaption="False">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <dxb:ToolBarControl Grid.Row="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-                            <dxb:BarCheckItem x:Name="bcMatrix" GroupIndex="1" Alignment="Far" Hint="矩阵模式显示" Glyph="{StaticResource imgMatrix}" ItemClick="MatrixShow" IsChecked="True"/>
-                            <dxb:BarCheckItem x:Name="bcList" GroupIndex="1" Alignment="Far" Hint="列表模式显示" Glyph="{StaticResource imgList}" ItemClick="ListShow"/>
-                        </dxb:ToolBarControl>
-                        <ScrollViewer x:Name="matrixInfo" Grid.Row="1" Visibility="Visible" Margin="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                            <WrapPanel x:Name="overviewPanel">
+    <dx:LoadingDecorator x:Name="loadWait" IsSplashScreenShown="{Binding IsLoad}" SplashScreenDataContext="{Binding}" OwnerLock="LoadingContent" SplashScreenTemplate="{StaticResource splashScreenTemplate}">
+        <dxdo:DockLayoutManager>
+            <dxdo:LayoutGroup>
+                <dxdo:LayoutPanel Caption="教学楼列表" ItemWidth="220" AllowClose="False" AllowFloat="False">
+                    <control:ucClassRoom x:Name="classRoomTree"/>
+                </dxdo:LayoutPanel>
+                <dxdo:LayoutGroup ItemWidth="*" Orientation="Horizontal">
+                    <dxdo:LayoutPanel ItemWidth="*" x:Name="detailPanel" Visibility="Collapsed" ShowCaption="False" ShowBorder="False" AllowHide="False"/>
+                    <dxdo:LayoutPanel ItemWidth="*" x:Name="listPanel" ShowCaption="False">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <dxb:ToolBarControl Grid.Row="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                                <dxb:BarCheckItem x:Name="bcMatrix" GroupIndex="1" Alignment="Far" Hint="矩阵模式显示" Glyph="{StaticResource imgMatrix}" ItemClick="MatrixShow" IsChecked="True"/>
+                                <dxb:BarCheckItem x:Name="bcList" GroupIndex="1" Alignment="Far" Hint="列表模式显示" Glyph="{StaticResource imgList}" ItemClick="ListShow"/>
+                            </dxb:ToolBarControl>
+                            <ScrollViewer x:Name="matrixInfo" Grid.Row="1" Visibility="Visible" Margin="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                <WrapPanel x:Name="overviewPanel">
 
-                            </WrapPanel>
-                        </ScrollViewer>
-                        <dxg:GridControl Visibility="Collapsed" Grid.Row="1" ItemsSource="{Binding ClassRoomExs}"
+                                </WrapPanel>
+                            </ScrollViewer>
+                            <dxg:GridControl Visibility="Collapsed" Grid.Row="1" ItemsSource="{Binding ClassRoomExs}"
                                          SelectedItem="{Binding SelectedClassRoomEx}"
                 		                x:Name="listInfo"
                                         AllowInitiallyFocusedRow="False">
-                            <dxg:GridControl.View>
-                                <dxg:TableView x:Name="listView" AllowEditing="False" RowDoubleClick="listView_RowDoubleClick">
-                                </dxg:TableView>
-                            </dxg:GridControl.View>
-                            <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" Fixed="Left"/>
-                            <dxg:GridColumn FieldName="TerminalId" Header="教室编号" Width="80" Fixed="Left"/>
-                            <dxg:GridColumn Binding="{Binding System,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="中控" Width="60" />
-                            <dxg:GridColumn Binding="{Binding ACRelay1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电源" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding FPD,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电视" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding ComputerStatus,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电脑" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Projector,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="投影机" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Curtain,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="窗帘" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Lamp,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="照明" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding ProjectorScreen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="幕布" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Volume,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="音响" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Record,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="录播" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding AirConitioner,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="空调" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Lock_Status,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电控柜门" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Door_Status,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="门禁" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Large_Screen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="大屏" Width="60"/>
-                            <dxg:GridColumn FieldName="ProjectionSignal" Header="投影机信号源" Width="100">
-                                <dxg:GridColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.Signals}" DisplayMember="Value" ValueMember="Key"/>
-                                    </DataTemplate>
-                                </dxg:GridColumn.CellTemplate>
-                            </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="ComputerSignal" Header="电脑信号源" Width="80">
-                                <dxg:GridColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.Signals}" DisplayMember="Value" ValueMember="Key"/>
-                                    </DataTemplate>
-                                </dxg:GridColumn.CellTemplate>
-                            </dxg:GridColumn>
-                            <dxg:GridColumn Binding="{Binding LAN1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口1" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding LAN2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口2" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding LAN3,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口3" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding LAN4,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口4" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Alarm_In1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="安防报警" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Alarm_In2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="报警2" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding Alarm_Control,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="布防" Width="60"/>
-                            <dxg:GridColumn Binding="{Binding IN_STATUS1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入1" Width="80"/>
-                            <dxg:GridColumn Binding="{Binding IN_STATUS2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入2" Width="80"/>
-                            <dxg:GridColumn Binding="{Binding IN_STATUS3,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入3" Width="80"/>
-                        </dxg:GridControl>
-                    </Grid>
-                </dxdo:LayoutPanel>
+                                <dxg:GridControl.View>
+                                    <dxg:TableView x:Name="listView" AllowEditing="False" RowDoubleClick="listView_RowDoubleClick">
+                                    </dxg:TableView>
+                                </dxg:GridControl.View>
+                                <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" Fixed="Left"/>
+                                <dxg:GridColumn FieldName="TerminalId" Header="教室编号" Width="80" Fixed="Left"/>
+                                <dxg:GridColumn Binding="{Binding System,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="中控" Width="60" />
+                                <dxg:GridColumn Binding="{Binding ACRelay1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电源" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding FPD,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电视" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding ComputerStatus,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电脑" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Projector,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="投影机" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Curtain,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="窗帘" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Lamp,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="照明" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding ProjectorScreen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="幕布" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Volume,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="音响" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Record,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="录播" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding AirConitioner,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="空调" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Lock_Status,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电控柜门" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Door_Status,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="门禁" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Large_Screen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="大屏" Width="60"/>
+                                <dxg:GridColumn FieldName="ProjectionSignal" Header="投影机信号源" Width="100">
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.Signals}" DisplayMember="Value" ValueMember="Key"/>
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                                </dxg:GridColumn>
+                                <dxg:GridColumn FieldName="ComputerSignal" Header="电脑信号源" Width="80">
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.Signals}" DisplayMember="Value" ValueMember="Key"/>
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                                </dxg:GridColumn>
+                                <dxg:GridColumn Binding="{Binding LAN1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口1" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding LAN2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口2" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding LAN3,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口3" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding LAN4,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口4" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Alarm_In1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="安防报警" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Alarm_In2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="报警2" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding Alarm_Control,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="布防" Width="60"/>
+                                <dxg:GridColumn Binding="{Binding IN_STATUS1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入1" Width="80"/>
+                                <dxg:GridColumn Binding="{Binding IN_STATUS2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入2" Width="80"/>
+                                <dxg:GridColumn Binding="{Binding IN_STATUS3,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入3" Width="80"/>
+                            </dxg:GridControl>
+                        </Grid>
+                    </dxdo:LayoutPanel>
+                </dxdo:LayoutGroup>
             </dxdo:LayoutGroup>
-        </dxdo:LayoutGroup>
-    </dxdo:DockLayoutManager>
+        </dxdo:DockLayoutManager>
+    </dx:LoadingDecorator>
 </UserControl>

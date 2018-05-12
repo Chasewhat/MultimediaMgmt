@@ -4,6 +4,7 @@ using MultimediaMgmt.ViewModel.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -36,6 +37,8 @@ namespace MultimediaMgmt.View.Controls
 
         public void CheckedChangedExec(CommonTree classRoom, bool isChecked)
         {
+            monitorMgmtViewModel.IsLoad = true;
+            monitorMgmtViewModel.WaitIndiContent = "正在加载...";
             if (isChecked)
             {
                 //新增视频
@@ -54,6 +57,8 @@ namespace MultimediaMgmt.View.Controls
                 monitor.StatusChanged += StatusChangedExec;
                 monitors.Add(monitor);
                 this.overviewPanel.Children.Add(monitor);
+                monitor.Play();
+
             }
             else
             {
@@ -63,7 +68,9 @@ namespace MultimediaMgmt.View.Controls
                     return;
                 monitors.Remove(rm);
                 this.overviewPanel.Children.Remove(rm);
+                rm.Dispose();
             }
+            monitorMgmtViewModel.IsLoad = false;
         }
 
         public void ShowCountExec(int count)
@@ -126,6 +133,8 @@ namespace MultimediaMgmt.View.Controls
                 monitor.Tag = i;
                 monitor.StatusChanged += RoomStatusChangedExec;
                 roomMonitors.Add(monitor);
+                monitor.Margin = new Thickness(2);
+                monitor.Play();
                 i++;
             }
             roomMonitors.ForEach(m =>

@@ -18,42 +18,45 @@ namespace MultimediaMgmt.ViewModel.Controls
 
         public ClassRoomViewModel()
         {
-            try
+            Task.Run(() =>
             {
-                List<CommonTree> temp = new List<CommonTree>();
-                foreach (ClassroomBuilding build in multimediaEntities.ClassroomBuilding)
+                try
                 {
-                    CommonTree tr = new CommonTree()
+                    List<CommonTree> temp = new List<CommonTree>();
+                    foreach (ClassroomBuilding build in multimediaEntities.ClassroomBuilding)
                     {
-                        ID = build.id,
-                        Name = build.BuildingName,
-                        Image = Constants.Images["build16"],
-                        IsChecked = false,
-                        Items = new List<CommonTree>()
-                    };
-                    foreach (var data in multimediaEntities.ClassRoom.Where(r => r.BuildingId == build.id).GroupBy(r => r.Floor))
-                    {
-                        tr.Items.Add(new CommonTree()
+                        CommonTree tr = new CommonTree()
                         {
-                            ID = data.Key,
-                            Name = string.Format("{0}层", data.Key),
-                            Image = Constants.Images["floor16"],
+                            ID = build.id,
+                            Name = build.BuildingName,
+                            Image = Constants.Images["build16"],
                             IsChecked = false,
-                            Items = (data.Select(c => new CommonTree()
+                            Items = new List<CommonTree>()
+                        };
+                        foreach (var data in multimediaEntities.ClassRoom.Where(r => r.BuildingId == build.id).GroupBy(r => r.Floor))
+                        {
+                            tr.Items.Add(new CommonTree()
                             {
-                                ID = c.Id,
-                                Name = c.RoomName,
-                                Image = Constants.Images["home16"],
+                                ID = data.Key,
+                                Name = string.Format("{0}层", data.Key),
+                                Image = Constants.Images["floor16"],
                                 IsChecked = false,
-                                Items = null
-                            })).ToList()
-                        });
+                                Items = (data.Select(c => new CommonTree()
+                                {
+                                    ID = c.Id,
+                                    Name = c.RoomName,
+                                    Image = Constants.Images["home16"],
+                                    IsChecked = false,
+                                    Items = null
+                                })).ToList()
+                            });
+                        }
+                        temp.Add(tr);
                     }
-                    temp.Add(tr);
+                    ClassRooms = temp;
                 }
-                ClassRooms = temp;
-            }
-            catch { }
+                catch { }
+            });          
             SelectedClassRooms = new List<CommonTree>();
         }
     }

@@ -13,10 +13,12 @@ namespace MultimediaMgmt.ViewModel.Controls
     [POCOViewModel]
     public class MonitorMgmtViewModel:BaseViewModel
     {
+        public virtual string WaitIndiContent { get; set; }
+        public virtual bool IsLoad { get; set; }
         public Action<int> ShowCountExec;
         public MonitorMgmtViewModel()
         {
-
+            IsLoad = false;
         }
 
         [Command]

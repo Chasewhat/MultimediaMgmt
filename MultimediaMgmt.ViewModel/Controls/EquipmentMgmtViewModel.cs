@@ -18,6 +18,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual SmartObservableCollection<ClassRoomEx> ClassRoomExs { get; set; }
         public virtual ClassRoomEx SelectedClassRoomEx { get; set; }
         public virtual Dictionary<byte, string> Signals { get; set; }
+        public virtual string WaitIndiContent { get; set; }
+        public virtual bool IsLoad { get; set; }
         public List<int> ids = new List<int>();
         private IRestConnection restConnection = null;
         public EquipmentMgmtViewModel()
@@ -26,7 +28,8 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (!string.IsNullOrEmpty(url))
                 restConnection = new RestConnection(url);
             Signals = Constants.Signals;
-            ClassRoomListRefresh();
+            //ClassRoomListRefresh();
+            IsLoad = false;
         }
 
         public void ClassRoomListRefresh()

@@ -110,6 +110,7 @@
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Controls\ClassRoomSingleViewModel.cs" />
     <Compile Include="Controls\IcCardRealtimeViewModel.cs" />
+    <Compile Include="Controls\MonitorViewModel.cs" />
     <Compile Include="Controls\PieControlViewModel.cs" />
     <Compile Include="Controls\CourseControlViewModel.cs" />
     <Compile Include="Controls\Stocks\EquipmentStatusViewModel.cs" />

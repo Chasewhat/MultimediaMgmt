@@ -12,35 +12,41 @@
     x:Class="MultimediaMgmt.View.Controls.ucMonitorMgmt"
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded">
-    <dxdo:DockLayoutManager>
-        <dxdo:LayoutGroup>
-            <dxdo:LayoutPanel Caption="教学楼列表" ItemWidth="220" AllowClose="False" AllowFloat="False">
-                <control:ucClassRoom x:Name="classRoomTree"/>
-            </dxdo:LayoutPanel>
-            <dxdo:DocumentGroup x:Name="docGroup" Background="Transparent" ShowTabHeaders="False" Margin="0" Padding="0"
+    <UserControl.Resources>
+        <DataTemplate x:Key="splashScreenTemplate">
+            <dx:WaitIndicator DeferedVisibility="True" Content="{Binding WaitIndiContent}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <dx:LoadingDecorator x:Name="loadWait" IsSplashScreenShown="{Binding IsLoad}" SplashScreenDataContext="{Binding}" OwnerLock="LoadingContent" SplashScreenTemplate="{StaticResource splashScreenTemplate}">
+        <dxdo:DockLayoutManager>
+            <dxdo:LayoutGroup>
+                <dxdo:LayoutPanel Caption="教学楼列表" ItemWidth="220" AllowClose="False" AllowFloat="False">
+                    <control:ucClassRoom x:Name="classRoomTree"/>
+                </dxdo:LayoutPanel>
+                <dxdo:DocumentGroup x:Name="docGroup" Background="Transparent" ShowTabHeaders="False" Margin="0" Padding="0"
                                         ShowCaption="False" AllowHide="False" AllowClose="False"
                                         ShowCloseButton="False" ShowControlBox="False" ClosePageButtonShowMode="NoWhere" 
                                         TabContentCacheMode="CacheTabsOnSelecting">
-                <dxdo:DocumentPanel x:Name="monitorMain" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                            <!--<RowDefinition Height="Auto"/>-->
-                        </Grid.RowDefinitions>
-                        <dxb:ToolBarControl Grid.Row="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-                            <dxb:BarCheckItem x:Name="bcC1" GroupIndex="1" Alignment="Far" Hint="1" Glyph="{StaticResource img1}" Command="{Binding ShowCountCommand}" CommandParameter="1"/>
-                            <dxb:BarCheckItem x:Name="bcC4" GroupIndex="1" Alignment="Far" Hint="4" Glyph="{StaticResource img4}" Command="{Binding ShowCountCommand}" CommandParameter="4"/>
-                            <dxb:BarCheckItem x:Name="bcC9" GroupIndex="1" Alignment="Far" Hint="9" Glyph="{StaticResource img9}" Command="{Binding ShowCountCommand}" CommandParameter="9"/>
-                            <dxb:BarCheckItem x:Name="bcC16" GroupIndex="1" Alignment="Far" Hint="16" Glyph="{StaticResource img16}" Command="{Binding ShowCountCommand}" CommandParameter="16" IsChecked="True"/>
-                            <dxb:BarCheckItem x:Name="bcC32" GroupIndex="1" Alignment="Far" Hint="32" Glyph="{StaticResource img32}" Command="{Binding ShowCountCommand}" CommandParameter="32"/>
-                        </dxb:ToolBarControl>
-                        <ScrollViewer x:Name="matrixInfo" Grid.Row="1" Visibility="Visible" Margin="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                            <UniformGrid x:Name="overviewPanel" Rows="4" Columns="4">
+                    <dxdo:DocumentPanel x:Name="monitorMain" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <!--<RowDefinition Height="Auto"/>-->
+                            </Grid.RowDefinitions>
+                            <dxb:ToolBarControl Grid.Row="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                                <dxb:BarCheckItem x:Name="bcC1" GroupIndex="1" Alignment="Far" Hint="1" Glyph="{StaticResource img1}" Command="{Binding ShowCountCommand}" CommandParameter="1"/>
+                                <dxb:BarCheckItem x:Name="bcC4" GroupIndex="1" Alignment="Far" Hint="4" Glyph="{StaticResource img4}" Command="{Binding ShowCountCommand}" CommandParameter="4"/>
+                                <dxb:BarCheckItem x:Name="bcC9" GroupIndex="1" Alignment="Far" Hint="9" Glyph="{StaticResource img9}" Command="{Binding ShowCountCommand}" CommandParameter="9"/>
+                                <dxb:BarCheckItem x:Name="bcC16" GroupIndex="1" Alignment="Far" Hint="16" Glyph="{StaticResource img16}" Command="{Binding ShowCountCommand}" CommandParameter="16" IsChecked="True"/>
+                                <dxb:BarCheckItem x:Name="bcC32" GroupIndex="1" Alignment="Far" Hint="32" Glyph="{StaticResource img32}" Command="{Binding ShowCountCommand}" CommandParameter="32"/>
+                            </dxb:ToolBarControl>
+                            <!--<ScrollViewer x:Name="matrixInfo" Grid.Row="1" Visibility="Visible" Margin="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">-->
+                            <UniformGrid x:Name="overviewPanel" Grid.Row="1" Rows="4" Columns="4">
 
                             </UniformGrid>
-                        </ScrollViewer>
-                        <!--<dxb:ToolBarControl Grid.Row="2" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                            <!--</ScrollViewer>-->
+                            <!--<dxb:ToolBarControl Grid.Row="2" AllowCustomizationMenu="False" AllowQuickCustomization="False">
                             <dxb:BarEditItem x:Name="widthChange" Content="视频宽度:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                                         EditValue="300" Alignment="Far" EditValueChanged="widthChange_EditValueChanged">
                                 <dxb:BarEditItem.ContentTemplate>
@@ -74,20 +80,21 @@
                                 </dxb:BarEditItem.EditSettings>
                             </dxb:BarEditItem>
                         </dxb:ToolBarControl>-->
-                    </Grid>
-                </dxdo:DocumentPanel>
-                <dxdo:DocumentPanel x:Name="monitorRoom" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False">
-                    <Grid>
-                        <dxdo:LayoutGroup Orientation="Horizontal">
-                            <dxdo:LayoutPanel ItemWidth="*" x:Name="detailPanel" Visibility="Collapsed" ShowCaption="False" ShowBorder="False" AllowHide="False"/>
-                            <dxdo:LayoutPanel ItemWidth="*" x:Name="listPanel" ShowCaption="False">
-                                <UniformGrid x:Name="overviewRoomPanel" Rows="1" Columns="1" VerticalAlignment="Top">
-                                </UniformGrid>
-                            </dxdo:LayoutPanel>
-                        </dxdo:LayoutGroup>
-                    </Grid>
-                </dxdo:DocumentPanel>
-            </dxdo:DocumentGroup>
-        </dxdo:LayoutGroup>
-    </dxdo:DockLayoutManager>
+                        </Grid>
+                    </dxdo:DocumentPanel>
+                    <dxdo:DocumentPanel x:Name="monitorRoom" ShowCaption="False" AllowClose="False" AllowHide="False" ShowBorder="False">
+                        <Grid>
+                            <dxdo:LayoutGroup Orientation="Horizontal">
+                                <dxdo:LayoutPanel ItemWidth="*" x:Name="detailPanel" Visibility="Collapsed" ShowCaption="False" ShowBorder="False" AllowHide="False"/>
+                                <dxdo:LayoutPanel ItemWidth="*" x:Name="listPanel" ShowCaption="False">
+                                    <UniformGrid x:Name="overviewRoomPanel" Rows="1" Columns="1" VerticalAlignment="Top">
+                                    </UniformGrid>
+                                </dxdo:LayoutPanel>
+                            </dxdo:LayoutGroup>
+                        </Grid>
+                    </dxdo:DocumentPanel>
+                </dxdo:DocumentGroup>
+            </dxdo:LayoutGroup>
+        </dxdo:DockLayoutManager>
+    </dx:LoadingDecorator>
 </UserControl>

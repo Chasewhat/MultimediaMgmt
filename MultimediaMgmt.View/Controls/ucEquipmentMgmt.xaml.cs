@@ -74,6 +74,8 @@ namespace MultimediaMgmt.View.Controls
 
         public void CheckedChangedExec(CommonTree classRoom, bool isChecked)
         {
+            classRoomMgmtViewModel.IsLoad = true;
+            classRoomMgmtViewModel.WaitIndiContent = "正在加载...";
             if (isChecked)
             {
                 //新增设备
@@ -107,6 +109,7 @@ namespace MultimediaMgmt.View.Controls
                 //if (this.overviewPanel.Children.Count <= 0)
                 //    this.listPanel.ItemWidth = new GridLength(0);
             }
+            classRoomMgmtViewModel.IsLoad = false;
         }
 
         public void StatusChangedExec(ucEquipmentControl ucc, bool isDetail)
