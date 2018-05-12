@@ -81,6 +81,10 @@ namespace MultimediaMgmt.ViewModel.Controls
                                        //Alarm_In3 = t.Alarm_In3,
                                        //Alarm_In4 = t.Alarm_In4
                                    };
+                        if (BuildingId.HasValue && BuildingId.Value > 0)
+                            data = data.Where(s => s.BuildingId == BuildingId.Value);
+                        if (!string.IsNullOrEmpty(TerminalId))
+                            data = data.Where(s => s.TerminalId == TerminalId);
                         WarnOperates = data.ToSmartObservableCollection();
                     }
                 }
@@ -112,6 +116,13 @@ namespace MultimediaMgmt.ViewModel.Controls
 
             //WarnOperates = data.ToSmartObservableCollection();
             #endregion
+        }
+
+        [Command]
+        public void Reset()
+        {
+            TerminalId = null;
+            BuildingId = null;
         }
 
         [Command]

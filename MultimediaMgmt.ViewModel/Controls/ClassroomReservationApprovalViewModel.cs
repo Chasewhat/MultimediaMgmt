@@ -88,6 +88,14 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
+        public void Reset()
+        {
+            SelectedDateItem =  SelectedRoomItem =
+                SelectedReserveState = SelectedApproveState = null;
+            BeginDate = EndDate = null;
+        }
+
+        [Command]
         public void Delete()
         {
             if (SelectedClassroomReservationEx == null)
@@ -109,7 +117,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Approve()
         {
-            if (SelectedClassroomReservationEx == null)
+            if (SelectedClassroomReservationEx == null
+                || SelectedClassroomReservationEx.ApprovalState != 0)
                 return;
             if (MessageShow(string.Format("确认批准{0}的预约申请?", SelectedClassroomReservationEx.ReservationPersonName))
                 != MessageBoxResult.Yes)
@@ -132,7 +141,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Reject()
         {
-            if (SelectedClassroomReservationEx == null)
+            if (SelectedClassroomReservationEx == null
+                || SelectedClassroomReservationEx.ApprovalState != 0)
                 return;
             if (MessageShow(string.Format("确认拒绝{0}的预约申请?", SelectedClassroomReservationEx.ReservationPersonName))
                 != MessageBoxResult.Yes)

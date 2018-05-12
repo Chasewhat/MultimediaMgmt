@@ -23,7 +23,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual int SelectedSwCardType { get; set; }
         protected void OnSelectedSwCardTypeChanged()
         {
-            if(SelectedSwCardType==1)
+            if (SelectedSwCardType == 1)
                 CardStatuss = Constants.AccessCardStatuss;
             else
                 CardStatuss = Constants.CardStatuss;
@@ -120,12 +120,21 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = data.Where(s => s.TerminalId == TerminalId);
             if (SelectedCardStatus.HasValue)
                 data = data.Where(s => s.State == SelectedCardStatus.Value);
-            if(BeginDate.HasValue && BeginDate.Value!=default(DateTime))
+            if (BeginDate.HasValue && BeginDate.Value != default(DateTime))
                 data = data.Where(s => s.LogTime >= BeginDate);
             if (EndDate.HasValue && EndDate.Value != default(DateTime))
                 data = data.Where(s => s.LogTime <= EndDate);
 
             CardLogExs = data.ToSmartObservableCollection();
+        }
+
+        [Command]
+        public void Reset()
+        {
+            HexCode = CardNum = PersonId = PersonName = BuildingName =
+                Location = TerminalId = null;
+            SelectedCardStatus = null;
+            BeginDate = EndDate = null;
         }
     }
 }

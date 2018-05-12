@@ -54,6 +54,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         public virtual List<string> TerminalIds { get; set; }
 
         public Action<string> MessageShow;
+        public Action CloseWindow;
 
         private int currId = 0;
         public PermitAddEditViewModel(int id)
@@ -123,28 +124,38 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 MessageShow("请确认必填项");
                 return;
             }
-            if (currId > 0)
+            try
             {
-                ClassRoomPermit permit = multimediaEntities.ClassRoomPermit.FirstOrDefault(s => s.ID == currId);
-                if (permit != null)
+                if (currId > 0)
                 {
-                    permit.TerminalId = TerminalId;
-                    permit.PermitTime = CurrPermit.PermitTime;
-                    permit.PersonId = CurrPermit.PersonId;
-                    multimediaEntities.Entry(permit).State = EntityState.Modified;
+                    ClassRoomPermit permit = multimediaEntities.ClassRoomPermit.FirstOrDefault(s => s.ID == currId);
+                    if (permit != null)
+                    {
+                        permit.TerminalId = TerminalId;
+                        permit.PermitTime = CurrPermit.PermitTime;
+                        permit.PersonId = CurrPermit.PersonId;
+                        multimediaEntities.Entry(permit).State = EntityState.Modified;
+                    }
                 }
-            }
-            else
-            {
-                ClassRoomPermit permit = new ClassRoomPermit()
+                else
                 {
-                    TerminalId = TerminalId,
-                    PersonId = CurrPermit.PersonId,
-                    PermitTime = CurrPermit.PermitTime
-                };
-                multimediaEntities.ClassRoomPermit.Add(permit);
+                    ClassRoomPermit permit = new ClassRoomPermit()
+                    {
+                        TerminalId = TerminalId,
+                        PersonId = CurrPermit.PersonId,
+                        PermitTime = CurrPermit.PermitTime
+                    };
+                    multimediaEntities.ClassRoomPermit.Add(permit);
+                }
+                multimediaEntities.SaveChanges();
+                MessageShow("保存成功!");
             }
-            multimediaEntities.SaveChanges();
+            catch (Exception ex)
+            {
+                MessageShow(string.Format("保存失败:{0}", ex.Message));
+            }
+            if (currId > 0)
+                CloseWindow();
         }
 
         [Command]

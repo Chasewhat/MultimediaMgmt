@@ -17,8 +17,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual SmartObservableCollection<WarnOperate> WarnHistorys { get; set; }
         public virtual int? BuildingId { get; set; }
         public virtual string TerminalId { get; set; }
-        public virtual DateTime BeginDate { get; set; }
-        public virtual DateTime EndDate { get; set; }
+        public virtual DateTime? BeginDate { get; set; }
+        public virtual DateTime? EndDate { get; set; }
 
         public virtual List<KeyValuePair<int,string>> Buildings { get; set; }
 
@@ -57,9 +57,19 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (!string.IsNullOrEmpty(TerminalId))
                 data = data.Where(s => s.TerminalId == TerminalId);
 
-            data = data.Where(s => s.ReportTime >= BeginDate && s.ReportTime <= EndDate);
-
+            if (BeginDate.HasValue && BeginDate.Value != default(DateTime))
+                data = data.Where(s => s.ReportTime >= BeginDate);
+            if (EndDate.HasValue && EndDate.Value != default(DateTime))
+                data = data.Where(s => s.ReportTime <= EndDate);
             WarnHistorys = data.ToSmartObservableCollection();
+        }
+
+        [Command]
+        public void Reset()
+        {
+            TerminalId = null;
+            BuildingId = null;
+            BeginDate = EndDate = null;
         }
     }
 }

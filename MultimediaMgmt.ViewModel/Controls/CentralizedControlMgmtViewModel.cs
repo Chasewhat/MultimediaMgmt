@@ -76,6 +76,12 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
+        public void Reset()
+        {
+            BuildingId = null;
+        }
+
+        [Command]
         public void CopyIcCardToTerminal()
         {
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0 ||

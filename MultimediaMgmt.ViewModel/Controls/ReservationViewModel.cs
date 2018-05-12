@@ -59,6 +59,13 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
+        public void Reset()
+        {
+            TerminalId = PersonId = null;
+            BeginDate = EndDate = null;
+        }
+
+        [Command]
         public void Delete()
         {
             if (SelectedReservation == null)

@@ -54,7 +54,9 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (!string.IsNullOrEmpty(TerminalId))
                 data = data.Where(s => s.TerminalId == TerminalId);
             if (!string.IsNullOrEmpty(PersonId))
-                data = data.Where(s => s.PersonId.IndexOf(PersonId) >= 0);
+                data = data.Where(s => s.PersonId==PersonId);
+            if (!string.IsNullOrEmpty(PersonName))
+                data = data.Where(s => s.PersonId == PersonName);
             var temp = data.ToList();
             List<string> personNames;
             foreach (PermitOperateEx po in temp)
@@ -71,6 +73,13 @@ namespace MultimediaMgmt.ViewModel.Controls
                 po.PersonName = string.Join(";", personNames.ToArray());
             }
             Permits = temp.ToSmartObservableCollection();
+        }
+
+        [Command]
+        public void Reset()
+        {
+            TerminalId = PersonId = PersonName = null;
+            BuildingId = null;
         }
 
         [Command]

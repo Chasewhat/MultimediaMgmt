@@ -117,53 +117,62 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 MessageShow("请确认必填项");
                 return;
             }
-            CurrIcCard.HexCode = HexCode;
-            CurrIcCard.CardType = CardType;
-            CurrIcCard.PersonId = PersonId;
-            if (currId > 0)
-                multimediaEntities.Entry(CurrIcCard).State = EntityState.Modified;
-            else
-                multimediaEntities.IcCard.Add(CurrIcCard);
-            if (IsSyncPerson.HasValue && IsSyncPerson.Value)
+            try
             {
-                //同步维护Person
-                bool isAdd = true;
-                Person person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == PersonId);
-                if (person == null)
-                    person = new Person() { PersonId = PersonId };
+                CurrIcCard.HexCode = HexCode;
+                CurrIcCard.CardType = CardType;
+                CurrIcCard.PersonId = PersonId;
+                if (currId > 0)
+                    multimediaEntities.Entry(CurrIcCard).State = EntityState.Modified;
                 else
-                    isAdd = false;
-                person.Name = Name;
-                person.Sex = Sex;
-                person.ClassId = ClassId;
-                person.FacultyId = FacultyId;
-                person.Email = Email;
-                person.Phone = Phone;
-                if (isAdd)
-                    multimediaEntities.Person.Add(person);
-                else
-                    multimediaEntities.Entry(person).State = EntityState.Modified;
+                    multimediaEntities.IcCard.Add(CurrIcCard);
+                if (IsSyncPerson.HasValue && IsSyncPerson.Value)
+                {
+                    //同步维护Person
+                    bool isAdd = true;
+                    Person person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == PersonId);
+                    if (person == null)
+                        person = new Person() { PersonId = PersonId };
+                    else
+                        isAdd = false;
+                    person.Name = Name;
+                    person.Sex = Sex;
+                    person.ClassId = ClassId;
+                    person.FacultyId = FacultyId;
+                    person.Email = Email;
+                    person.Phone = Phone;
+                    if (isAdd)
+                        multimediaEntities.Person.Add(person);
+                    else
+                        multimediaEntities.Entry(person).State = EntityState.Modified;
 
-                //同步维护Student
-                isAdd = true;
-                Student student = multimediaEntities.Student.FirstOrDefault(s => s.PersonId == PersonId);
-                if (student == null)
-                    student = new Student() { PersonId = PersonId };
-                else
-                    isAdd = false;
-                student.Name = Name;
-                student.Sex = Sex;
-                student.ClassID = ClassId;
-                student.Email = Email;
-                student.Phone = Phone;
-                if (isAdd)
-                    multimediaEntities.Student.Add(student);
-                else
-                    multimediaEntities.Entry(student).State = EntityState.Modified;
+                    //同步维护Student
+                    isAdd = true;
+                    Student student = multimediaEntities.Student.FirstOrDefault(s => s.PersonId == PersonId);
+                    if (student == null)
+                        student = new Student() { PersonId = PersonId };
+                    else
+                        isAdd = false;
+                    student.Name = Name;
+                    student.Sex = Sex;
+                    student.ClassID = ClassId;
+                    student.Email = Email;
+                    student.Phone = Phone;
+                    if (isAdd)
+                        multimediaEntities.Student.Add(student);
+                    else
+                        multimediaEntities.Entry(student).State = EntityState.Modified;
+                }
+
+                multimediaEntities.SaveChanges();
+                MessageShow("保存成功!");
             }
-
-            multimediaEntities.SaveChanges();
-            CloseWindow();
+            catch (Exception ex)
+            {
+                MessageShow(string.Format("保存失败:{0}", ex.Message));
+            }
+            if (currId > 0)
+                CloseWindow();
         }
     }
 }

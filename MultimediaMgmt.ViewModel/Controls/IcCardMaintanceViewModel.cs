@@ -86,6 +86,14 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
+        public void Reset()
+        {
+            HexCode = CardNum = PersonId = PersonName = SelectedSex =
+                SelectedCardStatus = SelectedCardType = null;
+            SelectedCardStatus= SelectedCardType = null;
+        }
+
+        [Command]
         public void Delete()
         {
             if (SelectedIcCard == null)

@@ -62,6 +62,7 @@
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
                 <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
                 <dxb:BarItemSeparator/>
                 <dxb:BarButtonItem Content="增加" ItemClick="Add_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Add_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
                 <dxb:BarButtonItem Content="导出Excel" Command="{Binding ExportExcelCommand}" Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
@@ -102,6 +103,7 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Status" Header="卡状态" Width="100"/>
             </dxg:GridControl>
         </DockPanel>
     </dx:LoadingDecorator>

@@ -18,7 +18,7 @@ namespace MultimediaMgmt.View.PopWindows
             icCardAddEditViewModel.CloseWindow = () => { this.Close(); };
             icCardAddEditViewModel.MessageShow = (s) =>
             {
-                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             };
         }
     }
