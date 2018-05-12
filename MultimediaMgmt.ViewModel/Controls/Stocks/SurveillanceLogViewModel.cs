@@ -37,5 +37,11 @@ namespace MultimediaMgmt.ViewModel.Controls
 
             SurveillanceLogs = data.ToSmartObservableCollection();
         }
+
+        [Command]
+        public void Reset()
+        {
+            BeginDate = EndDate = null;
+        }
     }
 }

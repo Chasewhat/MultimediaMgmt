@@ -29,4 +29,9 @@ namespace MultimediaMgmt.ViewModel.Notice
     /// 右下角提示窗事件
     /// </summary>
     public class NotifyShowEvent : Prism.Events.PubSubEvent<Notify> { }
+
+    /// <summary>
+    /// 设备状态查询事件
+    /// </summary>
+    public class EquipmentStatusInquiryEvent : Prism.Events.PubSubEvent<string> { }
 }

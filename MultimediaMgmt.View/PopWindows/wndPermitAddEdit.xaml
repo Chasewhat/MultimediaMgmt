@@ -78,7 +78,7 @@
                         <dxe:TextEdit HorizontalAlignment="Left" Width="100" EditValue="{Binding MajorsName}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="性别:">
-                        <dxe:ComboBoxEdit HorizontalAlignment="Left" Width="100" IsTextEditable="False" EditValue="{Binding Sex}" ItemsSource="{Binding Sexs}" DisplayMember="Value" ValueMember="Key"/>
+                        <dxe:ComboBoxEdit HorizontalAlignment="Left" Width="100" IsTextEditable="True" EditValue="{Binding Sex}" ItemsSource="{Binding Sexs}" DisplayMember="Value" ValueMember="Key"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="班级:">
                         <dxe:TextEdit HorizontalAlignment="Left" Width="100" EditValue="{Binding ClassId}"/>

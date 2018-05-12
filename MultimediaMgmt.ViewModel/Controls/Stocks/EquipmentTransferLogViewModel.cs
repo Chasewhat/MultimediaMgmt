@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MultimediaMgmt.Common.Extend;
 using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.Common.Helper;
+using MultimediaMgmt.ViewModel.Notice;
 
 namespace MultimediaMgmt.ViewModel.Controls
 {
@@ -19,6 +20,14 @@ namespace MultimediaMgmt.ViewModel.Controls
 
         public EquipmentTransferLogViewModel()
         {
+            //订阅设备状态查询事件
+            NOTICE.GetEvent<EquipmentStatusInquiryEvent>().Subscribe(QueryStatus);
+        }
+
+        public void QueryStatus(string number)
+        {
+            SerialNumber = number;
+            Query();
         }
 
         [Command]
@@ -55,6 +64,12 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = data.Where(s => s.SerialNumber == SerialNumber);
 
             EquipmentTransferLogs = data.ToSmartObservableCollection();
+        }
+
+        [Command]
+        public void Reset()
+        {
+            SerialNumber = null;
         }
     }
 }

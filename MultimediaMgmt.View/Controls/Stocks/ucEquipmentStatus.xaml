@@ -43,6 +43,7 @@
                 </dxb:BarEditItem.EditSettings>
             </dxb:BarEditItem>
             <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+            <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
         </dxb:ToolBarControl>
         <dxg:GridControl ItemsSource="{Binding EquipmentStatuss}"
                          SelectedItem="{Binding SelectedEquipmentStatus}"

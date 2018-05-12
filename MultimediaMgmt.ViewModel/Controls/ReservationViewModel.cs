@@ -30,7 +30,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Query()
         {
-            var data = from b in multimediaEntities.ReservationCourseTable
+            var data = (from b in multimediaEntities.ReservationCourseTable
                        join c in multimediaEntities.ClassRoom on b.RoomId equals c.Id
                        join p in multimediaEntities.Person on b.PersonId equals p.PersonId
                        select new ReservationEx(){
@@ -45,7 +45,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            ClassroomReservationId = b.ClassroomReservationId,
                            TerminalId = c.TerminalId,
                            Name = p.Name
-                       };
+                       }).AsEnumerable();
             if (!string.IsNullOrEmpty(PersonId))
                 data = data.Where(s => s.PersonId == PersonId);
             if (!string.IsNullOrEmpty(TerminalId))

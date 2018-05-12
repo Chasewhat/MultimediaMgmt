@@ -25,8 +25,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual Dictionary<byte, string> ApproveState { get; set; }
         public virtual int? SelectedDateItem { get; set; }
         public virtual int? SelectedRoomItem { get; set; }
-        public virtual int? SelectedReserveState { get; set; }
-        public virtual int? SelectedApproveState { get; set; }
+        public virtual byte? SelectedReserveState { get; set; }
+        public virtual byte? SelectedApproveState { get; set; }
         public virtual DateTime? BeginDate { get; set; }
         public virtual DateTime? EndDate { get; set; }
 
@@ -77,7 +77,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                     data = data.Where(s => s.Date.ToDateTime("yyyy-MM-dd") <= EndDate.Value);
             }
 
-            if (SelectedRoomItem.HasValue && SelectedRoomItem.Value != 0)
+            if (SelectedRoomItem.HasValue)
                 data = data.Where(s => s.RoomId == RoomId);
             if (SelectedReserveState.HasValue)
                 data = data.Where(s => s.ReservationState == SelectedReserveState);
@@ -90,7 +90,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Reset()
         {
-            SelectedDateItem =  SelectedRoomItem =
+            SelectedDateItem = SelectedRoomItem =
                 SelectedReserveState = SelectedApproveState = null;
             BeginDate = EndDate = null;
         }
