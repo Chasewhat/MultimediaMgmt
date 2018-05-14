@@ -27,7 +27,7 @@ namespace MultimediaMgmt.View.Controls
         private bool isSet = false;
         public string MediaUrl = string.Empty;
         public int Id = 0;
-        public ucMonitor(string info,string mediaUrl,int id)
+        public ucMonitor(string info, string mediaUrl, int id)
         {
             InitializeComponent();
             this.DataContext = monitorViewModel = ViewModelSource.Create<MonitorViewModel>();
@@ -55,10 +55,14 @@ namespace MultimediaMgmt.View.Controls
             //this.vlcTest.SourceProvider.MediaPlayer.Dispose();
             //}
             //this.vlcTest.SourceProvider.Dispose();
-            this.vlcTest.Dispose();
             this.volumnChange.EditValue = 0;
             monitorViewModel.Image = Constants.Images["imagePlay"];
-            GC.Collect();
+
+            Task.Run(() =>
+            {
+                this.vlcTest.Dispose();
+                GC.Collect();
+            });          
         }
 
         private void showDetail_CheckedChanged(object sender, ItemClickEventArgs e)
@@ -97,26 +101,38 @@ namespace MultimediaMgmt.View.Controls
             Task.Run(() =>
             {
                 PlayTask();
-            });         
+            });
         }
 
         private void PlayTask()
         {
-            this.vlcTest.Dispatcher.Invoke(() => {
+            this.vlcTest.Dispatcher.Invoke(() =>
+            {
                 if (this.vlcTest.SourceProvider.MediaPlayer == null)
                 {
                     if (string.IsNullOrEmpty(MediaUrl))
                         return;
                     // Default installation path of VideoLAN.LibVLC.Windows
                     var libDirectory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
-                    string[] arguments = { "-I", "--dummy-quiet",
-                        "--ignore-config", "--no-video-title","--rtsp-tcp",
-                        "--no-sub-autodetect-file", "--loop"};
-                    this.vlcTest.SourceProvider.CreatePlayer(libDirectory, arguments);
+                    string[] arguments = {
+                        "-I", "--dummy-quiet",
+                        "--preferred-resolution=240",
+                        //"--width=48","--height=27","--align=1",
+                        "--volume=0","--zoom=0.5","--no-video-deco",
+                        "--ignore-config", "--no-video-title",
+                        "--no-sub-autodetect-file",
+                        "--loop",
+                        "--rtsp-tcp",
+                        //"--demux=h264",
+                        //"--ipv4",
+                        "--no-prefer-system-codecs",
+                        "--rtsp-caching=300",
+                        "--network-caching=500"
+                    };
+                    this.vlcTest.SourceProvider.CreatePlayer(libDirectory);
                     this.vlcTest.SourceProvider.MediaPlayer.Play(new Uri(MediaUrl));
                     this.vlcTest.SourceProvider.disposedValue = false;
-                    this.vlcTest.SourceProvider.MediaPlayer.Audio.Volume = 0;
-                    this.vlcTest.SourceProvider.MediaPlayer.Audio.IsMute = true;
+                    //this.vlcTest.SourceProvider.MediaPlayer.Audio.IsMute = true;
                     monitorViewModel.Image = Constants.Images["imagePause"];
                 }
                 else

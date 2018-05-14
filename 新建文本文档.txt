@@ -1,0 +1,5 @@
+INSERT INTO dmtjsgl3.DBO.ClassRoom(TerminalId,TerminalIp,RoomName,[Floor],BuildingId)
+  SELECT [TerminalId]
+      ,[TerminalIp]
+      ,[RoomNum],1,2
+  FROM [dmtjsglOld].[dbo].[ClassRoom]

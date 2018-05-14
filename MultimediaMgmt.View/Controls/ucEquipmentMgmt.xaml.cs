@@ -36,7 +36,7 @@ namespace MultimediaMgmt.View.Controls
              });
             //每隔60秒刷新一次
             DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.ApplicationIdle);
-            timer.Interval = TimeSpan.FromSeconds(60);
+            timer.Interval = TimeSpan.FromSeconds(3);
             timer.Tick += (s, se) => { Refresh(); };
             timer.Start();
         }
@@ -76,40 +76,48 @@ namespace MultimediaMgmt.View.Controls
         {
             classRoomMgmtViewModel.IsLoad = true;
             classRoomMgmtViewModel.WaitIndiContent = "正在加载...";
-            if (isChecked)
+            try
             {
-                //新增设备
-                if (!classRoomMgmtViewModel.ids.Contains(classRoom.ID))
-                    classRoomMgmtViewModel.ids.Add(classRoom.ID);
-                classRoomMgmtViewModel.ClassRoomListRefresh();
-                if (classRoomMgmtViewModel.ClassRoomExs == null)
-                    return;
-                ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID);
-                if (cr == null)
-                    return;
-                ucEquipmentControl ucc = new ucEquipmentControl();
-                ucc.Margin = new Thickness(5);
-                ucc.Width = 180;
-                ucc.Height = 200;
-                ucc.StatusChanged += StatusChangedExec;
-                equipments.Add(ucc);
-                this.overviewPanel.Children.Add(ucc);
-                ucc.Init(cr);
-                //if (this.listPanel.ItemWidth == new GridLength(0))
-                //    this.listPanel.ItemWidth = new GridLength(220);
+                if (isChecked)
+                {
+                    //新增设备
+                    if (!classRoomMgmtViewModel.ids.Contains(classRoom.ID))
+                        classRoomMgmtViewModel.ids.Add(classRoom.ID);
+                    classRoomMgmtViewModel.ClassRoomListRefresh();
+                    if (classRoomMgmtViewModel.ClassRoomExs == null)
+                        return;
+                    ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID);
+                    if (cr == null)
+                        return;
+                    ucEquipmentControl ucc = new ucEquipmentControl();
+                    ucc.Margin = new Thickness(5);
+                    ucc.Width = 180;
+                    ucc.Height = 200;
+                    ucc.StatusChanged += StatusChangedExec;
+                    equipments.Add(ucc);
+                    this.overviewPanel.Children.Add(ucc);
+                    ucc.Init(cr);
+                    //if (this.listPanel.ItemWidth == new GridLength(0))
+                    //    this.listPanel.ItemWidth = new GridLength(220);
+                }
+                else
+                {
+                    //删除设备
+                    ucEquipmentControl eq = equipments.FirstOrDefault(s => s.Id == classRoom.ID);
+                    if (eq == null)
+                        return;
+                    equipments.Remove(eq);
+                    this.overviewPanel.Children.Remove(eq);
+                    //if (this.overviewPanel.Children.Count <= 0)
+                    //    this.listPanel.ItemWidth = new GridLength(0);
+                }
             }
-            else
+            catch
+            { }
+            finally
             {
-                //删除设备
-                ucEquipmentControl eq = equipments.FirstOrDefault(s => s.Id == classRoom.ID);
-                if (eq == null)
-                    return;
-                equipments.Remove(eq);
-                this.overviewPanel.Children.Remove(eq);
-                //if (this.overviewPanel.Children.Count <= 0)
-                //    this.listPanel.ItemWidth = new GridLength(0);
+                classRoomMgmtViewModel.IsLoad = false;
             }
-            classRoomMgmtViewModel.IsLoad = false;
         }
 
         public void StatusChangedExec(ucEquipmentControl ucc, bool isDetail)

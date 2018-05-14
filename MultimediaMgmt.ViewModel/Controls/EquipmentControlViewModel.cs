@@ -42,7 +42,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                 return;
             flag = 1;
             CurrClassRoom = cr;
-            ClassRoomInfo = string.Format("{0}{1}", cr.BuildingName, cr.TerminalId);
+            ClassRoomInfo = string.Format("{0}{1}", cr.BuildingName, cr.RoomName);
             CourseName = cr.CourseName;
             PersonName = cr.PersonName;
             if (cr.System.HasValue && cr.System.Value)

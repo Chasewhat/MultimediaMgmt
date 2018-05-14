@@ -39,38 +39,46 @@ namespace MultimediaMgmt.View.Controls
         {
             monitorMgmtViewModel.IsLoad = true;
             monitorMgmtViewModel.WaitIndiContent = "正在加载...";
-            if (isChecked)
+            try
             {
-                //新增视频
-                ClassRoomEx cr = monitorMgmtViewModel.GetClassRoom(classRoom.ID);
-                if (cr == null || string.IsNullOrEmpty(cr.VedioAddress))
-                    return;
-                string[] address = cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (address.Length <= 0)
-                    return;
-                ucMonitor monitor = new ucMonitor(
-                    string.Format("{0}{1}", cr.BuildingName, cr.TerminalId), address[0], cr.Id);
-                monitor.Margin = new Thickness(2);
-                monitor.Width = double.NaN;
-                monitor.Height = double.NaN;
-                monitor.Tag = 0;
-                monitor.StatusChanged += StatusChangedExec;
-                monitors.Add(monitor);
-                this.overviewPanel.Children.Add(monitor);
-                monitor.Play();
+                if (isChecked)
+                {
+                    //新增视频
+                    ClassRoomEx cr = monitorMgmtViewModel.GetClassRoom(classRoom.ID);
+                    if (cr == null || string.IsNullOrEmpty(cr.VedioAddress))
+                        return;
+                    string[] address = cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (address.Length <= 0)
+                        return;
+                    ucMonitor monitor = new ucMonitor(
+                        string.Format("{0}{1}", cr.BuildingName, cr.TerminalId), address[0], cr.Id);
+                    monitor.Margin = new Thickness(2);
+                    monitor.Width = double.NaN;
+                    monitor.Height = double.NaN;
+                    monitor.Tag = 0;
+                    monitor.StatusChanged += StatusChangedExec;
+                    monitors.Add(monitor);
+                    this.overviewPanel.Children.Add(monitor);
+                    monitor.Play();
 
+                }
+                else
+                {
+                    //删除视频
+                    ucMonitor rm = monitors.FirstOrDefault(s => s.Id == classRoom.ID);
+                    if (rm == null)
+                        return;
+                    monitors.Remove(rm);
+                    this.overviewPanel.Children.Remove(rm);
+                    rm.Dispose();
+                }
             }
-            else
+            catch
+            { }
+            finally
             {
-                //删除视频
-                ucMonitor rm = monitors.FirstOrDefault(s => s.Id == classRoom.ID);
-                if (rm == null)
-                    return;
-                monitors.Remove(rm);
-                this.overviewPanel.Children.Remove(rm);
-                rm.Dispose();
+                monitorMgmtViewModel.IsLoad = false;
             }
-            monitorMgmtViewModel.IsLoad = false;
         }
 
         public void ShowCountExec(int count)
