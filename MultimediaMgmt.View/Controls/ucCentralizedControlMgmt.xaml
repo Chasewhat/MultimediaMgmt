@@ -18,6 +18,12 @@
                     <dxe:ComboBoxEditSettings IsTextEditable="False" ValueMember="Key" DisplayMember="Value" ItemsSource="{Binding Buildings}"/>
                 </dxb:BarEditItem.EditSettings>
             </dxb:BarEditItem>
+            <dxb:BarEditItem Content="楼层:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding Floor}">
+                <dxb:BarEditItem.EditSettings>
+                    <dxe:TextEditSettings MaskType="RegEx" Mask="[1-9]\d*" MaskAutoComplete="None"/>
+                </dxb:BarEditItem.EditSettings>
+            </dxb:BarEditItem>
             <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
             <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
         </dxb:ToolBarControl>

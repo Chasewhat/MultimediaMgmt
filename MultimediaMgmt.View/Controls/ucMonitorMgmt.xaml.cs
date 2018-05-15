@@ -59,7 +59,7 @@ namespace MultimediaMgmt.View.Controls
                     monitor.StatusChanged += StatusChangedExec;
                     monitors.Add(monitor);
                     this.overviewPanel.Children.Add(monitor);
-                    monitor.Play();
+                    //monitor.Play();
 
                 }
                 else
@@ -142,7 +142,7 @@ namespace MultimediaMgmt.View.Controls
                 monitor.StatusChanged += RoomStatusChangedExec;
                 roomMonitors.Add(monitor);
                 monitor.Margin = new Thickness(2);
-                monitor.Play();
+                //monitor.Play();
                 i++;
             }
             roomMonitors.ForEach(m =>

@@ -45,7 +45,8 @@ namespace MultimediaMgmt.ViewModel.Controls
             ClassRoomInfo = string.Format("{0}{1}", cr.BuildingName, cr.RoomName);
             CourseName = cr.CourseName;
             PersonName = cr.PersonName;
-            if (cr.System.HasValue && cr.System.Value)
+            if (cr.System.HasValue && cr.System.Value
+                && cr.IsConnected)
             {
                 HeadColor = "DarkGreen";
                 Status1 = Constants.Images["Systemo"];

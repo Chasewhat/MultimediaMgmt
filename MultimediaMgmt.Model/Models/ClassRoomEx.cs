@@ -55,5 +55,6 @@ namespace MultimediaMgmt.Model.Models
         public bool? IN_STATUS3 { get; set; }
         public string HexCode { get; set; }
         public byte? Opereate_Last { get; set; }
+        public bool IsConnected { get; set; }
     }
 }

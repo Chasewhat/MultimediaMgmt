@@ -100,6 +100,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                        //IN_STATUS3 = t.IN_STATUS3,
                                        //HexCode = t.HexCode,
                                        Opereate_Last = t.Opereate_Last,
+                                       IsConnected = t.IsConnected,
                                        //暂时不知如何获取  取默认值
                                        PersonId = "11111",
                                        PersonName = "张三丰",

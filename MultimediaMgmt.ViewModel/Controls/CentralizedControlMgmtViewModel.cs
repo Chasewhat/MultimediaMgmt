@@ -24,6 +24,7 @@ namespace MultimediaMgmt.ViewModel.Controls
 
         public virtual List<KeyValuePair<int, string>> Buildings { get; set; }
         public virtual int? BuildingId { get; set; }
+        public virtual string Floor { get; set; }
 
         public virtual bool AllControlSwitch { get; set; }
         public virtual bool AllAirConditionerSwitch { get; set; }
@@ -63,6 +64,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            TerminalId = c.TerminalId,
                            TerminalIp = c.TerminalIp,
                            BuildingId = c.BuildingId,
+                           Floor = c.Floor,
                            RoomName = c.RoomName,
                            BuildingName = b.BuildingName,
                            System = t.System,
@@ -71,6 +73,9 @@ namespace MultimediaMgmt.ViewModel.Controls
                        };
             if (BuildingId.HasValue && BuildingId.Value > 0)
                 data = data.Where(s => s.BuildingId == BuildingId.Value);
+            int floor = 0;
+            if(int.TryParse(Floor,out floor))
+                data= data.Where(s => s.Floor == floor);
             CentralizedControls = data.ToSmartObservableCollection();
             AllSwitchSet();
         }
@@ -79,6 +84,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void Reset()
         {
             BuildingId = null;
+            Floor = null;
         }
 
         [Command]

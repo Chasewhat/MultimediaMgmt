@@ -113,10 +113,11 @@ namespace MultimediaMgmt.View.Controls
                     if (string.IsNullOrEmpty(MediaUrl))
                         return;
                     // Default installation path of VideoLAN.LibVLC.Windows
-                    var libDirectory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
+                    var libDirectory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "VLC"));
                     string[] arguments = {
                         "-I", "--dummy-quiet",
                         "--preferred-resolution=240",
+                        "--fullscreen",
                         //"--width=48","--height=27","--align=1",
                         "--volume=0","--zoom=0.5","--no-video-deco",
                         "--ignore-config", "--no-video-title",

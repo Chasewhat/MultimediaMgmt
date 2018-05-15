@@ -72,7 +72,11 @@
                                     </dxg:TableView.RowCellMenuCustomizations>
                                 </dxg:TableView>
                             </dxg:GridControl.View>
-                            <dxg:GridColumn FieldName="ReservationTime" Header="预约时间" Width="150"/>
+                            <dxg:GridColumn FieldName="ReservationTime" Header="预约时间" Width="180">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings Mask="yyyy-MM-dd HH:mm:ss" MaskType="DateTime" MaskUseAsDisplayFormat="True"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
                             <dxg:GridColumn FieldName="ReservationPersonName" Header="预约人" Width="80"/>
                             <dxg:GridColumn FieldName="Description" Header="预约说明" Width="200"/>
                             <dxg:GridColumn FieldName="ReservationState" Header="预约状态" Width="80">
