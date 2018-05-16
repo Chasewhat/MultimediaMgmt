@@ -11,17 +11,17 @@ using System.Windows.Controls;
 namespace MultimediaMgmt.View.Controls
 {
     /// <summary>
-    /// ucMonitorMgmt.xaml 的交互逻辑
+    /// ucMonitorMetaMgmt.xaml 的交互逻辑
     /// </summary>
     public partial class ucMonitorMgmt : UserControl
     {
         private MonitorMgmtViewModel monitorMgmtViewModel;
         private int monitorWidth = 300, monitorHeight = 200;
         private int monitorMax = 16;
-        private List<ucMonitor> monitors = new List<ucMonitor>();
-        private List<ucMonitor> roomMonitors = new List<ucMonitor>();
+        private List<ucMonitorMeta> monitors = new List<ucMonitorMeta>();
+        private List<ucMonitorMeta> roomMonitors = new List<ucMonitorMeta>();
         private bool isShowRoom = false;
-        private KeyValuePair<int, ucMonitor> currMonitor;
+        private KeyValuePair<int, ucMonitorMeta> currMonitor;
 
         public ucMonitorMgmt()
         {
@@ -50,7 +50,7 @@ namespace MultimediaMgmt.View.Controls
                     string[] address = cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     if (address.Length <= 0)
                         return;
-                    ucMonitor monitor = new ucMonitor(
+                    ucMonitorMeta monitor = new ucMonitorMeta(
                         string.Format("{0}{1}", cr.BuildingName, cr.TerminalId), address[0], cr.Id);
                     monitor.Margin = new Thickness(2);
                     monitor.Width = double.NaN;
@@ -65,7 +65,7 @@ namespace MultimediaMgmt.View.Controls
                 else
                 {
                     //删除视频
-                    ucMonitor rm = monitors.FirstOrDefault(s => s.Id == classRoom.ID);
+                    ucMonitorMeta rm = monitors.FirstOrDefault(s => s.Id == classRoom.ID);
                     if (rm == null)
                         return;
                     monitors.Remove(rm);
@@ -109,7 +109,7 @@ namespace MultimediaMgmt.View.Controls
         {
             if (roomMonitors.Count <= 0)
                 return;
-            foreach (ucMonitor monitor in roomMonitors)
+            foreach (ucMonitorMeta monitor in roomMonitors)
                 monitor.Dispose();
             roomMonitors.Clear();
             this.overviewRoomPanel.Children.Clear();
@@ -134,7 +134,7 @@ namespace MultimediaMgmt.View.Controls
                     break;
                 string info = string.Format("{0}{1} {2}#视频源",
                     cr.BuildingName, cr.TerminalId, i + 1);
-                ucMonitor monitor = new ucMonitor(info, address, cr.Id);
+                ucMonitorMeta monitor = new ucMonitorMeta(info, address, cr.Id);
                 monitor.Margin = new Thickness(2);
                 monitor.Width = double.NaN;
                 monitor.Height = double.NaN;
@@ -171,11 +171,11 @@ namespace MultimediaMgmt.View.Controls
             this.overviewPanel.Children.Insert(0, currMonitor.Value);
         }
 
-        public void StatusChangedExec(ucMonitor ucc, bool isDetail)
+        public void StatusChangedExec(ucMonitorMeta ucc, bool isDetail)
         {
             if (isDetail)
             {
-                currMonitor = new KeyValuePair<int, ucMonitor>(monitors.IndexOf(ucc), ucc);
+                currMonitor = new KeyValuePair<int, ucMonitorMeta>(monitors.IndexOf(ucc), ucc);
                 RoomMonitorInit(ucc.Id);
                 this.detailPanel.Visibility = Visibility.Visible;
                 this.overviewRoomPanel.Columns = 1;
@@ -191,14 +191,14 @@ namespace MultimediaMgmt.View.Controls
             }
         }
 
-        public void RoomStatusChangedExec(ucMonitor ucc, bool isDetail)
+        public void RoomStatusChangedExec(ucMonitorMeta ucc, bool isDetail)
         {
             if (isDetail)
             {
                 this.detailPanel.Visibility = Visibility.Visible;
                 if (this.detailPanel.Content != null)
                 {
-                    ucMonitor temp = this.detailPanel.Content as ucMonitor;
+                    ucMonitorMeta temp = this.detailPanel.Content as ucMonitorMeta;
                     temp.StatusSet();
                     temp.Dispose();
                     this.detailPanel.Content = null;
@@ -219,14 +219,14 @@ namespace MultimediaMgmt.View.Controls
         //{
         //    monitorWidth = (int)widthChange.EditValue;
         //    foreach (var child in this.overviewPanel.Children)
-        //        (child as ucMonitor).Width = monitorWidth;
+        //        (child as ucMonitorMeta).Width = monitorWidth;
         //}
 
         //private void heightChange_EditValueChanged(object sender, RoutedEventArgs e)
         //{
         //    monitorHeight = (int)heightChange.EditValue;
         //    foreach (var child in this.overviewPanel.Children)
-        //        (child as ucMonitor).Height = monitorHeight; ;
+        //        (child as ucMonitorMeta).Height = monitorHeight; ;
         //}
     }
 }

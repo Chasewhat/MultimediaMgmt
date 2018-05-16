@@ -62,20 +62,29 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 MessageShow("请确认必填项");
                 return;
             }
-            CurrLoanLog.SerialName = SerialName;
-            CurrLoanLog.LoanDate = LoanDate;
-            CurrLoanLog.Borrower = Borrower;
+            try
+            {
+                CurrLoanLog.SerialName = SerialName;
+                CurrLoanLog.LoanDate = LoanDate;
+                CurrLoanLog.Borrower = Borrower;
+                if (currId > 0)
+                {
+                    multimediaEntities.Entry(CurrLoanLog).State = EntityState.Modified;
+                    multimediaEntities.SaveChanges();
+                }
+                else
+                {
+                    multimediaEntities.EquipmentLoanLog.Add(CurrLoanLog);
+                    multimediaEntities.SaveChanges();
+                }
+                MessageShow("保存成功!");
+            }
+            catch (Exception ex)
+            {
+                MessageShow(string.Format("保存失败:{0}", ex.Message));
+            }
             if (currId > 0)
-            {
-                multimediaEntities.Entry(CurrLoanLog).State = EntityState.Modified;
-                multimediaEntities.SaveChanges();
-            }
-            else
-            {
-                multimediaEntities.EquipmentLoanLog.Add(CurrLoanLog);
-                multimediaEntities.SaveChanges();
-            }
-            CloseWindow();
+                CloseWindow();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace MultimediaMgmt.View.Controls
             {
                 foreach (var ui in this.monitorsPanel.Children)
                 {
-                    ucMonitor monitor = ui as ucMonitor;
+                    ucMonitorMeta monitor = ui as ucMonitorMeta;
                     monitor.Dispose();
                 }
                 this.monitorsPanel.Children.Clear();
@@ -77,7 +77,7 @@ namespace MultimediaMgmt.View.Controls
                     classControlDetailViewModel.CurrClassRoom.TerminalId);
                 if (i > 0)
                     info += string.Format(" {0}#视频源", i + 1);
-                ucMonitor monitor = new ucMonitor(info, ad, classControlDetailViewModel.CurrClassRoom.Id);
+                ucMonitorMeta monitor = new ucMonitorMeta(info, ad, classControlDetailViewModel.CurrClassRoom.Id);
                 monitor.Margin = new Thickness(5);
                 monitor.Width = double.NaN;
                 monitor.Height = double.NaN;
@@ -88,15 +88,15 @@ namespace MultimediaMgmt.View.Controls
             }
         }
 
-        public void StatusChangedExec(ucMonitor ucc, bool isDetail)
+        public void StatusChangedExec(ucMonitorMeta ucc, bool isDetail)
         {
             if (isDetail)
             {
                 monitorsPanel.Rows = monitorsPanel.Columns = 1;
                 foreach (var child in monitorsPanel.Children)
                 {
-                    if ((child as ucMonitor).Tag != ucc.Tag)
-                        (child as ucMonitor).Visibility = Visibility.Collapsed;
+                    if ((child as ucMonitorMeta).Tag != ucc.Tag)
+                        (child as ucMonitorMeta).Visibility = Visibility.Collapsed;
                 }
             }
             else
@@ -105,7 +105,7 @@ namespace MultimediaMgmt.View.Controls
                 monitorsPanel.Columns = monitorColumns;
                 foreach (var child in monitorsPanel.Children)
                 {
-                    (child as ucMonitor).Visibility = Visibility.Visible;
+                    (child as ucMonitorMeta).Visibility = Visibility.Visible;
                 }
             }
         }

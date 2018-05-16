@@ -58,19 +58,28 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 MessageShow("请确认必填项");
                 return;
             }
-            CurrSurveillanceLog.LogContent = LogContent;
-            CurrSurveillanceLog.LogDate = LogDate;
+            try
+            {
+                CurrSurveillanceLog.LogContent = LogContent;
+                CurrSurveillanceLog.LogDate = LogDate;
+                if (currId > 0)
+                {
+                    multimediaEntities.Entry(CurrSurveillanceLog).State = EntityState.Modified;
+                    multimediaEntities.SaveChanges();
+                }
+                else
+                {
+                    multimediaEntities.SurveillanceLog.Add(CurrSurveillanceLog);
+                    multimediaEntities.SaveChanges();
+                }
+                MessageShow("保存成功!");
+            }
+            catch (Exception ex)
+            {
+                MessageShow(string.Format("保存失败:{0}", ex.Message));
+            }
             if (currId > 0)
-            {
-                multimediaEntities.Entry(CurrSurveillanceLog).State = EntityState.Modified;
-                multimediaEntities.SaveChanges();
-            }
-            else
-            {
-                multimediaEntities.SurveillanceLog.Add(CurrSurveillanceLog);
-                multimediaEntities.SaveChanges();
-            }
-            CloseWindow();
+                CloseWindow();
         }
     }
 }

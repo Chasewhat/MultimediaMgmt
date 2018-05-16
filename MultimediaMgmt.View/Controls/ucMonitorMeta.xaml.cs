@@ -17,17 +17,18 @@ using System.Threading.Tasks;
 namespace MultimediaMgmt.View.Controls
 {
     /// <summary>
-    /// ucMonitor.xaml 的交互逻辑
+    /// ucMonitorMeta.xaml 的交互逻辑
     /// </summary>
-    public partial class ucMonitor : UserControl
+    public partial class ucMonitorMeta : UserControl
     {
         private MonitorViewModel monitorViewModel;
-        public delegate void StatusChangedEvent(ucMonitor uc, bool isDetail);
+        public delegate void StatusChangedEvent(ucMonitorMeta uc, bool isDetail);
         public event StatusChangedEvent StatusChanged;
         private bool isSet = false;
         public string MediaUrl = string.Empty;
         public int Id = 0;
-        public ucMonitor(string info, string mediaUrl, int id)
+        private bool isLoad = false;
+        public ucMonitorMeta(string info, string mediaUrl, int id)
         {
             InitializeComponent();
             this.DataContext = monitorViewModel = ViewModelSource.Create<MonitorViewModel>();
@@ -38,31 +39,30 @@ namespace MultimediaMgmt.View.Controls
 
         private void volumnChange_EditValueChanged(object sender, RoutedEventArgs e)
         {
-            if (this.vlcTest != null && this.vlcTest.SourceProvider != null
-                && this.vlcTest.SourceProvider.MediaPlayer != null
-                && this.vlcTest.SourceProvider.MediaPlayer.Audio != null)
-                this.vlcTest.SourceProvider.MediaPlayer.Audio.Volume = int.Parse(this.volumnChange.EditValue.ToString());
+            if (vlcPlayer != null)
+                vlcPlayer.Volume = int.Parse(this.volumnChange.EditValue.ToString());
         }
 
         public void Dispose()
         {
-            //if (this.vlcTest.SourceProvider.MediaPlayer != null)
+            //if (vlcPlayer.SourceProvider.MediaPlayer != null)
             //{
-            //if (this.vlcTest.SourceProvider.MediaPlayer.IsPlaying())
-            //    this.vlcTest.SourceProvider.MediaPlayer.Pause();
-            //this.vlcTest.SourceProvider.MediaPlayer.GetMedia().Dispose();
-            //this.vlcTest.SourceProvider.MediaPlayer.Stop();
-            //this.vlcTest.SourceProvider.MediaPlayer.Dispose();
+            //if (vlcPlayer.SourceProvider.MediaPlayer.IsPlaying())
+            //    vlcPlayer.SourceProvider.MediaPlayer.Pause();
+            //vlcPlayer.SourceProvider.MediaPlayer.GetMedia().Dispose();
+            //vlcPlayer.SourceProvider.MediaPlayer.Stop();
+            //vlcPlayer.SourceProvider.MediaPlayer.Dispose();
             //}
-            //this.vlcTest.SourceProvider.Dispose();
+            //vlcPlayer.SourceProvider.Dispose();
             this.volumnChange.EditValue = 0;
             monitorViewModel.Image = Constants.Images["imagePlay"];
 
             Task.Run(() =>
             {
-                this.vlcTest.Dispose();
+                vlcPlayer.Dispose();
+                Meta.Vlc.Wpf.ApiManager.ReleaseAll();
                 GC.Collect();
-            });          
+            });
         }
 
         private void showDetail_CheckedChanged(object sender, ItemClickEventArgs e)
@@ -106,47 +106,28 @@ namespace MultimediaMgmt.View.Controls
 
         private void PlayTask()
         {
-            this.vlcTest.Dispatcher.Invoke(() =>
+            vlcPlayer.Dispatcher.Invoke(() =>
             {
-                if (this.vlcTest.SourceProvider.MediaPlayer == null)
+                if (vlcPlayer.VlcMediaPlayer.Media == null)
                 {
                     if (string.IsNullOrEmpty(MediaUrl))
                         return;
-                    // Default installation path of VideoLAN.LibVLC.Windows
-                    var libDirectory = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
-                    string[] arguments = {
-                        "-I", "--dummy-quiet",
-                        "--preferred-resolution=240",
-                        "--no-autoscale",
-                        //"--width=48","--height=27","--align=1",
-                        //"--volume=0","--zoom=0.5",
-                        "--no-video-deco",
-                        "--ignore-config", "--no-video-title",
-                        "--no-sub-autodetect-file",
-                        "--loop",
-                        "--rtsp-tcp",
-                        //"--demux=h264",
-                        //"--ipv4",
-                        "--no-prefer-system-codecs",
-                        "--rtsp-caching=300",
-                        "--network-caching=500"
-                    };
-                    this.vlcTest.SourceProvider.CreatePlayer(libDirectory, arguments);
-                    this.vlcTest.SourceProvider.MediaPlayer.Play(new Uri(MediaUrl));
-                    this.vlcTest.SourceProvider.disposedValue = false;
-                    this.vlcTest.SourceProvider.MediaPlayer.Audio.IsMute = true;
+                    //vlcPlayer.IsMute = true;
+                    vlcPlayer.Volume = 0;
+                    vlcPlayer.LoadMedia(new Uri(MediaUrl));
+                    vlcPlayer.Play();
                     monitorViewModel.Image = Constants.Images["imagePause"];
                 }
                 else
                 {
-                    if (this.vlcTest.SourceProvider.MediaPlayer.IsPlaying())
+                    if (vlcPlayer.VlcMediaPlayer.IsPlaying)
                     {
-                        this.vlcTest.SourceProvider.MediaPlayer.Pause();
+                        vlcPlayer.PauseOrResume();
                         monitorViewModel.Image = Constants.Images["imagePlay"];
                     }
                     else
                     {
-                        this.vlcTest.SourceProvider.MediaPlayer.Play();
+                        vlcPlayer.Play();
                         monitorViewModel.Image = Constants.Images["imagePause"];
                     }
                 }

@@ -64,6 +64,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Meta.Vlc, Version=16.5.1.0, Culture=neutral, PublicKeyToken=721a8c5379fa4056, processorArchitecture=x86">
+      <HintPath>..\packages\Meta.Vlc.17.06.20\lib\net45\x86\Meta.Vlc.dll</HintPath>
+    </Reference>
+    <Reference Include="Meta.Vlc.Wpf, Version=16.5.1.0, Culture=neutral, PublicKeyToken=721a8c5379fa4056, processorArchitecture=x86">
+      <HintPath>..\packages\Meta.Vlc.Wpf.17.06.20\lib\net45\x86\Meta.Vlc.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=7.0.0.396, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.7.0.0.396\lib\net45\Prism.dll</HintPath>
     </Reference>
@@ -108,6 +114,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ucMonitorMeta.xaml.cs">
+      <DependentUpon>ucMonitorMeta.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PopWindows\wndFileChoose.xaml.cs">
       <DependentUpon>wndFileChoose.xaml</DependentUpon>
     </Compile>
@@ -158,6 +167,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ucIcCardRealtime.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ucMonitorMeta.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

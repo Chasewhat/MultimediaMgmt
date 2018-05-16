@@ -46,12 +46,14 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             {
                 TerminalIds = multimediaEntities.ClassRoom.
                     Where(s => s.BuildingId == BuildingId.Value).
-                    Select(s => s.TerminalId).ToList();
+                    Select(s =>
+                    new { s.RoomName, s.TerminalId }).AsEnumerable().Select(s =>
+                             new KeyValuePair<string, string>(s.TerminalId, s.RoomName)).ToList();
             }
         }
         public virtual string TerminalId { get; set; }
 
-        public virtual List<string> TerminalIds { get; set; }
+        public virtual List<KeyValuePair<string, string>> TerminalIds { get; set; }
 
         public Action<string> MessageShow;
         public Action CloseWindow;

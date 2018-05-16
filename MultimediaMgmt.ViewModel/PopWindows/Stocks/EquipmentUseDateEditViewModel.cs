@@ -57,19 +57,28 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 MessageShow("请确认必填项");
                 return;
             }
-            CurrSerial.SerialNumber = SerialNumber;
-            CurrSerial.UseDate = UseDate;
+            try
+            {
+                CurrSerial.SerialNumber = SerialNumber;
+                CurrSerial.UseDate = UseDate;
+                if (currId > 0)
+                {
+                    multimediaEntities.Entry(CurrSerial).State = EntityState.Modified;
+                    multimediaEntities.SaveChanges();
+                }
+                else
+                {
+                    multimediaEntities.EquipmentInStock.Add(CurrSerial);
+                    multimediaEntities.SaveChanges();
+                }
+                MessageShow("保存成功!");
+            }
+            catch (Exception ex)
+            {
+                MessageShow(string.Format("保存失败:{0}", ex.Message));
+            }
             if (currId > 0)
-            {
-                multimediaEntities.Entry(CurrSerial).State = EntityState.Modified;
-                multimediaEntities.SaveChanges();
-            }
-            else
-            {
-                multimediaEntities.EquipmentInStock.Add(CurrSerial);
-                multimediaEntities.SaveChanges();
-            }
-            CloseWindow();
+                CloseWindow();
         }
     }
 }

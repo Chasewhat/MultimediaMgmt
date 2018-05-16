@@ -58,19 +58,28 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 MessageShow("请确认必填项");
                 return;
             }
-            CurrTransferLog.SerialNumber = SerialNumber;
-            CurrTransferLog.TransferDate = TransferDate;
+            try
+            {
+                CurrTransferLog.SerialNumber = SerialNumber;
+                CurrTransferLog.TransferDate = TransferDate;
+                if (currId > 0)
+                {
+                    multimediaEntities.Entry(CurrTransferLog).State = EntityState.Modified;
+                    multimediaEntities.SaveChanges();
+                }
+                else
+                {
+                    multimediaEntities.EquipmentTransferLog.Add(CurrTransferLog);
+                    multimediaEntities.SaveChanges();
+                }
+                MessageShow("保存成功!");
+            }
+            catch (Exception ex)
+            {
+                MessageShow(string.Format("保存失败:{0}", ex.Message));
+            }
             if (currId > 0)
-            {
-                multimediaEntities.Entry(CurrTransferLog).State = EntityState.Modified;
-                multimediaEntities.SaveChanges();
-            }
-            else
-            {
-                multimediaEntities.EquipmentTransferLog.Add(CurrTransferLog);
-                multimediaEntities.SaveChanges();
-            }
-            CloseWindow();
+                CloseWindow();
         }
     }
 }

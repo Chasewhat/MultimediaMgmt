@@ -18,7 +18,7 @@ namespace MultimediaMgmt.View.PopWindows
             equipmentInStockAddEditViewModel.CloseWindow = () => { this.Close(); };
             equipmentInStockAddEditViewModel.MessageShow = (s) =>
             {
-                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             };
         }
     }

@@ -18,7 +18,7 @@ namespace MultimediaMgmt.View.PopWindows
             surveillanceLogAddEditViewModel.CloseWindow = () => { this.Close(); };
             surveillanceLogAddEditViewModel.MessageShow = (s) =>
             {
-                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             };
         }
     }
