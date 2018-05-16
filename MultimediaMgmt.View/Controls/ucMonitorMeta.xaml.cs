@@ -60,7 +60,7 @@ namespace MultimediaMgmt.View.Controls
             Task.Run(() =>
             {
                 vlcPlayer.Dispose();
-                Meta.Vlc.Wpf.ApiManager.ReleaseAll();
+                //Meta.Vlc.Wpf.ApiManager.ReleaseAll();
                 GC.Collect();
             });
         }

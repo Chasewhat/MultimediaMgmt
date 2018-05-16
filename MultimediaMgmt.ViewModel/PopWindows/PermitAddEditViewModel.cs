@@ -204,6 +204,12 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         }
 
         [Command]
+        public void Reset()
+        {
+            ClassId = Sex= CollegeName = MajorsName = null;
+        }
+
+        [Command]
         public void PersonAdd()
         {
             ChoosedPersons.AddRange(SelectedPersons.Where(s => ChoosedPersons.FirstOrDefault(f => f.PersonId == s.PersonId) == null));

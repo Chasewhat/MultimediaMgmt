@@ -36,7 +36,7 @@ namespace MultimediaMgmt.View.Controls
 
         public void DetailInit(ClassRoomEx cr)
         {
-            this.infoDetail.Init(cr);
+            this.infoDetail.Init(cr, true);
         }
 
         private void showDetail_CheckedChanged(object sender, ItemClickEventArgs e)

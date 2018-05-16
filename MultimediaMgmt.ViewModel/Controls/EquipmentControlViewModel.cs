@@ -50,12 +50,12 @@ namespace MultimediaMgmt.ViewModel.Controls
                 if (cr.IsConnected)
                     HeadColor = "DarkGreen";
                 else
-                    HeadColor = "Yellow";
+                    HeadColor = "DarkRed";
                 Status1 = Constants.Images["Systemo"];
             }
             else
             {
-                HeadColor = "Yellow";
+                HeadColor = "DarkRed";
                 Status1 = Constants.Images["Systemc"];
             }
 

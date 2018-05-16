@@ -24,11 +24,12 @@ namespace MultimediaMgmt.View.Controls
             this.DataContext = classControlDetailViewModel = ViewModelSource.Create<EquipmentControlDetailViewModel>();
         }
 
-        public void Init(ClassRoomEx cr)
+        public void Init(ClassRoomEx cr, bool isRefresh = false)
         {
             Id = cr.Id;
             classControlDetailViewModel.Init(cr);
-            MonitorInit(true);
+            if (!isRefresh)
+                MonitorInit(true);
         }
 
         public void MonitorInit(bool isShow = true)

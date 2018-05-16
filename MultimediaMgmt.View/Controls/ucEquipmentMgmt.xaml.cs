@@ -59,7 +59,7 @@ namespace MultimediaMgmt.View.Controls
                     {
                         ucEquipmentControlDetail temp = this.detailPanel.Content as ucEquipmentControlDetail;
                         ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
-                        temp.Init(cr);
+                        temp.Init(cr,true);
                     }
                     else if (this.detailPanel.Content is ucEquipmentControl)
                     {
