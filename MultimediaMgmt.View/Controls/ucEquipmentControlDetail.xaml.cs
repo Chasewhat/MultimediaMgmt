@@ -22,6 +22,10 @@ namespace MultimediaMgmt.View.Controls
         {
             InitializeComponent();
             this.DataContext = classControlDetailViewModel = ViewModelSource.Create<EquipmentControlDetailViewModel>();
+            classControlDetailViewModel.MessageShow = (s) =>
+            {
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            };
         }
 
         public void Init(ClassRoomEx cr, bool isRefresh = false)

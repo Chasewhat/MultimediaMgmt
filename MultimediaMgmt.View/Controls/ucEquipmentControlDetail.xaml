@@ -85,7 +85,7 @@
                                 <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Record}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem Label="投影机信号源: " FontSize="15">
-                                <dxe:ComboBoxEdit EditValue="{Binding CurrClassRoom.ProjectionSignal}" Margin="5,0,0,0" ItemsSource="{Binding Signals}" DisplayMember="Value" ValueMember="Key"/>
+                                <dxe:ComboBoxEdit EditValue="{Binding CurrClassRoom.ProjectionSignal,UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" ItemsSource="{Binding Signals}" DisplayMember="Value" ValueMember="Key"/>
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                         <dxlc:LayoutGroup Orientation="Vertical" ItemSpace="0">
@@ -117,7 +117,7 @@
                                 <dxe:ToggleSwitchEdit IsChecked="{Binding CurrClassRoom.Lock_Status}" CheckedStateContent="开" UncheckedStateContent="关" HorizontalAlignment="Left"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem Label="电脑信号源: " FontSize="15">
-                                <dxe:ComboBoxEdit Margin="5,0,0,0" EditValue="{Binding CurrClassRoom.ComputerSignal}" ItemsSource="{Binding Signals}" DisplayMember="Value" ValueMember="Key"/>
+                                <dxe:ComboBoxEdit Margin="5,0,0,0" EditValue="{Binding CurrClassRoom.ComputerSignal,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Signals}" DisplayMember="Value" ValueMember="Key"/>
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                     </dxlc:LayoutGroup>

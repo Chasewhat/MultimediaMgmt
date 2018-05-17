@@ -160,7 +160,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             try
             {
-                string url = string.Format("{0}/TERMINAL_STATUS?{1}={2}",
+                string url = string.Format("http://{0}/TERMINAL_STATUS?{1}={2}",
                     ip, target, status);
                 string response = WebHelper.Get(url);
                 JObject jo = JObject.Parse(response);
