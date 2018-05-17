@@ -17,8 +17,9 @@ namespace MultimediaMgmt.Model.Models
         public string Status { get; set; }
         public string Name { get; set; }
         public string Sex { get; set; }
-        public string FacultyId { get; set; }
+        public int? FacultyId { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Career { get; set; }
     }
 }

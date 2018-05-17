@@ -25,9 +25,10 @@ namespace MultimediaMgmt.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AccessCard> AccessCard { get; set; }
         public virtual DbSet<AccessCardLog> AccessCardLog { get; set; }
         public virtual DbSet<AlarmInfo> AlarmInfo { get; set; }
-        public virtual DbSet<BlackList> BlackList { get; set; }
+        public virtual DbSet<ClassAndGrade> ClassAndGrade { get; set; }
         public virtual DbSet<ClassGrade> ClassGrade { get; set; }
         public virtual DbSet<ClassRoom> ClassRoom { get; set; }
         public virtual DbSet<ClassroomBuilding> ClassroomBuilding { get; set; }
@@ -40,11 +41,12 @@ namespace MultimediaMgmt.Model
         public virtual DbSet<EquipmentRepairLog> EquipmentRepairLog { get; set; }
         public virtual DbSet<EquipmentScrapLog> EquipmentScrapLog { get; set; }
         public virtual DbSet<EquipmentTransferLog> EquipmentTransferLog { get; set; }
+        public virtual DbSet<EquipmentType> EquipmentType { get; set; }
+        public virtual DbSet<Faculty> Faculty { get; set; }
         public virtual DbSet<IcCard> IcCard { get; set; }
         public virtual DbSet<LossCard> LossCard { get; set; }
         public virtual DbSet<Majors> Majors { get; set; }
         public virtual DbSet<MenuItem> MenuItem { get; set; }
-        public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<ReservationCourseTable> ReservationCourseTable { get; set; }
         public virtual DbSet<StdClassPeriod> StdClassPeriod { get; set; }
         public virtual DbSet<StdCourseTable> StdCourseTable { get; set; }
@@ -52,12 +54,10 @@ namespace MultimediaMgmt.Model
         public virtual DbSet<SwipeCardLog> SwipeCardLog { get; set; }
         public virtual DbSet<SysParameter> SysParameter { get; set; }
         public virtual DbSet<TerminalActiveTime> TerminalActiveTime { get; set; }
-        public virtual DbSet<TerminalCurrentInfo> TerminalCurrentInfo { get; set; }
         public virtual DbSet<TerminalInfo> TerminalInfo { get; set; }
         public virtual DbSet<UserProfile> UserProfile { get; set; }
         public virtual DbSet<WeeklyCourseTable> WeeklyCourseTable { get; set; }
         public virtual DbSet<LessonLog> LessonLog { get; set; }
         public virtual DbSet<SurveillanceLog> SurveillanceLog { get; set; }
-        public virtual DbSet<EquipmentType> EquipmentType { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace MultimediaMgmt.View.Controls
                 if (isChecked)
                 {
                     //新增视频
-                    ClassRoomEx cr = monitorMgmtViewModel.GetClassRoom(classRoom.ID);
+                    ClassRoomEx cr = monitorMgmtViewModel.GetClassRoom(classRoom.ID.Value);
                     if (cr == null || string.IsNullOrEmpty(cr.VedioAddress))
                         return;
                     string[] address = cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

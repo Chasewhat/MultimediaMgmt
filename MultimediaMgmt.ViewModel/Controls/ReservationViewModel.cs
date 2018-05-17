@@ -32,7 +32,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             var data = (from b in multimediaEntities.ReservationCourseTable
                        join c in multimediaEntities.ClassRoom on b.RoomId equals c.Id
-                       join p in multimediaEntities.Person on b.PersonId equals p.PersonId
+                       join p in multimediaEntities.IcCard on b.PersonId equals p.PersonId
                        select new ReservationEx(){
                            Id = b.Id,
                            Date = b.Date,
@@ -40,7 +40,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            BeginTime=b.BeginTime,
                            EndTime = b.EndTime,
                            RoomId = b.RoomId,
-                           RoomNum = c.RoomName,
+                           RoomNum = c.RoomNum,
                            PersonId = b.PersonId,
                            CourseName = b.CourseName,
                            ClassroomReservationId = b.ClassroomReservationId,

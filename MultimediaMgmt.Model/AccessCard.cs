@@ -12,19 +12,12 @@ namespace MultimediaMgmt.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Person
+    public partial class AccessCard
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
+        public string HexCode { get; set; }
+        public string CardNum { get; set; }
         public string PersonId { get; set; }
         public string Name { get; set; }
-        public string Account { get; set; }
-        public string Password { get; set; }
-        public string Sex { get; set; }
-        public string FacultyId { get; set; }
-        public string ClassId { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public Nullable<System.DateTime> EntryTime { get; set; }
-        public Nullable<System.DateTime> DepartureDate { get; set; }
     }
 }

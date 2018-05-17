@@ -16,6 +16,9 @@ namespace MultimediaMgmt.Model
     {
         public int Id { get; set; }
         public string HexCode { get; set; }
-        public System.DateTime LossReportTime { get; set; }
+        public string PersonId { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.DateTime> LossReportTime { get; set; }
+        public string CardNum { get; set; }
     }
 }

@@ -12,12 +12,16 @@ namespace MultimediaMgmt.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class BlackList
+    public partial class ClassAndGrade
     {
-        public int ID { get; set; }
-        public string HexCode { get; set; }
-        public string Reason { get; set; }
-        public int Operation { get; set; }
-        public System.DateTime ReportTime { get; set; }
+        public int Id { get; set; }
+        public string MajorName { get; set; }
+        public string ClassAndGradeName { get; set; }
+        public Nullable<int> NumberOfStudents { get; set; }
+        public string EntranceDate { get; set; }
+        public string GraduationDate { get; set; }
+        public int FacultyId { get; set; }
+    
+        public virtual Faculty Faculty { get; set; }
     }
 }

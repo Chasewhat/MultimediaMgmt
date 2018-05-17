@@ -47,8 +47,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 TerminalIds = multimediaEntities.ClassRoom.
                     Where(s => s.BuildingId == BuildingId.Value).
                     Select(s =>
-                    new { s.RoomName, s.TerminalId }).AsEnumerable().Select(s =>
-                             new KeyValuePair<string, string>(s.TerminalId, s.RoomName)).ToList();
+                    new { s.RoomNum, s.TerminalId }).AsEnumerable().Select(s =>
+                             new KeyValuePair<string, string>(s.TerminalId, s.RoomNum)).ToList();
             }
         }
         public virtual string TerminalId { get; set; }
@@ -63,7 +63,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         {
             Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
             {
-                Key = s.id,
+                Key = s.Id,
                 Value = s.BuildingName
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
@@ -73,14 +73,14 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             {
                 CurrPermit = (from p in multimediaEntities.ClassRoomPermit
                               join c in multimediaEntities.ClassRoom on p.TerminalId equals c.TerminalId
-                              join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
+                              join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
                               where p.ID == id
                               select new PermitOperateEx()
                               {
                                   Id = p.ID,
-                                  BuildingId = b.id,
+                                  BuildingId = b.Id,
                                   TerminalId = p.TerminalId,
-                                  RoomName = c.RoomName,
+                                  RoomName = c.RoomNum,
                                   BuildingName = b.BuildingName,
                                   PersonId = p.PersonId,
                                   PermitTime = p.PermitTime
@@ -101,7 +101,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 List<Person> temp = new List<Person>();
                 foreach (var p in CurrPermit.PersonId.Split(';'))
                 {
-                    Person tp = multimediaEntities.Person.FirstOrDefault();
+                    Person tp = multimediaEntities.IcCard.Select(s => new Person() { PersonId = s.PersonId, Name = s.Name }).FirstOrDefault();
                     if (tp != null)
                         temp.Add(tp);
                 }
@@ -166,7 +166,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (string.IsNullOrEmpty(CurrPermit.RoomName) || CurrPermit.BuildingId <= 0)
                 return;
             ClassRoom temp = multimediaEntities.ClassRoom.FirstOrDefault(s => s.BuildingId == CurrPermit.BuildingId &&
-                    s.RoomName == CurrPermit.RoomName);
+                    s.RoomNum == CurrPermit.RoomName);
             if (temp != null)
                 CurrPermit.TerminalId = temp.TerminalId;
         }
@@ -193,20 +193,24 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         [Command]
         public void QueryPerson()
         {
-            Persons = (from p in multimediaEntities.Person
-                       join m in multimediaEntities.Majors on p.FacultyId equals m.FacultyId into temp
+            Persons = (from p in multimediaEntities.IcCard
+                       join m in multimediaEntities.Majors on p.FacultyId.ToString() equals m.FacultyId into temp
                        from t in temp.DefaultIfEmpty()
-                       where (string.IsNullOrEmpty(ClassId) || p.ClassId == ClassId) &&
+                       where //(string.IsNullOrEmpty(ClassId) || p.ClassId == ClassId) &&
                             (string.IsNullOrEmpty(Sex) || p.Sex == Sex) &&
-                            (string.IsNullOrEmpty(CollegeName) || (t != null && t.CollegeName == CollegeName)) &&
+                            (string.IsNullOrEmpty(CollegeName) || (p.Faculty != null && p.Faculty.FacultyName == CollegeName)) &&
                             (string.IsNullOrEmpty(MajorsName) || (t != null && t.MajorsName == MajorsName))
-                       select p).ToSmartObservableCollection();
+                       select new Person()
+                       {
+                           PersonId = p.PersonId,
+                           Name = p.Name
+                       }).ToSmartObservableCollection();
         }
 
         [Command]
         public void Reset()
         {
-            ClassId = Sex= CollegeName = MajorsName = null;
+            ClassId = Sex = CollegeName = MajorsName = null;
         }
 
         [Command]

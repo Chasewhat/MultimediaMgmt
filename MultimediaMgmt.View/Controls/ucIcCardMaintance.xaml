@@ -93,9 +93,9 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="FacultyId" Header="工作单位" Width="80" />
+                <dxg:GridColumn FieldName="Career" Header="工作单位" Width="80" />
                 <dxg:GridColumn FieldName="Email" Header="邮箱" Width="80"/>
-                <dxg:GridColumn FieldName="Phone" Header="电话" Width="80"/>
+                <dxg:GridColumn FieldName="Phone" Header="电话" Width="100"/>
                 <dxg:GridColumn FieldName="CardType" Header="卡类别" Width="80">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>

@@ -86,7 +86,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         private IEnumerable<CourseEx> GetCourses(int roomid)
         {
             var weekCourses = (from w in multimediaEntities.WeeklyCourseTable
-                               join p in multimediaEntities.Person on w.PersonId equals p.PersonId into temp
+                               join p in multimediaEntities.IcCard on w.PersonId equals p.PersonId into temp
                                from t in temp.DefaultIfEmpty()
                                where w.RoomId == roomid
                                select new
@@ -112,7 +112,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                    CourseName = s.CourseName
                                }).ToList();
             var stdCourses = from s in multimediaEntities.StdCourseTable
-                             join p in multimediaEntities.Person on s.PersonId equals p.PersonId into temp
+                             join p in multimediaEntities.IcCard on s.PersonId equals p.PersonId into temp
                              from t in temp.DefaultIfEmpty()
                              where s.RoomId == roomid
                              select new CourseWeekEx
@@ -179,7 +179,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             var test = multimediaEntities.ReservationCourseTable.FirstOrDefault();
                 var reserCourses = (from w in multimediaEntities.ReservationCourseTable
-                                    join p in multimediaEntities.Person on w.PersonId equals p.PersonId into temp
+                                    join p in multimediaEntities.IcCard on w.PersonId equals p.PersonId into temp
                                     from t in temp.DefaultIfEmpty()
                                     where w.RoomId == roomid
                                  &&
@@ -208,7 +208,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                         CourseName = s.CourseName
                                     }).ToList();
             var weekCourses = (from w in multimediaEntities.WeeklyCourseTable
-                               join p in multimediaEntities.Person on w.PersonId equals p.PersonId into temp
+                               join p in multimediaEntities.IcCard on w.PersonId equals p.PersonId into temp
                                from t in temp.DefaultIfEmpty()
                                where w.RoomId == roomid
                                select new
@@ -234,7 +234,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                    CourseName = s.CourseName
                                }).ToList();
             var stdCourses = from s in multimediaEntities.StdCourseTable
-                             join p in multimediaEntities.Person on s.PersonId equals p.PersonId into temp
+                             join p in multimediaEntities.IcCard on s.PersonId equals p.PersonId into temp
                              from t in temp.DefaultIfEmpty()
                              where s.RoomId == roomid
                              select new CourseWeekEx
@@ -405,7 +405,7 @@ namespace MultimediaMgmt.ViewModel.Controls
 
         public string GetPerson(string personId)
         {
-            var person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == personId);
+            var person = multimediaEntities.IcCard.FirstOrDefault(s => s.PersonId == personId);
             if (person != null)
                 return person.Name;
             else
@@ -642,15 +642,15 @@ namespace MultimediaMgmt.ViewModel.Controls
                     try
                     {
                         List<ClassRoomEx> classRooms = (from c in multimediaEntities.ClassRoom
-                                                        join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
-                                                        orderby b.id, c.Id
+                                                        join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
+                                                        orderby b.Id, c.Id
                                                         select new ClassRoomEx()
                                                         {
                                                             Id = c.Id,
-                                                            BuildingId = b.id,
+                                                            BuildingId = b.Id,
                                                             BuildingName = b.BuildingName,
                                                             TerminalId = c.TerminalId,
-                                                            RoomName = c.RoomName
+                                                            RoomName = c.RoomNum
                                                         }).ToList();
                         ICollection<StdClassPeriod> stdClassPeriods = multimediaEntities.StdClassPeriod.OrderBy(o => o.ClassOrd).ToList();
                         PropertyInfo[] pis = typeof(CourseEx).GetProperties();
@@ -780,15 +780,15 @@ namespace MultimediaMgmt.ViewModel.Controls
                 ICellStyle headerCellStyle = workbook.CreateCellStyle();
                 NPOI.SS.UserModel.IFont headerFont = workbook.CreateFont();
                 List<ClassRoomEx> classRooms = (from c in multimediaEntities.ClassRoom
-                                                join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
-                                                orderby b.id, c.Id
+                                                join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
+                                                orderby b.Id, c.Id
                                                 select new ClassRoomEx()
                                                 {
                                                     Id = c.Id,
-                                                    BuildingId = b.id,
+                                                    BuildingId = b.Id,
                                                     BuildingName = b.BuildingName,
                                                     TerminalId = c.TerminalId,
-                                                    RoomName = c.RoomName
+                                                    RoomName = c.RoomNum
                                                 }).ToList();
                 ICollection<StdClassPeriod> stdClassPeriods = multimediaEntities.StdClassPeriod.OrderBy(o => o.ClassOrd).ToList();
                 foreach (ClassRoomEx classRoom in classRooms)

@@ -12,21 +12,22 @@ namespace MultimediaMgmt.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class ClassroomBuilding
+    public partial class Faculty
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ClassroomBuilding()
+        public Faculty()
         {
-            this.ClassRoom = new HashSet<ClassRoom>();
+            this.ClassAndGrade = new HashSet<ClassAndGrade>();
+            this.IcCard = new HashSet<IcCard>();
         }
     
         public int Id { get; set; }
-        public string BuildingName { get; set; }
-        public string Location { get; set; }
+        public string FacultyName { get; set; }
         public int Ord { get; set; }
-        public Nullable<int> FloorsSum { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClassRoom> ClassRoom { get; set; }
+        public virtual ICollection<ClassAndGrade> ClassAndGrade { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IcCard> IcCard { get; set; }
     }
 }

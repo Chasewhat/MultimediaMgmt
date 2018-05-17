@@ -30,7 +30,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
             {
-                Key = s.id,
+                Key = s.Id,
                 Value = s.BuildingName
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
@@ -51,7 +51,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (BuildingId.HasValue && BuildingId.Value > 0)
                 crs = crs.Where(s => s.BuildingId == BuildingId.Value);
             if (!string.IsNullOrEmpty(RoomNum))
-                crs = crs.Where(s => s.RoomName == RoomNum);
+                crs = crs.Where(s => s.RoomNum == RoomNum);
 
             ICollection<WebClassRoom> classrooms = crs.Select(
                 s => new WebClassRoom() { TerminalId = s.TerminalId }).ToList();
@@ -65,16 +65,16 @@ namespace MultimediaMgmt.ViewModel.Controls
                     {
                         Collection<WebTerminalInfo> terminalInfos = ja.ToObject<Collection<WebTerminalInfo>>();
                         var data = from c in crs
-                                   join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
+                                   join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
                                    join t in terminalInfos on c.TerminalId equals t.TerminalId
                                    select new WarnOperate()
                                    {
-                                       BuildingId = b.id,
+                                       BuildingId = b.Id,
                                        ClassRoomId = c.Id,
                                        TerminalId = t.TerminalId,
                                        TerminalIp = c.TerminalIp,
                                        BuildingName = b.BuildingName,
-                                       RoomNum = c.RoomName,
+                                       RoomNum = c.RoomNum,
                                        Alarm_Control = t.Alarm_Control,
                                        Alarm_In1 = t.Alarm_In1,
                                        Alarm_In2 = t.Alarm_In2
@@ -130,7 +130,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             if (SelectedWarnOperate == null)
                 return;
-            string url = string.Format("{0}/Alarm_Control={1}", SelectedWarnOperate.TerminalIp, status);
+            string url = string.Format("http://{0}/Alarm_Control={1}", SelectedWarnOperate.TerminalIp, status);
             string response = WebHelper.Get(url);
             WarnOperateQuery();
         }

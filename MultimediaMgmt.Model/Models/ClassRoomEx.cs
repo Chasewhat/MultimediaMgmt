@@ -15,7 +15,7 @@ namespace MultimediaMgmt.Model.Models
         public string TerminalId { get; set; }
         public string TerminalIp { get; set; }
         public string RoomName { get; set; }
-        public int Floor { get; set; }
+        public int? Floor { get; set; }
         public int BuildingId { get; set; }
         public string VedioAddress { get; set; }
         public string BuildingName { get; set; }

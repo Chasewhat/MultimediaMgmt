@@ -180,7 +180,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                     updateReservation.ClassroomReservationApproval.Add(approval);
                 }
                 approval.ApprovalState = 1;
-                approval.ApprovalPersonId = Constants.CurrUser.PersonId;
+                approval.ApprovalPersonId = Constants.CurrUser.LoginName;
                 approval.ApprovalTime = DateTime.Now;
                 approval.Description = "";
                 if (null != reservation.ClassroomReservationApproval.Where(p => p.ApprovalLevel == 1).FirstOrDefault())
@@ -214,7 +214,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                     updateReservation.ClassroomReservationApproval.Add(approval);
                 }
                 approval.ApprovalState = 2;
-                approval.ApprovalPersonId = Constants.CurrUser.PersonId;
+                approval.ApprovalPersonId = Constants.CurrUser.LoginName;
                 approval.ApprovalTime = DateTime.Now;
                 approval.Description = "";
                 if (null != reservation.ClassroomReservationApproval.Where(p => p.ApprovalLevel == 1).FirstOrDefault())

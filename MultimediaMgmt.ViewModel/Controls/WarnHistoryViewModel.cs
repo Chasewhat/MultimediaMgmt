@@ -26,7 +26,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
             {
-                Key = s.id,
+                Key = s.Id,
                 Value = s.BuildingName
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
@@ -37,15 +37,15 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void WarnOperateQuery()
         {
             var data = from b in multimediaEntities.ClassroomBuilding
-                       join c in multimediaEntities.ClassRoom on b.id equals c.BuildingId
+                       join c in multimediaEntities.ClassRoom on b.Id equals c.BuildingId
                        join t in multimediaEntities.AlarmInfo on c.TerminalId equals t.TerminalId
                        select new WarnOperate()
                        {
-                           BuildingId = b.id,
+                           BuildingId = b.Id,
                            ClassRoomId = c.Id,
                            TerminalId = t.TerminalId,
                            BuildingName = b.BuildingName,
-                           RoomNum = c.RoomName,
+                           RoomNum = c.RoomNum,
                            Alarm_In1 = t.Alarm1,
                            Alarm_In2 = t.Alarm2,
                            Alarm_In3 = t.Alarm3,

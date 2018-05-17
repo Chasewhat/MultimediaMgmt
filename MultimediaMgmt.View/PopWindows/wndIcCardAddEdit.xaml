@@ -44,7 +44,7 @@
                         <dxe:ComboBoxEdit IsTextEditable="False" ItemsSource="{Binding Sexs}" EditValue="{Binding Sex}" DisplayMember="Value" ValueMember="Key"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="工作单位:">
-                        <dxe:TextEdit EditValue="{Binding FacultyId}"/>
+                        <dxe:TextEdit EditValue="{Binding Career}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="班级:" Foreground="Red" IsRequired="True">
                         <dxe:TextEdit EditValue="{Binding ClassId}"/>

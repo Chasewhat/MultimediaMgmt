@@ -21,14 +21,6 @@ namespace MultimediaMgmt.Model
         public Nullable<byte> LockACT { get; set; }
         public Nullable<bool> ComputerStatus { get; set; }
         public Nullable<byte> ComputerControl { get; set; }
-        public Nullable<bool> FPD { get; set; }
-        public Nullable<bool> Record { get; set; }
-        public Nullable<bool> AirConditioner { get; set; }
-        public Nullable<bool> LargeScreen { get; set; }
-        public Nullable<bool> DoorControl { get; set; }
-        public Nullable<bool> DoorStatus { get; set; }
-        public Nullable<bool> Lamp { get; set; }
-        public Nullable<bool> Curtain { get; set; }
         public Nullable<bool> System { get; set; }
         public Nullable<bool> Projector { get; set; }
         public Nullable<bool> ProjectionScreen { get; set; }
@@ -45,14 +37,23 @@ namespace MultimediaMgmt.Model
         public Nullable<bool> LAN2 { get; set; }
         public Nullable<bool> LAN3 { get; set; }
         public Nullable<bool> LAN4 { get; set; }
-        public Nullable<bool> Alarm_Control { get; set; }
+        public bool Alarm_Control { get; set; }
         public Nullable<bool> Alarm_In1 { get; set; }
         public Nullable<bool> Alarm_In2 { get; set; }
-        public Nullable<bool> Alarm_In3 { get; set; }
-        public Nullable<bool> Alarm_In4 { get; set; }
+        public Nullable<bool> AirConditioner { get; set; }
+        public Nullable<bool> Lamp { get; set; }
+        public string HexCode { get; set; }
+        public string Name { get; set; }
+        public Nullable<double> Temperature { get; set; }
+        public Nullable<double> Humidity { get; set; }
+        public Nullable<double> Voltage { get; set; }
+        public Nullable<double> PowerRate { get; set; }
+        public Nullable<bool> Curtain { get; set; }
+        public Nullable<bool> Record { get; set; }
+        public Nullable<bool> FPD { get; set; }
         public Nullable<bool> IN_STATUS1 { get; set; }
         public Nullable<bool> IN_STATUS2 { get; set; }
         public Nullable<bool> IN_STATUS3 { get; set; }
-        public string HexCode { get; set; }
+        public Nullable<bool> System_Changed { get; set; }
     }
 }

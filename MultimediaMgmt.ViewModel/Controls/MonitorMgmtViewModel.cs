@@ -30,13 +30,13 @@ namespace MultimediaMgmt.ViewModel.Controls
         public ClassRoomEx GetClassRoom(int id)
         {
             return (from c in multimediaEntities.ClassRoom
-                       join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
+                       join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
                        select new ClassRoomEx()
                        {
                            Id = c.Id,
                            TerminalId = c.TerminalId,
                            TerminalIp = c.TerminalIp,
-                           RoomName = c.RoomName,
+                           RoomName = c.RoomNum,
                            BuildingId = c.BuildingId,
                            BuildingName = b.BuildingName,
                            Location = b.Location,

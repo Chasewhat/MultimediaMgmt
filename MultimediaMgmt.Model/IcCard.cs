@@ -18,7 +18,15 @@ namespace MultimediaMgmt.Model
         public string HexCode { get; set; }
         public string CardNum { get; set; }
         public string PersonId { get; set; }
+        public string Name { get; set; }
+        public string Sex { get; set; }
+        public string Career { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
         public string CardType { get; set; }
+        public Nullable<int> FacultyId { get; set; }
         public string Status { get; set; }
+    
+        public virtual Faculty Faculty { get; set; }
     }
 }

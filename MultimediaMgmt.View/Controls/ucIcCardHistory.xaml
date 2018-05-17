@@ -105,7 +105,8 @@
             <dxg:GridColumn FieldName="Name" Header="姓名" Width="80"/>
             <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" />
             <dxg:GridColumn FieldName="Location" Header="位置" Width="80"/>
-            <dxg:GridColumn FieldName="TerminalId" Header="教室编号" Width="80"/>
+            <dxg:GridColumn FieldName="RoomNum" Header="教室编号" Width="80"/>
+            <dxg:GridColumn FieldName="TerminalId" Header="终端编号" Width="80"/>
             <dxg:GridColumn FieldName="State" Header="刷卡状态" Width="80">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>

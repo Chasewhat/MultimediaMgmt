@@ -14,11 +14,19 @@ namespace MultimediaMgmt.Model
     
     public partial class AccessCardLog
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string HexCode { get; set; }
+        public string CardNum { get; set; }
+        public string PersonId { get; set; }
+        public string Name { get; set; }
+        public int RoomId { get; set; }
+        public string RoomNum { get; set; }
+        public string BuildingName { get; set; }
+        public string IdentifyMode { get; set; }
+        public string Location { get; set; }
         public string TerminalId { get; set; }
         public string TerminalIp { get; set; }
         public byte State { get; set; }
-        public System.DateTime LogTime { get; set; }
+        public Nullable<System.DateTime> LogTime { get; set; }
     }
 }

@@ -17,6 +17,5 @@ namespace MultimediaMgmt.Model
         public int Id { get; set; }
         public string LoginName { get; set; }
         public string UserName { get; set; }
-        public string PersonId { get; set; }
     }
 }

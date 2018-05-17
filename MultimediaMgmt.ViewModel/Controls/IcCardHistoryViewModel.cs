@@ -42,7 +42,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
             {
-                Key = s.id,
+                Key = s.Id,
                 Value = s.BuildingName
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
@@ -61,8 +61,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = from l in multimediaEntities.AccessCardLog
                        join c in multimediaEntities.IcCard on l.HexCode equals c.HexCode
                        join r in multimediaEntities.ClassRoom on l.TerminalId equals r.TerminalId
-                       join b in multimediaEntities.ClassroomBuilding on r.BuildingId equals b.id
-                       join p in multimediaEntities.Person on c.PersonId equals p.PersonId
+                       join b in multimediaEntities.ClassroomBuilding on r.BuildingId equals b.Id
+                       join p in multimediaEntities.IcCard on c.PersonId equals p.PersonId
                        select new CardLogEx()
                        {
                            Id = (int)l.Id,
@@ -71,7 +71,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            PersonId = c.PersonId,
                            Name = p.Name,
                            RoomId = r.Id,
-                           RoomNum = r.RoomName,
+                           RoomNum = r.RoomNum,
                            BuildingName = b.BuildingName,
                            Location = b.Location,
                            IdentifyMode = r.IdentifyMode,
@@ -85,8 +85,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = from l in multimediaEntities.SwipeCardLog
                        join c in multimediaEntities.IcCard on l.HexCode equals c.HexCode
                        join r in multimediaEntities.ClassRoom on l.TerminalId equals r.TerminalId
-                       join b in multimediaEntities.ClassroomBuilding on r.BuildingId equals b.id
-                       join p in multimediaEntities.Person on c.PersonId equals p.PersonId
+                       join b in multimediaEntities.ClassroomBuilding on r.BuildingId equals b.Id
+                       join p in multimediaEntities.IcCard on c.PersonId equals p.PersonId
                        select new CardLogEx()
                        {
                            Id = l.Id,
@@ -95,7 +95,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            PersonId = c.PersonId,
                            Name = p.Name,
                            RoomId = r.Id,
-                           RoomNum = r.RoomName,
+                           RoomNum = r.RoomNum,
                            BuildingName = b.BuildingName,
                            Location = b.Location,
                            IdentifyMode = r.IdentifyMode,

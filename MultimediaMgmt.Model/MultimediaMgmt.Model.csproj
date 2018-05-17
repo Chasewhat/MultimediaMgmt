@@ -56,13 +56,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessCard.cs">
+      <DependentUpon>MultimediaModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="AccessCardLog.cs">
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
     <Compile Include="AlarmInfo.cs">
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="BlackList.cs">
+    <Compile Include="ClassAndGrade.cs">
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
     <Compile Include="ClassGrade.cs">
@@ -105,6 +108,9 @@
     <Compile Include="EquipmentType.cs">
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Faculty.cs">
+      <DependentUpon>MultimediaModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="IcCard.cs">
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
@@ -124,6 +130,7 @@
     <Compile Include="Models\ClassroomReservationEx.cs" />
     <Compile Include="Models\CourseWeekEx.cs" />
     <Compile Include="Models\CourseEx.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\ReservationEx.cs" />
     <Compile Include="Models\CardLogEx.cs" />
     <Compile Include="Models\EquipmentStatusEx.cs" />
@@ -157,9 +164,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MultimediaModels.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Person.cs">
-      <DependentUpon>MultimediaModels.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReservationCourseTable.cs">
       <DependentUpon>MultimediaModels.tt</DependentUpon>
@@ -183,9 +187,6 @@
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
     <Compile Include="TerminalActiveTime.cs">
-      <DependentUpon>MultimediaModels.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TerminalCurrentInfo.cs">
       <DependentUpon>MultimediaModels.tt</DependentUpon>
     </Compile>
     <Compile Include="TerminalInfo.cs">

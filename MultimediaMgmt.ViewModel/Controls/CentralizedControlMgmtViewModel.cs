@@ -42,7 +42,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
             {
-                Key = s.id,
+                Key = s.Id,
                 Value = s.BuildingName
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
@@ -56,8 +56,13 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void Query()
         {
             var data = from c in multimediaEntities.ClassRoom
-                       join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
-                       join t in multimediaEntities.TerminalCurrentInfo on c.TerminalId equals t.TerminalID
+                       join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
+                       join t in (from tt in multimediaEntities.TerminalInfo
+                                  group tt by new
+                                  {
+                                      tt.TerminalId
+                                  } into g
+                                  select g.Where(p => p.LogTime == g.Max(m => m.LogTime)).FirstOrDefault()) on c.TerminalId equals t.TerminalId
                        select new CentralizedControlEx()
                        {
                            Id = c.Id,
@@ -65,17 +70,17 @@ namespace MultimediaMgmt.ViewModel.Controls
                            TerminalIp = c.TerminalIp,
                            BuildingId = c.BuildingId,
                            Floor = c.Floor,
-                           RoomName = c.RoomName,
+                           RoomName = c.RoomNum,
                            BuildingName = b.BuildingName,
                            System = t.System,
-                           AirConitioner = t.AirConitioner,
+                           AirConitioner = null,//t.AirConitioner,
                            Lamp = t.Lamp
                        };
             if (BuildingId.HasValue && BuildingId.Value > 0)
                 data = data.Where(s => s.BuildingId == BuildingId.Value);
             int floor = 0;
-            if(int.TryParse(Floor,out floor))
-                data= data.Where(s => s.Floor == floor);
+            if (int.TryParse(Floor, out floor))
+                data = data.Where(s => s.Floor == floor);
             CentralizedControls = data.ToSmartObservableCollection();
             AllSwitchSet();
         }
@@ -119,7 +124,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0)
                 return;
             TokenSource = new CancellationTokenSource();
-            CentralizedControls.BeginUpdate();           
+            CentralizedControls.BeginUpdate();
             foreach (var cc in SelectedCentralizedControls)
             {
                 if (TokenSource.IsCancellationRequested)

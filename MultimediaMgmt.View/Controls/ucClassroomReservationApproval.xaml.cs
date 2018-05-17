@@ -36,7 +36,7 @@ namespace MultimediaMgmt.View.Controls
         public void SelectChangedExec(CommonTree classRoom)
         {
             courseControl.SelectChangedExec(classRoom);
-            classroomReservationApprovalViewModel.RoomId = classRoom.ID;
+            classroomReservationApprovalViewModel.RoomId = classRoom.ID.Value;
         }
     }
 }

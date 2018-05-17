@@ -17,7 +17,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual SmartObservableCollection<PermitOperateEx> Permits { get; set; }
         public virtual PermitOperateEx SelectedPermit { get; set; }
         public virtual int? BuildingId { get; set; }
-        public virtual string TerminalId { get; set; }
+        public virtual string RoomNum { get; set; }
         public virtual string PersonId { get; set; }
         public virtual string PersonName { get; set; }
 
@@ -27,7 +27,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
             {
-                Key = s.id,
+                Key = s.Id,
                 Value = s.BuildingName
             }).AsEnumerable().Select(s =>
                             new KeyValuePair<int, string>(s.Key, s.Value)).ToList();
@@ -38,21 +38,21 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             var data = from p in multimediaEntities.ClassRoomPermit
                        join c in multimediaEntities.ClassRoom on p.TerminalId equals c.TerminalId
-                       join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
+                       join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
                        select new PermitOperateEx()
                        {
                            Id = p.ID,
-                           BuildingId = b.id,
+                           BuildingId = b.Id,
                            TerminalId = p.TerminalId,
-                           RoomName = c.RoomName,
+                           RoomName = c.RoomNum,
                            BuildingName = b.BuildingName,
                            PersonId = p.PersonId,
                            PermitTime = p.PermitTime
                        };
             if (BuildingId.HasValue && BuildingId.Value > 0)
                 data = data.Where(s => s.BuildingId == BuildingId.Value);
-            if (!string.IsNullOrEmpty(TerminalId))
-                data = data.Where(s => s.TerminalId == TerminalId);
+            if (!string.IsNullOrEmpty(RoomNum))
+                data = data.Where(s => s.RoomName == RoomNum);
             if (!string.IsNullOrEmpty(PersonId))
                 data = data.Where(s => s.PersonId==PersonId);
             if (!string.IsNullOrEmpty(PersonName))
@@ -66,7 +66,7 @@ namespace MultimediaMgmt.ViewModel.Controls
 
                 foreach (string id in personids)
                 {
-                    Person p = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == id);
+                    IcCard p = multimediaEntities.IcCard.FirstOrDefault(s => s.PersonId == id);
                     if (p != null)
                         personNames.Add(p.Name);
                 }
@@ -78,7 +78,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Reset()
         {
-            TerminalId = PersonId = PersonName = null;
+            RoomNum = PersonId = PersonName = null;
             BuildingId = null;
         }
 

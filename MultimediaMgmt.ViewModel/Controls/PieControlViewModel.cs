@@ -30,14 +30,19 @@ namespace MultimediaMgmt.ViewModel.Controls
             {
                 case 1:
                 case 2:
-                    ClassroomBuilding building = multimediaEntities.ClassroomBuilding.FirstOrDefault(s => s.id == buildingId);
+                    ClassroomBuilding building = multimediaEntities.ClassroomBuilding.FirstOrDefault(s => s.Id == buildingId);
                     if (building == null)
                         return;
                     tcount = multimediaEntities.ClassRoom.Where(s => s.BuildingId == buildingId).Count();
                     count = (from c in multimediaEntities.ClassRoom
-                             join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
-                             join t in multimediaEntities.TerminalCurrentInfo on c.TerminalId equals t.TerminalID
-                             where b.id == buildingId &&
+                             join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
+                             join t in (from tt in multimediaEntities.TerminalInfo
+                                        group tt by new
+                                        {
+                                            tt.TerminalId
+                                        } into g
+                                        select g.Where(p => p.LogTime == g.Max(m => m.LogTime)).FirstOrDefault()) on c.TerminalId equals t.TerminalId
+                             where b.Id == buildingId &&
                                t.System.HasValue && t.System.Value
                              select c.Id).Count();
                     Rates = new List<DataPie>() {

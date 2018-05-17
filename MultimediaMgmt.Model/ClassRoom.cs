@@ -18,16 +18,11 @@ namespace MultimediaMgmt.Model
         public string TerminalId { get; set; }
         public string TerminalIp { get; set; }
         public string IdentifyMode { get; set; }
-        public string RoomName { get; set; }
-        public int Floor { get; set; }
+        public string RoomNum { get; set; }
         public int BuildingId { get; set; }
         public string VedioAddress { get; set; }
-        public string CardType { get; set; }
-        public Nullable<System.TimeSpan> BeginTime1 { get; set; }
-        public Nullable<System.TimeSpan> EndTime1 { get; set; }
-        public Nullable<System.TimeSpan> BeginTime2 { get; set; }
-        public Nullable<System.TimeSpan> EndTime2 { get; set; }
-        public Nullable<System.TimeSpan> BeginTime3 { get; set; }
-        public Nullable<System.TimeSpan> EndTime3 { get; set; }
+        public Nullable<int> Floor { get; set; }
+    
+        public virtual ClassroomBuilding ClassroomBuilding { get; set; }
     }
 }

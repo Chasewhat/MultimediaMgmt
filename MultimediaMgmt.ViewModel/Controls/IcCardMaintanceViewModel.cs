@@ -53,7 +53,6 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void Query()
         {
             var data = from i in multimediaEntities.IcCard
-                       join p in multimediaEntities.Person on i.PersonId equals p.PersonId
                        select new IcCardInfo()
                        {
                            Id = i.Id,
@@ -62,11 +61,12 @@ namespace MultimediaMgmt.ViewModel.Controls
                            PersonId = i.PersonId,
                            CardType = i.CardType,
                            Status = i.Status,
-                           Name = p.Name,
-                           Sex = p.Sex,
-                           FacultyId = p.FacultyId,
-                           Email = p.Email,
-                           Phone = p.Phone
+                           Name = i.Name,
+                           Sex = i.Sex,
+                           FacultyId = i.FacultyId,
+                           Email = i.Email,
+                           Phone = i.Phone,
+                           Career = i.Career
                        };
             if (!string.IsNullOrEmpty(PersonId))
                 data = data.Where(s => s.PersonId == PersonId);
@@ -118,8 +118,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                 return;
             }
             //同步删除Person
-            Person person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == SelectedIcCard.PersonId);
-            multimediaEntities.Person.Remove(person);
+            //Person person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == SelectedIcCard.PersonId);
+            //multimediaEntities.Person.Remove(person);
             //同步删除Student
             Student student = multimediaEntities.Student.FirstOrDefault(s => s.PersonId == SelectedIcCard.PersonId);
             multimediaEntities.Student.Remove(student);
@@ -228,33 +228,35 @@ namespace MultimediaMgmt.ViewModel.Controls
                                 multimediaEntities.IcCard.Add(card);
                             }
                         }
-                        pis = typeof(Person).GetProperties();
-                        sheetName = "老师名单";
-                        sheet = workbook.GetSheet(sheetName);
-                        if (sheet != null)
-                        {
-                            rows = sheet.GetRowEnumerator();
-                            rows.MoveNext();
-                            while (rows.MoveNext())
-                            {
-                                HSSFRow row = (HSSFRow)rows.Current;
-                                Person person = new Person();
-                                for (int i = 0; i < row.LastCellNum; i++)
-                                {
-                                    PropertyInfo pi = pis.Where(p => p.Name.Equals(IcCardField[i])).FirstOrDefault();
-                                    if (null != pi)
-                                    {
-                                        ICell cell = row.GetCell(i);
-                                        if (cell != null)
-                                        {
-                                            string s = cell.ToString();
-                                            pi.SetValue(person, Convert.ChangeType(cell.ToString(), pi.PropertyType), null);
-                                        }
-                                    }
-                                }
-                                multimediaEntities.Person.Add(person);
-                            }
-                        }
+                        //Person表去除
+
+                        //pis = typeof(Person).GetProperties();
+                        //sheetName = "老师名单";
+                        //sheet = workbook.GetSheet(sheetName);
+                        //if (sheet != null)
+                        //{
+                        //    rows = sheet.GetRowEnumerator();
+                        //    rows.MoveNext();
+                        //    while (rows.MoveNext())
+                        //    {
+                        //        HSSFRow row = (HSSFRow)rows.Current;
+                        //        Person person = new Person();
+                        //        for (int i = 0; i < row.LastCellNum; i++)
+                        //        {
+                        //            PropertyInfo pi = pis.Where(p => p.Name.Equals(IcCardField[i])).FirstOrDefault();
+                        //            if (null != pi)
+                        //            {
+                        //                ICell cell = row.GetCell(i);
+                        //                if (cell != null)
+                        //                {
+                        //                    string s = cell.ToString();
+                        //                    pi.SetValue(person, Convert.ChangeType(cell.ToString(), pi.PropertyType), null);
+                        //                }
+                        //            }
+                        //        }
+                        //        multimediaEntities.Person.Add(person);
+                        //    }
+                        //}
                         pis = typeof(Student).GetProperties();
                         sheetName = "学生名单";
                         sheet = workbook.GetSheet(sheetName);

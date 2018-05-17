@@ -81,8 +81,8 @@ namespace MultimediaMgmt.View.Controls
                 if (isChecked)
                 {
                     //新增设备
-                    if (!classRoomMgmtViewModel.ids.Contains(classRoom.ID))
-                        classRoomMgmtViewModel.ids.Add(classRoom.ID);
+                    if (!classRoomMgmtViewModel.ids.Contains(classRoom.ID.Value))
+                        classRoomMgmtViewModel.ids.Add(classRoom.ID.Value);
                     classRoomMgmtViewModel.ClassRoomListRefresh();
                     if (classRoomMgmtViewModel.ClassRoomExs == null)
                         return;

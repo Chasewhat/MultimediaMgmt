@@ -17,6 +17,7 @@ namespace MultimediaMgmt.Model
         public int ID { get; set; }
         public string ClassID { get; set; }
         public int MajorID { get; set; }
+        public Nullable<int> FaucultyID { get; set; }
         public string ClassName { get; set; }
         public int StudentSum { get; set; }
         public Nullable<System.DateTime> EntryTime { get; set; }

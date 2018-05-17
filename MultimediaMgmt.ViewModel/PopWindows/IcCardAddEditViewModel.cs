@@ -27,7 +27,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         {
             Task.Run(() =>
             {
-                var person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == PersonId);
+                var person = multimediaEntities.IcCard.FirstOrDefault(s => s.PersonId == PersonId);
                 if (person == null)
                 {
                     var student = multimediaEntities.Student.FirstOrDefault(s => s.PersonId == PersonId);
@@ -45,8 +45,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 {
                     Name = person.Name;
                     Sex = person.Sex;
-                    ClassId = person.ClassId;
-                    FacultyId = person.FacultyId;
+                    //ClassId = person.ClassId;
+                    Career = person.Career;
                     Email = person.Email;
                     Phone = person.Phone;
                     return;
@@ -63,7 +63,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         [Required(ErrorMessage = "班级不能为空")]
         public virtual string ClassId { get; set; }
 
-        public virtual string FacultyId { get; set; }
+        public virtual string Career { get; set; }
         public virtual string Email { get; set; }
         public virtual string Phone { get; set; }
         public virtual bool? IsSyncPerson { get; set; }
@@ -128,26 +128,27 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                     multimediaEntities.IcCard.Add(CurrIcCard);
                 if (IsSyncPerson.HasValue && IsSyncPerson.Value)
                 {
-                    //同步维护Person
-                    bool isAdd = true;
-                    Person person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == PersonId);
-                    if (person == null)
-                        person = new Person() { PersonId = PersonId };
-                    else
-                        isAdd = false;
-                    person.Name = Name;
-                    person.Sex = Sex;
-                    person.ClassId = ClassId;
-                    person.FacultyId = FacultyId;
-                    person.Email = Email;
-                    person.Phone = Phone;
-                    if (isAdd)
-                        multimediaEntities.Person.Add(person);
-                    else
-                        multimediaEntities.Entry(person).State = EntityState.Modified;
+                    //同步维护Person 老数据库不再同步维护
+
+                    //bool isAdd = true;
+                    //Person person = multimediaEntities.Person.FirstOrDefault(s => s.PersonId == PersonId);
+                    //if (person == null)
+                    //    person = new Person() { PersonId = PersonId };
+                    //else
+                    //    isAdd = false;
+                    //person.Name = Name;
+                    //person.Sex = Sex;
+                    //person.ClassId = ClassId;
+                    //person.FacultyId = FacultyId;
+                    //person.Email = Email;
+                    //person.Phone = Phone;
+                    //if (isAdd)
+                    //    multimediaEntities.Person.Add(person);
+                    //else
+                    //    multimediaEntities.Entry(person).State = EntityState.Modified;
 
                     //同步维护Student
-                    isAdd = true;
+                    bool isAdd = true;
                     Student student = multimediaEntities.Student.FirstOrDefault(s => s.PersonId == PersonId);
                     if (student == null)
                         student = new Student() { PersonId = PersonId };

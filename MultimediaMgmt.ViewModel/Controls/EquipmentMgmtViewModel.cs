@@ -56,16 +56,16 @@ namespace MultimediaMgmt.ViewModel.Controls
                     {
                         Collection<WebTerminalInfo> terminalInfos = ja.ToObject<Collection<WebTerminalInfo>>();
                         var data = from c in crs
-                                   join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
+                                   join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
                                    join t in terminalInfos on c.TerminalId equals t.TerminalId
                                    where ids.Contains(c.Id)
-                                   orderby c.BuildingId,c.Floor,c.RoomName
+                                   orderby c.BuildingId,c.Floor,c.RoomNum
                                    select new ClassRoomEx()
                                    {
                                        Id = c.Id,
                                        TerminalId = c.TerminalId,
                                        TerminalIp = c.TerminalIp,
-                                       RoomName = c.RoomName,
+                                       RoomName = c.RoomNum,
                                        BuildingId = c.BuildingId,
                                        BuildingName = b.BuildingName,
                                        Location = b.Location,

@@ -16,6 +16,6 @@ namespace MultimediaMgmt.Model
     {
         public int Id { get; set; }
         public string TerminalId { get; set; }
-        public System.DateTime LogTime { get; set; }
+        public Nullable<System.DateTime> LogTime { get; set; }
     }
 }

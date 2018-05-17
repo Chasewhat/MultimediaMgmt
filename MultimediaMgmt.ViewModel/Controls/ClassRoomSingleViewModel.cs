@@ -25,13 +25,13 @@ namespace MultimediaMgmt.ViewModel.Controls
                 {
                     CommonTree tr = new CommonTree()
                     {
-                        ID = build.id,
+                        ID = build.Id,
                         Name = build.BuildingName,
                         Image = Constants.Images["build16"],
                         IsChecked = false,
                         Items = new List<CommonTree>()
                     };
-                    foreach (var data in multimediaEntities.ClassRoom.Where(r => r.BuildingId == build.id).GroupBy(r => r.Floor))
+                    foreach (var data in multimediaEntities.ClassRoom.Where(r => r.BuildingId == build.Id).GroupBy(r => r.Floor))
                     {
                         tr.Items.Add(new CommonTree()
                         {
@@ -42,7 +42,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                             Items = (data.Select(c => new CommonTree()
                             {
                                 ID = c.Id,
-                                Name = c.RoomName,
+                                Name = c.RoomNum,
                                 Image = Constants.Images["home16"],
                                 IsChecked = false,
                                 Items = null

@@ -55,7 +55,7 @@ namespace MultimediaMgmt.View.Controls
 
         public void SelectChangedExec(CommonTree classRoom)
         {
-            courseControlViewModel.RoomId = classRoom.ID;
+            courseControlViewModel.RoomId = classRoom.ID.Value;
             courseControlViewModel.Query();
         }
 

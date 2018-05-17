@@ -4,17 +4,35 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MultimediaModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MultimediaModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccessCard">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HexCode" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="CardNum" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PersonId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
         <EntityType Name="AccessCardLog">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HexCode" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="CardNum" Type="varchar" MaxLength="32" />
+          <Property Name="PersonId" Type="varchar" MaxLength="32" />
+          <Property Name="Name" Type="varchar" MaxLength="64" />
+          <Property Name="RoomId" Type="int" Nullable="false" />
+          <Property Name="RoomNum" Type="varchar" MaxLength="64" />
+          <Property Name="BuildingName" Type="varchar" MaxLength="256" />
+          <Property Name="IdentifyMode" Type="varchar" MaxLength="1" />
+          <Property Name="Location" Type="varchar" MaxLength="256" />
           <Property Name="TerminalId" Type="varchar" MaxLength="32" />
           <Property Name="TerminalIp" Type="varchar" MaxLength="24" />
           <Property Name="State" Type="tinyint" Nullable="false" />
-          <Property Name="LogTime" Type="datetime" Nullable="false" />
+          <Property Name="LogTime" Type="datetime" />
         </EntityType>
         <EntityType Name="AlarmInfo">
           <Key>
@@ -28,15 +46,17 @@
           <Property Name="Alarm4" Type="bit" />
           <Property Name="ReportTime" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="BlackList">
+        <EntityType Name="ClassAndGrade">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HexCode" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="Reason" Type="varchar" MaxLength="256" />
-          <Property Name="Operation" Type="int" Nullable="false" />
-          <Property Name="ReportTime" Type="datetime" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MajorName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="ClassAndGradeName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="NumberOfStudents" Type="int" />
+          <Property Name="EntranceDate" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="GraduationDate" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ClassGrade">
           <Key>
@@ -45,6 +65,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClassID" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="MajorID" Type="int" Nullable="false" />
+          <Property Name="FaucultyID" Type="int" />
           <Property Name="ClassName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="StudentSum" Type="int" Nullable="false" />
           <Property Name="EntryTime" Type="datetime" />
@@ -57,29 +78,21 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TerminalId" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="TerminalIp" Type="varchar" MaxLength="24" Nullable="false" />
-          <Property Name="IdentifyMode" Type="varchar" MaxLength="20" />
-          <Property Name="RoomName" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="Floor" Type="int" Nullable="false" />
+          <Property Name="IdentifyMode" Type="varchar" MaxLength="1" />
+          <Property Name="RoomNum" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="BuildingId" Type="int" Nullable="false" />
           <Property Name="VedioAddress" Type="varchar" MaxLength="500" />
-          <Property Name="CardType" Type="varchar" MaxLength="50" />
-          <Property Name="BeginTime1" Type="time" Precision="0" />
-          <Property Name="EndTime1" Type="time" Precision="0" />
-          <Property Name="BeginTime2" Type="time" Precision="0" />
-          <Property Name="EndTime2" Type="time" Precision="0" />
-          <Property Name="BeginTime3" Type="time" Precision="0" />
-          <Property Name="EndTime3" Type="time" Precision="0" />
+          <Property Name="Floor" Type="int" />
         </EntityType>
         <EntityType Name="ClassroomBuilding">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BuildingName" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuildingName" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="Location" Type="varchar" MaxLength="256" />
-          <Property Name="FloorsSum" Type="int" Nullable="false" />
-          <Property Name="BeginTime" Type="datetime" />
-          <Property Name="EndTime" Type="datetime" />
+          <Property Name="Ord" Type="int" Nullable="false" />
+          <Property Name="FloorsSum" Type="int" />
         </EntityType>
         <EntityType Name="ClassRoomPermit">
           <Key>
@@ -213,19 +226,33 @@
           <Property Name="EquipmentName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="EquipmentCategory" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacultyName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Ord" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="IcCard">
           <Key>
-            <PropertyRef Name="HexCode" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HexCode" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="CardNum" Type="varchar" MaxLength="32" />
+          <Property Name="CardNum" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="PersonId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Sex" Type="varchar" MaxLength="2" />
+          <Property Name="Career" Type="varchar" MaxLength="256" />
+          <Property Name="Email" Type="varchar" MaxLength="256" />
+          <Property Name="Phone" Type="varchar" MaxLength="128" />
           <Property Name="CardType" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Status" Type="nchar" MaxLength="10" />
+          <Property Name="FacultyId" Type="int" />
+          <Property Name="Status" Type="nchar" MaxLength="20" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6002: 表/视图“dmtjsgl3.dbo.LessonLog”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+警告 6002: 表/视图“dmtjsgl.dbo.LessonLog”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="LessonLog">
           <Key>
             <PropertyRef Name="ID" />
@@ -240,11 +267,14 @@
         </EntityType>
         <EntityType Name="LossCard">
           <Key>
-            <PropertyRef Name="HexCode" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HexCode" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="LossReportTime" Type="datetime" Nullable="false" />
+          <Property Name="PersonId" Type="varchar" MaxLength="32" />
+          <Property Name="Name" Type="varchar" MaxLength="64" />
+          <Property Name="LossReportTime" Type="datetime" />
+          <Property Name="CardNum" Type="varchar" MaxLength="32" />
         </EntityType>
         <EntityType Name="Majors">
           <Key>
@@ -268,23 +298,6 @@
           <Property Name="Enable" Type="bit" Nullable="false" />
           <Property Name="ParentId" Type="int" />
         </EntityType>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PersonId" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Account" Type="varchar" MaxLength="50" />
-          <Property Name="Password" Type="varchar" MaxLength="50" />
-          <Property Name="Sex" Type="varchar" MaxLength="2" Nullable="false" />
-          <Property Name="FacultyId" Type="varchar" MaxLength="250" />
-          <Property Name="ClassId" Type="varchar" MaxLength="250" />
-          <Property Name="Email" Type="varchar" MaxLength="50" />
-          <Property Name="Phone" Type="varchar" MaxLength="50" />
-          <Property Name="EntryTime" Type="date" />
-          <Property Name="DepartureDate" Type="date" />
-        </EntityType>
         <EntityType Name="ReservationCourseTable">
           <Key>
             <PropertyRef Name="Id" />
@@ -292,8 +305,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ClassOrd" Type="tinyint" Nullable="false" />
-          <Property Name="BeginTime" Type="varchar" MaxLength="5" />
-          <Property Name="EndTime" Type="varchar" MaxLength="5" />
+          <Property Name="BeginTime" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="EndTime" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="RoomId" Type="int" Nullable="false" />
           <Property Name="PersonId" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="CourseName" Type="varchar" MaxLength="32" />
@@ -307,7 +320,7 @@
           <Property Name="ClassOrd" Type="tinyint" Nullable="false" />
           <Property Name="BeginTime" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="EndTime" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="ExecDate" Type="varchar" MaxLength="10" />
+          <Property Name="ExecDate" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="StdCourseTable">
           <Key>
@@ -316,11 +329,11 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DayOfWeek" Type="tinyint" Nullable="false" />
           <Property Name="ClassOrd" Type="tinyint" Nullable="false" />
-          <Property Name="BeginTime" Type="varchar" MaxLength="5" />
-          <Property Name="EndTime" Type="varchar" MaxLength="5" />
+          <Property Name="BeginTime" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="EndTime" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="RoomId" Type="int" Nullable="false" />
           <Property Name="PersonId" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="CourseName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="32" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -337,9 +350,13 @@
           <Property Name="ClassID" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="EntryTime" Type="date" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“dmtjsgl.dbo.SurveillanceLog”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="SurveillanceLog">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="LogContent" />
+            <PropertyRef Name="LogDate" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LogContent" Type="varchar" MaxLength="1000" Nullable="false" />
@@ -351,11 +368,20 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HexCode" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PersonId" Type="varchar" MaxLength="32" />
+          <Property Name="Name" Type="varchar" MaxLength="64" />
+          <Property Name="BuildingName" Type="varchar" MaxLength="256" />
+          <Property Name="Location" Type="varchar" MaxLength="256" />
           <Property Name="TerminalId" Type="varchar" MaxLength="32" />
           <Property Name="TerminalIp" Type="varchar" MaxLength="24" />
-          <Property Name="LogTime" Type="datetime" Nullable="false" />
+          <Property Name="LogTime" Type="datetime" />
+          <Property Name="CardNum" Type="varchar" MaxLength="32" />
+          <Property Name="RoomNum" Type="varchar" MaxLength="64" />
           <Property Name="State" Type="tinyint" Nullable="false" />
           <Property Name="Unlocked" Type="bit" Nullable="false" />
+          <Property Name="RoomId" Type="int" Nullable="false" />
+          <Property Name="IdentifyMode" Type="varchar" MaxLength="1" />
+          <Property Name="CardType" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="SysParameter">
           <Key>
@@ -375,43 +401,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TerminalId" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="LogTime" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TerminalCurrentInfo">
-          <Key>
-            <PropertyRef Name="TerminalID" />
-          </Key>
-          <Property Name="TerminalID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="System" Type="bit" />
-          <Property Name="FPD" Type="bit" />
-          <Property Name="ComputerStatus" Type="bit" />
-          <Property Name="Projector" Type="bit" />
-          <Property Name="ProjectorScreen" Type="bit" />
-          <Property Name="Curtain" Type="bit" />
-          <Property Name="Lamp" Type="bit" />
-          <Property Name="Volume" Type="bit" />
-          <Property Name="Record" Type="bit" />
-          <Property Name="Lock_Status" Type="bit" />
-          <Property Name="Door_Status" Type="bit" />
-          <Property Name="ACRelay1" Type="bit" />
-          <Property Name="Large_Screen" Type="bit" />
-          <Property Name="AirConitioner" Type="bit" />
-          <Property Name="ProjectionSignal" Type="tinyint" />
-          <Property Name="ComputerSignal" Type="tinyint" />
-          <Property Name="LAN1" Type="bit" />
-          <Property Name="LAN2" Type="bit" />
-          <Property Name="LAN3" Type="bit" />
-          <Property Name="LAN4" Type="bit" />
-          <Property Name="Alarm_In1" Type="bit" />
-          <Property Name="Alarm_In2" Type="bit" />
-          <Property Name="Alarm_In3" Type="bit" />
-          <Property Name="Alarm_In4" Type="bit" />
-          <Property Name="Alarm_Control" Type="bit" />
-          <Property Name="IN_STATUS1" Type="bit" />
-          <Property Name="IN_STATUS2" Type="bit" />
-          <Property Name="IN_STATUS3" Type="bit" />
-          <Property Name="HexCode" Type="varchar" MaxLength="32" />
-          <Property Name="Opereate_Last" Type="tinyint" />
+          <Property Name="LogTime" Type="datetime" />
         </EntityType>
         <EntityType Name="TerminalInfo">
           <Key>
@@ -424,14 +414,6 @@
           <Property Name="LockACT" Type="tinyint" />
           <Property Name="ComputerStatus" Type="bit" />
           <Property Name="ComputerControl" Type="tinyint" />
-          <Property Name="FPD" Type="bit" />
-          <Property Name="Record" Type="bit" />
-          <Property Name="AirConditioner" Type="bit" />
-          <Property Name="LargeScreen" Type="bit" />
-          <Property Name="DoorControl" Type="bit" />
-          <Property Name="DoorStatus" Type="bit" />
-          <Property Name="Lamp" Type="bit" />
-          <Property Name="Curtain" Type="bit" />
           <Property Name="System" Type="bit" />
           <Property Name="Projector" Type="bit" />
           <Property Name="ProjectionScreen" Type="bit" />
@@ -448,15 +430,24 @@
           <Property Name="LAN2" Type="bit" />
           <Property Name="LAN3" Type="bit" />
           <Property Name="LAN4" Type="bit" />
-          <Property Name="Alarm_Control" Type="bit" />
+          <Property Name="Alarm_Control" Type="bit" Nullable="false" />
           <Property Name="Alarm_In1" Type="bit" />
           <Property Name="Alarm_In2" Type="bit" />
-          <Property Name="Alarm_In3" Type="bit" />
-          <Property Name="Alarm_In4" Type="bit" />
+          <Property Name="AirConditioner" Type="bit" />
+          <Property Name="Lamp" Type="bit" />
+          <Property Name="HexCode" Type="varchar" MaxLength="32" />
+          <Property Name="Name" Type="varchar" MaxLength="64" />
+          <Property Name="Temperature" Type="float" />
+          <Property Name="Humidity" Type="float" />
+          <Property Name="Voltage" Type="float" />
+          <Property Name="PowerRate" Type="float" />
+          <Property Name="Curtain" Type="bit" />
+          <Property Name="Record" Type="bit" />
+          <Property Name="FPD" Type="bit" />
           <Property Name="IN_STATUS1" Type="bit" />
           <Property Name="IN_STATUS2" Type="bit" />
           <Property Name="IN_STATUS3" Type="bit" />
-          <Property Name="HexCode" Type="varchar" MaxLength="32" />
+          <Property Name="System_Changed" Type="bit" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -465,7 +456,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LoginName" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="PersonId" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="WeeklyCourseTable">
           <Key>
@@ -480,6 +470,34 @@
           <Property Name="PersonId" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="CourseName" Type="varchar" MaxLength="32" />
         </EntityType>
+        <Association Name="FK_dbo_ClassAndGrade_dbo_Faculty_FacultyId">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ClassAndGrade" Type="Self.ClassAndGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassAndGrade">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ClassRoom_dbo_ClassroomBuilding_BuildingId">
+          <End Role="ClassroomBuilding" Type="Self.ClassroomBuilding" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ClassRoom" Type="Self.ClassRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassroomBuilding">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassRoom">
+              <PropertyRef Name="BuildingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId">
           <End Role="ClassroomReservation" Type="Self.ClassroomReservation" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -491,6 +509,18 @@
             </Principal>
             <Dependent Role="ClassroomReservationApproval">
               <PropertyRef Name="ClassroomReservationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_IcCard_dbo_Faculty_FacultyId">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+          <End Role="IcCard" Type="Self.IcCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IcCard">
+              <PropertyRef Name="FacultyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -521,9 +551,10 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MultimediaModelsStoreContainer">
+          <EntitySet Name="AccessCard" EntityType="Self.AccessCard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccessCardLog" EntityType="Self.AccessCardLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlarmInfo" EntityType="Self.AlarmInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BlackList" EntityType="Self.BlackList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassAndGrade" EntityType="Self.ClassAndGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClassGrade" EntityType="Self.ClassGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClassRoom" EntityType="Self.ClassRoom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClassroomBuilding" EntityType="Self.ClassroomBuilding" Schema="dbo" store:Type="Tables" />
@@ -537,20 +568,18 @@
           <EntitySet Name="EquipmentScrapLog" EntityType="Self.EquipmentScrapLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EquipmentTransferLog" EntityType="Self.EquipmentTransferLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EquipmentType" EntityType="Self.EquipmentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IcCard" EntityType="Self.IcCard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LossCard" EntityType="Self.LossCard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Majors" EntityType="Self.Majors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuItem" EntityType="Self.MenuItem" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReservationCourseTable" EntityType="Self.ReservationCourseTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StdClassPeriod" EntityType="Self.StdClassPeriod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StdCourseTable" EntityType="Self.StdCourseTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SurveillanceLog" EntityType="Self.SurveillanceLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SwipeCardLog" EntityType="Self.SwipeCardLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysParameter" EntityType="Self.SysParameter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TerminalActiveTime" EntityType="Self.TerminalActiveTime" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TerminalCurrentInfo" EntityType="Self.TerminalCurrentInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TerminalInfo" EntityType="Self.TerminalInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeeklyCourseTable" EntityType="Self.WeeklyCourseTable" Schema="dbo" store:Type="Tables" />
@@ -562,9 +591,28 @@
     [LessonLog].[LogDate] AS [LogDate]
     FROM [dbo].[LessonLog] AS [LessonLog]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="SurveillanceLog" EntityType="Self.SurveillanceLog" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SurveillanceLog].[ID] AS [ID], 
+    [SurveillanceLog].[LogContent] AS [LogContent], 
+    [SurveillanceLog].[LogDate] AS [LogDate]
+    FROM [dbo].[SurveillanceLog] AS [SurveillanceLog]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_dbo_ClassAndGrade_dbo_Faculty_FacultyId" Association="Self.FK_dbo_ClassAndGrade_dbo_Faculty_FacultyId">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="ClassAndGrade" EntitySet="ClassAndGrade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ClassRoom_dbo_ClassroomBuilding_BuildingId" Association="Self.FK_dbo_ClassRoom_dbo_ClassroomBuilding_BuildingId">
+            <End Role="ClassroomBuilding" EntitySet="ClassroomBuilding" />
+            <End Role="ClassRoom" EntitySet="ClassRoom" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId" Association="Self.FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId">
             <End Role="ClassroomReservation" EntitySet="ClassroomReservation" />
             <End Role="ClassroomReservationApproval" EntitySet="ClassroomReservationApproval" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_IcCard_dbo_Faculty_FacultyId" Association="Self.FK_dbo_IcCard_dbo_Faculty_FacultyId">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="IcCard" EntitySet="IcCard" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_MenuItem_dbo_MenuItem_ParentId" Association="Self.FK_dbo_MenuItem_dbo_MenuItem_ParentId">
             <End Role="MenuItem" EntitySet="MenuItem" />
@@ -575,20 +623,39 @@
             <End Role="ReservationCourseTable" EntitySet="ReservationCourseTable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MultimediaModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccessCard">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CardNum" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersonId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="AccessCardLog">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CardNum" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PersonId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="RoomId" Type="Int32" Nullable="false" />
+          <Property Name="RoomNum" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="IdentifyMode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="TerminalId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="TerminalIp" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="Byte" Nullable="false" />
-          <Property Name="LogTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LogTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="AlarmInfo">
           <Key>
@@ -602,15 +669,18 @@
           <Property Name="Alarm4" Type="Boolean" />
           <Property Name="ReportTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="BlackList">
+        <EntityType Name="ClassAndGrade">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Reason" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Operation" Type="Int32" Nullable="false" />
-          <Property Name="ReportTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MajorName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClassAndGradeName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumberOfStudents" Type="Int32" />
+          <Property Name="EntranceDate" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GraduationDate" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Faculty" Relationship="Self.FK_dbo_ClassAndGrade_dbo_Faculty_FacultyId" FromRole="ClassAndGrade" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="ClassGrade">
           <Key>
@@ -619,6 +689,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClassID" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MajorID" Type="Int32" Nullable="false" />
+          <Property Name="FaucultyID" Type="Int32" />
           <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="StudentSum" Type="Int32" Nullable="false" />
           <Property Name="EntryTime" Type="DateTime" Precision="3" />
@@ -631,29 +702,23 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TerminalId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TerminalIp" Type="String" MaxLength="24" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdentifyMode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="RoomName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Floor" Type="Int32" Nullable="false" />
+          <Property Name="IdentifyMode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="RoomNum" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="BuildingId" Type="Int32" Nullable="false" />
           <Property Name="VedioAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="CardType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BeginTime1" Type="Time" Precision="0" />
-          <Property Name="EndTime1" Type="Time" Precision="0" />
-          <Property Name="BeginTime2" Type="Time" Precision="0" />
-          <Property Name="EndTime2" Type="Time" Precision="0" />
-          <Property Name="BeginTime3" Type="Time" Precision="0" />
-          <Property Name="EndTime3" Type="Time" Precision="0" />
+          <Property Name="Floor" Type="Int32" />
+          <NavigationProperty Name="ClassroomBuilding" Relationship="Self.FK_dbo_ClassRoom_dbo_ClassroomBuilding_BuildingId" FromRole="ClassRoom" ToRole="ClassroomBuilding" />
         </EntityType>
         <EntityType Name="ClassroomBuilding">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BuildingName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuildingName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="FloorsSum" Type="Int32" Nullable="false" />
-          <Property Name="BeginTime" Type="DateTime" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="Ord" Type="Int32" Nullable="false" />
+          <Property Name="FloorsSum" Type="Int32" />
+          <NavigationProperty Name="ClassRoom" Relationship="Self.FK_dbo_ClassRoom_dbo_ClassroomBuilding_BuildingId" FromRole="ClassroomBuilding" ToRole="ClassRoom" />
         </EntityType>
         <EntityType Name="ClassRoomPermit">
           <Key>
@@ -782,24 +847,52 @@
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Principal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="EquipmentType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EquipmentCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacultyName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ord" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClassAndGrade" Relationship="Self.FK_dbo_ClassAndGrade_dbo_Faculty_FacultyId" FromRole="Faculty" ToRole="ClassAndGrade" />
+          <NavigationProperty Name="IcCard" Relationship="Self.FK_dbo_IcCard_dbo_Faculty_FacultyId" FromRole="Faculty" ToRole="IcCard" />
+        </EntityType>
         <EntityType Name="IcCard">
           <Key>
-            <PropertyRef Name="HexCode" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CardNum" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="CardNum" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PersonId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Career" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="CardType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="FacultyId" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Faculty" Relationship="Self.FK_dbo_IcCard_dbo_Faculty_FacultyId" FromRole="IcCard" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="LossCard">
           <Key>
-            <PropertyRef Name="HexCode" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LossReportTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PersonId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="LossReportTime" Type="DateTime" Precision="3" />
+          <Property Name="CardNum" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Majors">
           <Key>
@@ -825,23 +918,6 @@
           <NavigationProperty Name="MenuItem1" Relationship="Self.FK_dbo_MenuItem_dbo_MenuItem_ParentId" FromRole="MenuItem" ToRole="MenuItem1" />
           <NavigationProperty Name="MenuItem2" Relationship="Self.FK_dbo_MenuItem_dbo_MenuItem_ParentId" FromRole="MenuItem1" ToRole="MenuItem" />
         </EntityType>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PersonId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Sex" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FacultyId" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="ClassId" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EntryTime" Type="DateTime" Precision="0" />
-          <Property Name="DepartureDate" Type="DateTime" Precision="0" />
-        </EntityType>
         <EntityType Name="ReservationCourseTable">
           <Key>
             <PropertyRef Name="Id" />
@@ -849,8 +925,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ClassOrd" Type="Byte" Nullable="false" />
-          <Property Name="BeginTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BeginTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RoomId" Type="Int32" Nullable="false" />
           <Property Name="PersonId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
@@ -865,7 +941,7 @@
           <Property Name="ClassOrd" Type="Byte" Nullable="false" />
           <Property Name="BeginTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ExecDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ExecDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="StdCourseTable">
           <Key>
@@ -874,11 +950,11 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DayOfWeek" Type="Byte" Nullable="false" />
           <Property Name="ClassOrd" Type="Byte" Nullable="false" />
-          <Property Name="BeginTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BeginTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RoomId" Type="Int32" Nullable="false" />
           <Property Name="PersonId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CourseName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -901,11 +977,20 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersonId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="TerminalId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="TerminalIp" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
-          <Property Name="LogTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LogTime" Type="DateTime" Precision="3" />
+          <Property Name="CardNum" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="RoomNum" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="Byte" Nullable="false" />
           <Property Name="Unlocked" Type="Boolean" Nullable="false" />
+          <Property Name="RoomId" Type="Int32" Nullable="false" />
+          <Property Name="IdentifyMode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CardType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SysParameter">
           <Key>
@@ -925,43 +1010,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TerminalId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LogTime" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="TerminalCurrentInfo">
-          <Key>
-            <PropertyRef Name="TerminalID" />
-          </Key>
-          <Property Name="TerminalID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="System" Type="Boolean" />
-          <Property Name="FPD" Type="Boolean" />
-          <Property Name="ComputerStatus" Type="Boolean" />
-          <Property Name="Projector" Type="Boolean" />
-          <Property Name="ProjectorScreen" Type="Boolean" />
-          <Property Name="Curtain" Type="Boolean" />
-          <Property Name="Lamp" Type="Boolean" />
-          <Property Name="Volume" Type="Boolean" />
-          <Property Name="Record" Type="Boolean" />
-          <Property Name="Lock_Status" Type="Boolean" />
-          <Property Name="Door_Status" Type="Boolean" />
-          <Property Name="ACRelay1" Type="Boolean" />
-          <Property Name="Large_Screen" Type="Boolean" />
-          <Property Name="AirConitioner" Type="Boolean" />
-          <Property Name="ProjectionSignal" Type="Byte" />
-          <Property Name="ComputerSignal" Type="Byte" />
-          <Property Name="LAN1" Type="Boolean" />
-          <Property Name="LAN2" Type="Boolean" />
-          <Property Name="LAN3" Type="Boolean" />
-          <Property Name="LAN4" Type="Boolean" />
-          <Property Name="Alarm_In1" Type="Boolean" />
-          <Property Name="Alarm_In2" Type="Boolean" />
-          <Property Name="Alarm_In3" Type="Boolean" />
-          <Property Name="Alarm_In4" Type="Boolean" />
-          <Property Name="Alarm_Control" Type="Boolean" />
-          <Property Name="IN_STATUS1" Type="Boolean" />
-          <Property Name="IN_STATUS2" Type="Boolean" />
-          <Property Name="IN_STATUS3" Type="Boolean" />
-          <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="Opereate_Last" Type="Byte" />
+          <Property Name="LogTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TerminalInfo">
           <Key>
@@ -974,14 +1023,6 @@
           <Property Name="LockACT" Type="Byte" />
           <Property Name="ComputerStatus" Type="Boolean" />
           <Property Name="ComputerControl" Type="Byte" />
-          <Property Name="FPD" Type="Boolean" />
-          <Property Name="Record" Type="Boolean" />
-          <Property Name="AirConditioner" Type="Boolean" />
-          <Property Name="LargeScreen" Type="Boolean" />
-          <Property Name="DoorControl" Type="Boolean" />
-          <Property Name="DoorStatus" Type="Boolean" />
-          <Property Name="Lamp" Type="Boolean" />
-          <Property Name="Curtain" Type="Boolean" />
           <Property Name="System" Type="Boolean" />
           <Property Name="Projector" Type="Boolean" />
           <Property Name="ProjectionScreen" Type="Boolean" />
@@ -998,15 +1039,24 @@
           <Property Name="LAN2" Type="Boolean" />
           <Property Name="LAN3" Type="Boolean" />
           <Property Name="LAN4" Type="Boolean" />
-          <Property Name="Alarm_Control" Type="Boolean" />
+          <Property Name="Alarm_Control" Type="Boolean" Nullable="false" />
           <Property Name="Alarm_In1" Type="Boolean" />
           <Property Name="Alarm_In2" Type="Boolean" />
-          <Property Name="Alarm_In3" Type="Boolean" />
-          <Property Name="Alarm_In4" Type="Boolean" />
+          <Property Name="AirConditioner" Type="Boolean" />
+          <Property Name="Lamp" Type="Boolean" />
+          <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Temperature" Type="Double" />
+          <Property Name="Humidity" Type="Double" />
+          <Property Name="Voltage" Type="Double" />
+          <Property Name="PowerRate" Type="Double" />
+          <Property Name="Curtain" Type="Boolean" />
+          <Property Name="Record" Type="Boolean" />
+          <Property Name="FPD" Type="Boolean" />
           <Property Name="IN_STATUS1" Type="Boolean" />
           <Property Name="IN_STATUS2" Type="Boolean" />
           <Property Name="IN_STATUS3" Type="Boolean" />
-          <Property Name="HexCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="System_Changed" Type="Boolean" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -1015,7 +1065,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LoginName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PersonId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WeeklyCourseTable">
           <Key>
@@ -1042,6 +1091,44 @@
           <Property Name="Num" Type="Int32" Nullable="false" />
           <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
+        <EntityType Name="SurveillanceLog">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="LogContent" />
+            <PropertyRef Name="LogDate" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogContent" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <Association Name="FK_dbo_ClassAndGrade_dbo_Faculty_FacultyId">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ClassAndGrade" Type="Self.ClassAndGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassAndGrade">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ClassRoom_dbo_ClassroomBuilding_BuildingId">
+          <End Role="ClassroomBuilding" Type="Self.ClassroomBuilding" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ClassRoom" Type="Self.ClassRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassroomBuilding">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassRoom">
+              <PropertyRef Name="BuildingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId">
           <End Role="ClassroomReservation" Type="Self.ClassroomReservation" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1070,6 +1157,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_IcCard_dbo_Faculty_FacultyId">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+          <End Role="IcCard" Type="Self.IcCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IcCard">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_MenuItem_dbo_MenuItem_ParentId">
           <End Role="MenuItem" Type="Self.MenuItem" Multiplicity="0..1" />
           <End Role="MenuItem1" Type="Self.MenuItem" Multiplicity="*" />
@@ -1083,9 +1182,10 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MultimediaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccessCard" EntityType="Self.AccessCard" />
           <EntitySet Name="AccessCardLog" EntityType="Self.AccessCardLog" />
           <EntitySet Name="AlarmInfo" EntityType="Self.AlarmInfo" />
-          <EntitySet Name="BlackList" EntityType="Self.BlackList" />
+          <EntitySet Name="ClassAndGrade" EntityType="Self.ClassAndGrade" />
           <EntitySet Name="ClassGrade" EntityType="Self.ClassGrade" />
           <EntitySet Name="ClassRoom" EntityType="Self.ClassRoom" />
           <EntitySet Name="ClassroomBuilding" EntityType="Self.ClassroomBuilding" />
@@ -1098,11 +1198,12 @@
           <EntitySet Name="EquipmentRepairLog" EntityType="Self.EquipmentRepairLog" />
           <EntitySet Name="EquipmentScrapLog" EntityType="Self.EquipmentScrapLog" />
           <EntitySet Name="EquipmentTransferLog" EntityType="Self.EquipmentTransferLog" />
+          <EntitySet Name="EquipmentType" EntityType="Self.EquipmentType" />
+          <EntitySet Name="Faculty" EntityType="Self.Faculty" />
           <EntitySet Name="IcCard" EntityType="Self.IcCard" />
           <EntitySet Name="LossCard" EntityType="Self.LossCard" />
           <EntitySet Name="Majors" EntityType="Self.Majors" />
           <EntitySet Name="MenuItem" EntityType="Self.MenuItem" />
-          <EntitySet Name="Person" EntityType="Self.Person" />
           <EntitySet Name="ReservationCourseTable" EntityType="Self.ReservationCourseTable" />
           <EntitySet Name="StdClassPeriod" EntityType="Self.StdClassPeriod" />
           <EntitySet Name="StdCourseTable" EntityType="Self.StdCourseTable" />
@@ -1110,11 +1211,19 @@
           <EntitySet Name="SwipeCardLog" EntityType="Self.SwipeCardLog" />
           <EntitySet Name="SysParameter" EntityType="Self.SysParameter" />
           <EntitySet Name="TerminalActiveTime" EntityType="Self.TerminalActiveTime" />
-          <EntitySet Name="TerminalCurrentInfo" EntityType="Self.TerminalCurrentInfo" />
           <EntitySet Name="TerminalInfo" EntityType="Self.TerminalInfo" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" />
           <EntitySet Name="WeeklyCourseTable" EntityType="Self.WeeklyCourseTable" />
           <EntitySet Name="LessonLog" EntityType="Self.LessonLog" />
+          <EntitySet Name="SurveillanceLog" EntityType="Self.SurveillanceLog" />
+          <AssociationSet Name="FK_dbo_ClassAndGrade_dbo_Faculty_FacultyId" Association="Self.FK_dbo_ClassAndGrade_dbo_Faculty_FacultyId">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="ClassAndGrade" EntitySet="ClassAndGrade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ClassRoom_dbo_ClassroomBuilding_BuildingId" Association="Self.FK_dbo_ClassRoom_dbo_ClassroomBuilding_BuildingId">
+            <End Role="ClassroomBuilding" EntitySet="ClassroomBuilding" />
+            <End Role="ClassRoom" EntitySet="ClassRoom" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId" Association="Self.FK_dbo_ClassroomReservationApproval_dbo_ClassroomReservation_ClassroomReservationId">
             <End Role="ClassroomReservation" EntitySet="ClassroomReservation" />
             <End Role="ClassroomReservationApproval" EntitySet="ClassroomReservationApproval" />
@@ -1123,40 +1232,45 @@
             <End Role="ClassroomReservation" EntitySet="ClassroomReservation" />
             <End Role="ReservationCourseTable" EntitySet="ReservationCourseTable" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_IcCard_dbo_Faculty_FacultyId" Association="Self.FK_dbo_IcCard_dbo_Faculty_FacultyId">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="IcCard" EntitySet="IcCard" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_MenuItem_dbo_MenuItem_ParentId" Association="Self.FK_dbo_MenuItem_dbo_MenuItem_ParentId">
             <End Role="MenuItem" EntitySet="MenuItem" />
             <End Role="MenuItem1" EntitySet="MenuItem" />
           </AssociationSet>
-          <EntitySet Name="SurveillanceLog" EntityType="MultimediaModels.SurveillanceLog" />
-          <EntitySet Name="EquipmentType" EntityType="MultimediaModels.EquipmentType" />
         </EntityContainer>
-        <EntityType Name="SurveillanceLog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LogContent" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
-        <EntityType Name="EquipmentType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EquipmentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EquipmentCategory" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MultimediaModelsStoreContainer" CdmEntityContainer="MultimediaEntities">
+          <EntitySetMapping Name="AccessCard">
+            <EntityTypeMapping TypeName="MultimediaModels.AccessCard">
+              <MappingFragment StoreEntitySet="AccessCard">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HexCode" ColumnName="HexCode" />
+                <ScalarProperty Name="CardNum" ColumnName="CardNum" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AccessCardLog">
             <EntityTypeMapping TypeName="MultimediaModels.AccessCardLog">
               <MappingFragment StoreEntitySet="AccessCardLog">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HexCode" ColumnName="HexCode" />
+                <ScalarProperty Name="CardNum" ColumnName="CardNum" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="IdentifyMode" ColumnName="IdentifyMode" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="TerminalId" ColumnName="TerminalId" />
                 <ScalarProperty Name="TerminalIp" ColumnName="TerminalIp" />
                 <ScalarProperty Name="State" ColumnName="State" />
@@ -1177,14 +1291,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BlackList">
-            <EntityTypeMapping TypeName="MultimediaModels.BlackList">
-              <MappingFragment StoreEntitySet="BlackList">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="HexCode" ColumnName="HexCode" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Operation" ColumnName="Operation" />
-                <ScalarProperty Name="ReportTime" ColumnName="ReportTime" />
+          <EntitySetMapping Name="ClassAndGrade">
+            <EntityTypeMapping TypeName="MultimediaModels.ClassAndGrade">
+              <MappingFragment StoreEntitySet="ClassAndGrade">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MajorName" ColumnName="MajorName" />
+                <ScalarProperty Name="ClassAndGradeName" ColumnName="ClassAndGradeName" />
+                <ScalarProperty Name="NumberOfStudents" ColumnName="NumberOfStudents" />
+                <ScalarProperty Name="EntranceDate" ColumnName="EntranceDate" />
+                <ScalarProperty Name="GraduationDate" ColumnName="GraduationDate" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1194,6 +1310,7 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClassID" ColumnName="ClassID" />
                 <ScalarProperty Name="MajorID" ColumnName="MajorID" />
+                <ScalarProperty Name="FaucultyID" ColumnName="FaucultyID" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
                 <ScalarProperty Name="StudentSum" ColumnName="StudentSum" />
                 <ScalarProperty Name="EntryTime" ColumnName="EntryTime" />
@@ -1208,29 +1325,21 @@
                 <ScalarProperty Name="TerminalId" ColumnName="TerminalId" />
                 <ScalarProperty Name="TerminalIp" ColumnName="TerminalIp" />
                 <ScalarProperty Name="IdentifyMode" ColumnName="IdentifyMode" />
-                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
-                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
                 <ScalarProperty Name="BuildingId" ColumnName="BuildingId" />
                 <ScalarProperty Name="VedioAddress" ColumnName="VedioAddress" />
-                <ScalarProperty Name="CardType" ColumnName="CardType" />
-                <ScalarProperty Name="BeginTime1" ColumnName="BeginTime1" />
-                <ScalarProperty Name="EndTime1" ColumnName="EndTime1" />
-                <ScalarProperty Name="BeginTime2" ColumnName="BeginTime2" />
-                <ScalarProperty Name="EndTime2" ColumnName="EndTime2" />
-                <ScalarProperty Name="BeginTime3" ColumnName="BeginTime3" />
-                <ScalarProperty Name="EndTime3" ColumnName="EndTime3" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ClassroomBuilding">
             <EntityTypeMapping TypeName="MultimediaModels.ClassroomBuilding">
               <MappingFragment StoreEntitySet="ClassroomBuilding">
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Ord" ColumnName="Ord" />
                 <ScalarProperty Name="FloorsSum" ColumnName="FloorsSum" />
-                <ScalarProperty Name="BeginTime" ColumnName="BeginTime" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1367,6 +1476,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentType">
+            <EntityTypeMapping TypeName="MultimediaModels.EquipmentType">
+              <MappingFragment StoreEntitySet="EquipmentType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
+                <ScalarProperty Name="EquipmentCategory" ColumnName="EquipmentCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faculty">
+            <EntityTypeMapping TypeName="MultimediaModels.Faculty">
+              <MappingFragment StoreEntitySet="Faculty">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FacultyName" ColumnName="FacultyName" />
+                <ScalarProperty Name="Ord" ColumnName="Ord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="IcCard">
             <EntityTypeMapping TypeName="MultimediaModels.IcCard">
               <MappingFragment StoreEntitySet="IcCard">
@@ -1374,7 +1501,13 @@
                 <ScalarProperty Name="HexCode" ColumnName="HexCode" />
                 <ScalarProperty Name="CardNum" ColumnName="CardNum" />
                 <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Career" ColumnName="Career" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="CardType" ColumnName="CardType" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1384,7 +1517,10 @@
               <MappingFragment StoreEntitySet="LossCard">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HexCode" ColumnName="HexCode" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LossReportTime" ColumnName="LossReportTime" />
+                <ScalarProperty Name="CardNum" ColumnName="CardNum" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1409,24 +1545,6 @@
                 <ScalarProperty Name="Ord" ColumnName="Ord" />
                 <ScalarProperty Name="Enable" ColumnName="Enable" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Person">
-            <EntityTypeMapping TypeName="MultimediaModels.Person">
-              <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Account" ColumnName="Account" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
-                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="EntryTime" ColumnName="EntryTime" />
-                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1491,11 +1609,20 @@
               <MappingFragment StoreEntitySet="SwipeCardLog">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="HexCode" ColumnName="HexCode" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="TerminalId" ColumnName="TerminalId" />
                 <ScalarProperty Name="TerminalIp" ColumnName="TerminalIp" />
                 <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+                <ScalarProperty Name="CardNum" ColumnName="CardNum" />
+                <ScalarProperty Name="RoomNum" ColumnName="RoomNum" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="IdentifyMode" ColumnName="IdentifyMode" />
+                <ScalarProperty Name="CardType" ColumnName="CardType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1521,43 +1648,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TerminalCurrentInfo">
-            <EntityTypeMapping TypeName="MultimediaModels.TerminalCurrentInfo">
-              <MappingFragment StoreEntitySet="TerminalCurrentInfo">
-                <ScalarProperty Name="TerminalID" ColumnName="TerminalID" />
-                <ScalarProperty Name="System" ColumnName="System" />
-                <ScalarProperty Name="FPD" ColumnName="FPD" />
-                <ScalarProperty Name="ComputerStatus" ColumnName="ComputerStatus" />
-                <ScalarProperty Name="Projector" ColumnName="Projector" />
-                <ScalarProperty Name="ProjectorScreen" ColumnName="ProjectorScreen" />
-                <ScalarProperty Name="Curtain" ColumnName="Curtain" />
-                <ScalarProperty Name="Lamp" ColumnName="Lamp" />
-                <ScalarProperty Name="Volume" ColumnName="Volume" />
-                <ScalarProperty Name="Record" ColumnName="Record" />
-                <ScalarProperty Name="Lock_Status" ColumnName="Lock_Status" />
-                <ScalarProperty Name="Door_Status" ColumnName="Door_Status" />
-                <ScalarProperty Name="ACRelay1" ColumnName="ACRelay1" />
-                <ScalarProperty Name="Large_Screen" ColumnName="Large_Screen" />
-                <ScalarProperty Name="AirConitioner" ColumnName="AirConitioner" />
-                <ScalarProperty Name="ProjectionSignal" ColumnName="ProjectionSignal" />
-                <ScalarProperty Name="ComputerSignal" ColumnName="ComputerSignal" />
-                <ScalarProperty Name="LAN1" ColumnName="LAN1" />
-                <ScalarProperty Name="LAN2" ColumnName="LAN2" />
-                <ScalarProperty Name="LAN3" ColumnName="LAN3" />
-                <ScalarProperty Name="LAN4" ColumnName="LAN4" />
-                <ScalarProperty Name="Alarm_In1" ColumnName="Alarm_In1" />
-                <ScalarProperty Name="Alarm_In2" ColumnName="Alarm_In2" />
-                <ScalarProperty Name="Alarm_In3" ColumnName="Alarm_In3" />
-                <ScalarProperty Name="Alarm_In4" ColumnName="Alarm_In4" />
-                <ScalarProperty Name="Alarm_Control" ColumnName="Alarm_Control" />
-                <ScalarProperty Name="IN_STATUS1" ColumnName="IN_STATUS1" />
-                <ScalarProperty Name="IN_STATUS2" ColumnName="IN_STATUS2" />
-                <ScalarProperty Name="IN_STATUS3" ColumnName="IN_STATUS3" />
-                <ScalarProperty Name="HexCode" ColumnName="HexCode" />
-                <ScalarProperty Name="Opereate_Last" ColumnName="Opereate_Last" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TerminalInfo">
             <EntityTypeMapping TypeName="MultimediaModels.TerminalInfo">
               <MappingFragment StoreEntitySet="TerminalInfo">
@@ -1568,14 +1658,6 @@
                 <ScalarProperty Name="LockACT" ColumnName="LockACT" />
                 <ScalarProperty Name="ComputerStatus" ColumnName="ComputerStatus" />
                 <ScalarProperty Name="ComputerControl" ColumnName="ComputerControl" />
-                <ScalarProperty Name="FPD" ColumnName="FPD" />
-                <ScalarProperty Name="Record" ColumnName="Record" />
-                <ScalarProperty Name="AirConditioner" ColumnName="AirConditioner" />
-                <ScalarProperty Name="LargeScreen" ColumnName="LargeScreen" />
-                <ScalarProperty Name="DoorControl" ColumnName="DoorControl" />
-                <ScalarProperty Name="DoorStatus" ColumnName="DoorStatus" />
-                <ScalarProperty Name="Lamp" ColumnName="Lamp" />
-                <ScalarProperty Name="Curtain" ColumnName="Curtain" />
                 <ScalarProperty Name="System" ColumnName="System" />
                 <ScalarProperty Name="Projector" ColumnName="Projector" />
                 <ScalarProperty Name="ProjectionScreen" ColumnName="ProjectionScreen" />
@@ -1595,12 +1677,21 @@
                 <ScalarProperty Name="Alarm_Control" ColumnName="Alarm_Control" />
                 <ScalarProperty Name="Alarm_In1" ColumnName="Alarm_In1" />
                 <ScalarProperty Name="Alarm_In2" ColumnName="Alarm_In2" />
-                <ScalarProperty Name="Alarm_In3" ColumnName="Alarm_In3" />
-                <ScalarProperty Name="Alarm_In4" ColumnName="Alarm_In4" />
+                <ScalarProperty Name="AirConditioner" ColumnName="AirConditioner" />
+                <ScalarProperty Name="Lamp" ColumnName="Lamp" />
+                <ScalarProperty Name="HexCode" ColumnName="HexCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+                <ScalarProperty Name="Humidity" ColumnName="Humidity" />
+                <ScalarProperty Name="Voltage" ColumnName="Voltage" />
+                <ScalarProperty Name="PowerRate" ColumnName="PowerRate" />
+                <ScalarProperty Name="Curtain" ColumnName="Curtain" />
+                <ScalarProperty Name="Record" ColumnName="Record" />
+                <ScalarProperty Name="FPD" ColumnName="FPD" />
                 <ScalarProperty Name="IN_STATUS1" ColumnName="IN_STATUS1" />
                 <ScalarProperty Name="IN_STATUS2" ColumnName="IN_STATUS2" />
                 <ScalarProperty Name="IN_STATUS3" ColumnName="IN_STATUS3" />
-                <ScalarProperty Name="HexCode" ColumnName="HexCode" />
+                <ScalarProperty Name="System_Changed" ColumnName="System_Changed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1610,7 +1701,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LoginName" ColumnName="LoginName" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1641,18 +1731,9 @@
           <EntitySetMapping Name="SurveillanceLog">
             <EntityTypeMapping TypeName="MultimediaModels.SurveillanceLog">
               <MappingFragment StoreEntitySet="SurveillanceLog">
-                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="LogContent" ColumnName="LogContent" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EquipmentType">
-            <EntityTypeMapping TypeName="MultimediaModels.EquipmentType">
-              <MappingFragment StoreEntitySet="EquipmentType">
-                <ScalarProperty Name="EquipmentCategory" ColumnName="EquipmentCategory" />
-                <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
