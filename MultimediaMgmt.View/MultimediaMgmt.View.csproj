@@ -616,5 +616,9 @@
     <Resource Include="Resources\prompt.png" />
     <Resource Include="Resources\warn1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\connect.png" />
+    <Resource Include="Resources\unconnect.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

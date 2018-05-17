@@ -14,6 +14,7 @@ namespace MultimediaMgmt.Model.Models
         public string BeginTime { get; set; }
         public string EndTime { get; set; }
         public int RoomId { get; set; }
+        public string RoomNum { get; set; }
         public string PersonId { get; set; }
         public string CourseName { get; set; }
         public int ClassroomReservationId { get; set; }

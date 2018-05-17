@@ -14,13 +14,6 @@
         <dxb:BarManager AllowCustomization="False" AllowHotCustomization="False" AllowQuickCustomization="False" AllowUIAutomationSupport="False">
             <DockPanel>
                 <dxb:ToolBarControl Cursor="Hand" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-                    <dxb:ToolBarControl.Resources>
-                        <ControlTemplate x:Key="{dxbt:BarControlThemeKey ResourceKey=BarTemplate, ThemeName=MetropolisDark}" TargetType="{x:Type ContentControl}">
-                            <Border Background="{Binding HeadColor}">
-                                <ContentPresenter />
-                            </Border>
-                        </ControlTemplate>
-                    </dxb:ToolBarControl.Resources>
                     <dxb:BarStaticItem Content="{Binding ClassRoomInfo}" ShowBorder="False"/>
                     <dxb:BarCheckItem x:Name="statusChange" Alignment="Far" Glyph="{dx:DXImageOffice2013 Image=Merge_16x16.png}" CheckedChanged="showDetail_CheckedChanged"/>
                 </dxb:ToolBarControl>
@@ -52,10 +45,13 @@
                         <Image Source="{Binding Status9}" Stretch="None" Grid.Row="4" Grid.Column="4"/>
                         <Border Margin="0,10,0,0" Grid.Row="5" Grid.ColumnSpan="5" 
                                 BorderThickness="0,0.5,0,0" BorderBrush="DarkGray">
-                            <StackPanel>
-                                <TextBlock Foreground="White" Margin="0,3,0,3" Text="{Binding CurrClassRoom.PersonName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBlock Foreground="White" Text="{Binding CurrClassRoom.CourseName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
+                            <DockPanel>
+                                <Image DockPanel.Dock="Right" Stretch="Uniform" Source="{Binding IsConnect}"/>
+                                <StackPanel>
+                                    <TextBlock Foreground="White" Margin="0,3,0,3" Text="{Binding CurrClassRoom.PersonName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Foreground="White" Text="{Binding CurrClassRoom.CourseName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DockPanel>
                         </Border>
                     </Grid>
                     <control:ucEquipmentControlDetail x:Name="infoDetail" Visibility="Collapsed"/>

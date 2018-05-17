@@ -59,7 +59,7 @@ namespace MultimediaMgmt.View.Controls
                     {
                         ucEquipmentControlDetail temp = this.detailPanel.Content as ucEquipmentControlDetail;
                         ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
-                        temp.Init(cr,true);
+                        temp.Init(cr, true);
                     }
                     else if (this.detailPanel.Content is ucEquipmentControl)
                     {
@@ -95,7 +95,7 @@ namespace MultimediaMgmt.View.Controls
                     ucc.Height = 200;
                     ucc.StatusChanged += StatusChangedExec;
                     equipments.Add(ucc);
-                    this.overviewPanel.Children.Add(ucc);
+                    this.overviewPanel.Children.Insert(0, ucc);
                     ucc.Init(cr);
                     //if (this.listPanel.ItemWidth == new GridLength(0))
                     //    this.listPanel.ItemWidth = new GridLength(220);

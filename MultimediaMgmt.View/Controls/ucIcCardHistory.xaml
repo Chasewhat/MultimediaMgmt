@@ -57,7 +57,7 @@
                 </dxb:BarEditItem.EditSettings>
             </dxb:BarEditItem>
             <dxb:BarEditItem Content="教室编号:" ClosePopupOnChangingEditValue="True" EditWidth="100"
-                              EditValue="{Binding TerminalId}">
+                              EditValue="{Binding RoomNum}">
                 <dxb:BarEditItem.EditSettings>
                     <dxe:TextEditSettings/>
                 </dxb:BarEditItem.EditSettings>

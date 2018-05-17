@@ -19,7 +19,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual string PersonId { get; set; }
         public virtual DateTime? BeginDate { get; set; }
         public virtual DateTime? EndDate { get; set; }
-        public virtual string TerminalId { get; set; }
+        public virtual string RoomNum { get; set; }
 
         public Action<string> MessageShow;
 
@@ -40,6 +40,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            BeginTime=b.BeginTime,
                            EndTime = b.EndTime,
                            RoomId = b.RoomId,
+                           RoomNum = c.RoomName,
                            PersonId = b.PersonId,
                            CourseName = b.CourseName,
                            ClassroomReservationId = b.ClassroomReservationId,
@@ -48,8 +49,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                        }).AsEnumerable();
             if (!string.IsNullOrEmpty(PersonId))
                 data = data.Where(s => s.PersonId == PersonId);
-            if (!string.IsNullOrEmpty(TerminalId))
-                data = data.Where(s => s.TerminalId == TerminalId);
+            if (!string.IsNullOrEmpty(RoomNum))
+                data = data.Where(s => s.RoomNum == RoomNum);
             if (BeginDate.HasValue && BeginDate.Value != default(DateTime))
                 data = data.Where(s => s.Date.ToDateTime("yyyy-MM-dd") >= BeginDate);
             if (EndDate.HasValue && EndDate.Value != default(DateTime))
@@ -61,7 +62,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Reset()
         {
-            TerminalId = PersonId = null;
+            RoomNum = PersonId = null;
             BeginDate = EndDate = null;
         }
 

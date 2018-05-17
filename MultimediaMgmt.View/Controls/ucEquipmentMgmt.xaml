@@ -51,7 +51,8 @@
                                     </dxg:TableView>
                                 </dxg:GridControl.View>
                                 <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" Fixed="Left"/>
-                                <dxg:GridColumn FieldName="TerminalId" Header="教室编号" Width="80" Fixed="Left"/>
+                                <dxg:GridColumn FieldName="RoomName" Header="教室编号" Width="80" Fixed="Left"/>
+                                <dxg:GridColumn FieldName="TerminalId" Header="终端编号" Width="80" Fixed="Left"/>
                                 <dxg:GridColumn Binding="{Binding System,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="中控" Width="60" />
                                 <dxg:GridColumn Binding="{Binding ACRelay1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电源" Width="60"/>
                                 <dxg:GridColumn Binding="{Binding FPD,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电视" Width="60"/>

@@ -35,7 +35,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual string CardNum { get; set; }
         public virtual string PersonId { get; set; }
         public virtual string PersonName { get; set; }
-        public virtual string TerminalId { get; set; }
+        public virtual string RoomNum { get; set; }
         public virtual string Location { get; set; }
 
         public IcCardHistoryViewModel()
@@ -71,6 +71,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            PersonId = c.PersonId,
                            Name = p.Name,
                            RoomId = r.Id,
+                           RoomNum = r.RoomName,
                            BuildingName = b.BuildingName,
                            Location = b.Location,
                            IdentifyMode = r.IdentifyMode,
@@ -94,6 +95,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            PersonId = c.PersonId,
                            Name = p.Name,
                            RoomId = r.Id,
+                           RoomNum = r.RoomName,
                            BuildingName = b.BuildingName,
                            Location = b.Location,
                            IdentifyMode = r.IdentifyMode,
@@ -116,8 +118,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = data.Where(s => s.BuildingName == BuildingName);
             if (!string.IsNullOrEmpty(Location))
                 data = data.Where(s => s.Location == Location);
-            if (!string.IsNullOrEmpty(TerminalId))
-                data = data.Where(s => s.TerminalId == TerminalId);
+            if (!string.IsNullOrEmpty(RoomNum))
+                data = data.Where(s => s.RoomNum == RoomNum);
             if (SelectedCardStatus.HasValue)
                 data = data.Where(s => s.State == SelectedCardStatus.Value);
             if (BeginDate.HasValue && BeginDate.Value != default(DateTime))
@@ -132,7 +134,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void Reset()
         {
             HexCode = CardNum = PersonId = PersonName = BuildingName =
-                Location = TerminalId = null;
+                Location = RoomNum = null;
             SelectedCardStatus = null;
             BeginDate = EndDate = null;
         }

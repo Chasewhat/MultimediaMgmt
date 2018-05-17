@@ -16,7 +16,7 @@ namespace MultimediaMgmt.ViewModel.Controls
     {
         public virtual SmartObservableCollection<WarnOperate> WarnHistorys { get; set; }
         public virtual int? BuildingId { get; set; }
-        public virtual string TerminalId { get; set; }
+        public virtual string RoomNum { get; set; }
         public virtual DateTime? BeginDate { get; set; }
         public virtual DateTime? EndDate { get; set; }
 
@@ -45,7 +45,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                            ClassRoomId = c.Id,
                            TerminalId = t.TerminalId,
                            BuildingName = b.BuildingName,
-                           RoomName = c.RoomName,
+                           RoomNum = c.RoomName,
                            Alarm_In1 = t.Alarm1,
                            Alarm_In2 = t.Alarm2,
                            Alarm_In3 = t.Alarm3,
@@ -54,8 +54,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                        };
             if (BuildingId.HasValue && BuildingId.Value > 0)
                 data = data.Where(s => s.BuildingId == BuildingId.Value);
-            if (!string.IsNullOrEmpty(TerminalId))
-                data = data.Where(s => s.TerminalId == TerminalId);
+            if (!string.IsNullOrEmpty(RoomNum))
+                data = data.Where(s => s.RoomNum == RoomNum);
 
             if (BeginDate.HasValue && BeginDate.Value != default(DateTime))
                 data = data.Where(s => s.ReportTime >= BeginDate);
@@ -67,7 +67,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Reset()
         {
-            TerminalId = null;
+            RoomNum = null;
             BuildingId = null;
             BeginDate = EndDate = null;
         }

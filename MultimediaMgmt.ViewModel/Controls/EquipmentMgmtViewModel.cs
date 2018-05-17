@@ -59,6 +59,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                    join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.id
                                    join t in terminalInfos on c.TerminalId equals t.TerminalId
                                    where ids.Contains(c.Id)
+                                   orderby c.BuildingId,c.Floor,c.RoomName
                                    select new ClassRoomEx()
                                    {
                                        Id = c.Id,

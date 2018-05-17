@@ -20,7 +20,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual SmartObservableCollection<WarnOperate> WarnOperates { get; set; }
         public virtual WarnOperate SelectedWarnOperate { get; set; }
         public virtual int? BuildingId { get; set; }
-        public virtual string TerminalId { get; set; }
+        public virtual string RoomNum { get; set; }
 
         public virtual List<KeyValuePair<int, string>> Buildings { get; set; }
 
@@ -50,8 +50,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                        select c).AsEnumerable();
             if (BuildingId.HasValue && BuildingId.Value > 0)
                 crs = crs.Where(s => s.BuildingId == BuildingId.Value);
-            if (!string.IsNullOrEmpty(TerminalId))
-                crs = crs.Where(s => s.TerminalId == TerminalId);
+            if (!string.IsNullOrEmpty(RoomNum))
+                crs = crs.Where(s => s.RoomName == RoomNum);
 
             ICollection<WebClassRoom> classrooms = crs.Select(
                 s => new WebClassRoom() { TerminalId = s.TerminalId }).ToList();
@@ -74,7 +74,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                        TerminalId = t.TerminalId,
                                        TerminalIp = c.TerminalIp,
                                        BuildingName = b.BuildingName,
-                                       RoomName = c.RoomName,
+                                       RoomNum = c.RoomName,
                                        Alarm_Control = t.Alarm_Control,
                                        Alarm_In1 = t.Alarm_In1,
                                        Alarm_In2 = t.Alarm_In2
@@ -83,8 +83,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                                    };
                         if (BuildingId.HasValue && BuildingId.Value > 0)
                             data = data.Where(s => s.BuildingId == BuildingId.Value);
-                        if (!string.IsNullOrEmpty(TerminalId))
-                            data = data.Where(s => s.TerminalId == TerminalId);
+                        if (!string.IsNullOrEmpty(RoomNum))
+                            data = data.Where(s => s.RoomNum == RoomNum);
                         WarnOperates = data.ToSmartObservableCollection();
                     }
                 }
@@ -121,7 +121,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Reset()
         {
-            TerminalId = null;
+            RoomNum = null;
             BuildingId = null;
         }
 

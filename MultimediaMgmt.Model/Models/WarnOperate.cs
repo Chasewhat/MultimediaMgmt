@@ -13,7 +13,7 @@ namespace MultimediaMgmt.Model.Models
         public int BuildingId { get; set; }
         public string TerminalId { get; set; }
         public string TerminalIp { get; set; }
-        public string RoomName { get; set; }
+        public string RoomNum { get; set; }
         public string BuildingName { get; set; }
         public bool? Alarm_In1 { get; set; }
         public bool? Alarm_In2 { get; set; }

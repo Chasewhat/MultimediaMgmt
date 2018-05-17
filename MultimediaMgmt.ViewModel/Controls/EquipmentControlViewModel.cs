@@ -27,9 +27,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual ImageSource Status7 { get; set; }
         public virtual ImageSource Status8 { get; set; }
         public virtual ImageSource Status9 { get; set; }
-
-        public virtual string HeadColor { get; set; }
-
+        public virtual ImageSource IsConnect { get; set; }
         private int flag = 1;
 
         public EquipmentControlViewModel()
@@ -48,14 +46,14 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (cr.System.HasValue && cr.System.Value)
             {
                 if (cr.IsConnected)
-                    HeadColor = "DarkGreen";
+                    IsConnect = Constants.Images["Connect"];
                 else
-                    HeadColor = "DarkRed";
+                    IsConnect = Constants.Images["UnConnect"];
                 Status1 = Constants.Images["Systemo"];
             }
             else
             {
-                HeadColor = "DarkRed";
+                IsConnect = Constants.Images["UnConnect"];
                 Status1 = Constants.Images["Systemc"];
             }
 

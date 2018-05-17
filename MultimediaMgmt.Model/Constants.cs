@@ -134,7 +134,9 @@ namespace MultimediaMgmt.Model
             { "ACRelay1c", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dyc.png") as ImageSource },
             { "ACRelay1o", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/dyo.png") as ImageSource },
             { "AirConditionerc", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/ktc.png") as ImageSource },
-            { "AirConditionero", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/kto.png") as ImageSource }
+            { "AirConditionero", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/kto.png") as ImageSource },
+            { "Connect", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/connect.png") as ImageSource },
+            { "UnConnect", new ImageSourceConverter().ConvertFromString(@"pack://application:,,,/Resources/unconnect.png") as ImageSource }
         };
     }
 }
