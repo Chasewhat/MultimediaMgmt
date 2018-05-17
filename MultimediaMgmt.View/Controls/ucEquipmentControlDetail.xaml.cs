@@ -55,6 +55,7 @@ namespace MultimediaMgmt.View.Controls
             string[] address = classControlDetailViewModel.CurrClassRoom.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             monitorCount = address.Length;
             //最多取前四个
+            //每两个视频作为一个视频源 主码/副码
             if (monitorCount > 4)
             {
                 string[] temp = new string[4];
@@ -74,21 +75,32 @@ namespace MultimediaMgmt.View.Controls
             {
                 monitorsPanel.Rows = monitorsPanel.Columns = monitorRows = monitorColumns = 1;
             }
-            int i = 0;
+            int i = 0, n = 0; ;
+            KeyValuePair<string, string> mediaUrls;
             foreach (string ad in address)
             {
-                string info = string.Format("{0}{1}",
-                    classControlDetailViewModel.CurrClassRoom.BuildingName,
-                    classControlDetailViewModel.CurrClassRoom.TerminalId);
-                if (i > 0)
-                    info += string.Format(" {0}#视频源", i + 1);
-                ucMonitorMeta monitor = new ucMonitorMeta(info, ad, classControlDetailViewModel.CurrClassRoom.Id);
-                monitor.Margin = new Thickness(5);
-                monitor.Width = double.NaN;
-                monitor.Height = double.NaN;
-                monitor.Tag = i;
-                monitor.StatusChanged += StatusChangedExec;
-                this.monitorsPanel.Children.Add(monitor);
+                if (i % 2 == 0)
+                {
+
+                    if (i + 2 > address.Length)
+                        mediaUrls = new KeyValuePair<string, string>(address[i], address[i]);
+                    else
+                        mediaUrls = new KeyValuePair<string, string>(address[i], address[i + 1]);
+                    string info = string.Format("{0}{1}",
+                        classControlDetailViewModel.CurrClassRoom.BuildingName,
+                        classControlDetailViewModel.CurrClassRoom.RoomName);
+                    if (n > 0)
+                        info += string.Format(" {0}#视频源", n + 1);
+                    ucMonitorMeta monitor = new ucMonitorMeta(info, mediaUrls,
+                        classControlDetailViewModel.CurrClassRoom.Id);
+                    monitor.Margin = new Thickness(5);
+                    monitor.Width = double.NaN;
+                    monitor.Height = double.NaN;
+                    monitor.Tag = i;
+                    monitor.StatusChanged += StatusChangedExec;
+                    this.monitorsPanel.Children.Add(monitor);
+                    n++;
+                }
                 i++;
             }
         }

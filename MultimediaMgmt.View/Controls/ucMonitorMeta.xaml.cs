@@ -25,15 +25,17 @@ namespace MultimediaMgmt.View.Controls
         public delegate void StatusChangedEvent(ucMonitorMeta uc, bool isDetail);
         public event StatusChangedEvent StatusChanged;
         private bool isSet = false;
-        public string MediaUrl = string.Empty;
+        public KeyValuePair<string, string> MediaUrls;//主码/副码
+        private string MediaUrl = string.Empty;
         public int Id = 0;
         private bool isLoad = false;
-        public ucMonitorMeta(string info, string mediaUrl, int id)
+        public ucMonitorMeta(string info, KeyValuePair<string, string> mediaUrls, int id)
         {
             InitializeComponent();
             this.DataContext = monitorViewModel = ViewModelSource.Create<MonitorViewModel>();
             monitorInfo.Content = info;
-            MediaUrl = mediaUrl;
+            MediaUrls = mediaUrls;
+            MediaUrl = MediaUrls.Value;
             Id = id;
         }
 
@@ -43,7 +45,7 @@ namespace MultimediaMgmt.View.Controls
                 vlcPlayer.Volume = int.Parse(this.volumnChange.EditValue.ToString());
         }
 
-        public void Dispose()
+        public Task Dispose()
         {
             //if (vlcPlayer.SourceProvider.MediaPlayer != null)
             //{
@@ -57,7 +59,7 @@ namespace MultimediaMgmt.View.Controls
             this.volumnChange.EditValue = 0;
             monitorViewModel.Image = Constants.Images["imagePlay"];
 
-            Task.Run(() =>
+            return Task.Run(() =>
             {
                 vlcPlayer.Dispose();
                 //Meta.Vlc.Wpf.ApiManager.ReleaseAll();
@@ -78,6 +80,17 @@ namespace MultimediaMgmt.View.Controls
         {
             StatusChangedEvent handler = StatusChanged;
             handler?.Invoke(this, isDetail);
+
+            //切换视频  主码/副码  最大化时使用主码  其他使用副码
+            this.volumnChange.EditValue = 0;
+            monitorViewModel.Image = Constants.Images["imagePlay"];
+            vlcPlayer.Stop();
+            //if (vlcPlayer.VlcMediaPlayer.Media != null)
+            //    vlcPlayer.VlcMediaPlayer.Media.Dispose();
+            if (isDetail)
+                MediaUrl = MediaUrls.Key;
+            else
+                MediaUrl = MediaUrls.Value;
         }
 
         public void StatusSet()
@@ -108,7 +121,8 @@ namespace MultimediaMgmt.View.Controls
         {
             vlcPlayer.Dispatcher.Invoke(() =>
             {
-                if (vlcPlayer.VlcMediaPlayer.Media == null)
+                if (vlcPlayer.State == Meta.Vlc.Interop.Media.MediaState.NothingSpecial ||
+                    vlcPlayer.State == Meta.Vlc.Interop.Media.MediaState.Stopped)
                 {
                     if (string.IsNullOrEmpty(MediaUrl))
                         return;
@@ -120,7 +134,7 @@ namespace MultimediaMgmt.View.Controls
                 }
                 else
                 {
-                    if (vlcPlayer.VlcMediaPlayer.IsPlaying)
+                    if (vlcPlayer.State == Meta.Vlc.Interop.Media.MediaState.Playing)
                     {
                         vlcPlayer.PauseOrResume();
                         monitorViewModel.Image = Constants.Images["imagePlay"];

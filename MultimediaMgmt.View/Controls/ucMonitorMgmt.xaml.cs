@@ -50,8 +50,14 @@ namespace MultimediaMgmt.View.Controls
                     string[] address = cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     if (address.Length <= 0)
                         return;
+                    KeyValuePair<string, string> mediaUrls;
+                    if (address.Length > 1)
+                        mediaUrls = new KeyValuePair<string, string>(address[0], address[1]);
+                    else
+                        mediaUrls = new KeyValuePair<string, string>(address[0], address[0]);
+
                     ucMonitorMeta monitor = new ucMonitorMeta(
-                        string.Format("{0}{1}", cr.BuildingName, cr.TerminalId), address[0], cr.Id);
+                        string.Format("{0}{1}", cr.BuildingName, cr.RoomName), mediaUrls, cr.Id);
                     monitor.Margin = new Thickness(2);
                     monitor.Width = double.NaN;
                     monitor.Height = double.NaN;
@@ -121,27 +127,38 @@ namespace MultimediaMgmt.View.Controls
             ClassRoomEx cr = monitorMgmtViewModel.GetClassRoom(id);
             if (cr == null || string.IsNullOrEmpty(cr.VedioAddress))
                 return;
-            int i = 0;
-            foreach (string address in cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+            int i = 0, n = 0;
+            KeyValuePair<string, string> mediaUrls;
+            string[] address = cr.VedioAddress.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string ad in address)
             {
-                if (i == 0)
+                if (n == 0)
                 {
                     i++;
+                    n++;
                     continue;
                 }
                 //最多取前四个
-                if (i > 3)
+                if (n > 3)
                     break;
-                string info = string.Format("{0}{1} {2}#视频源",
-                    cr.BuildingName, cr.TerminalId, i + 1);
-                ucMonitorMeta monitor = new ucMonitorMeta(info, address, cr.Id);
-                monitor.Margin = new Thickness(2);
-                monitor.Width = double.NaN;
-                monitor.Height = double.NaN;
-                monitor.Tag = i;
-                monitor.StatusChanged += RoomStatusChangedExec;
-                roomMonitors.Add(monitor);
-                monitor.Margin = new Thickness(2);
+                if (i % 2 == 0)
+                {
+                    if (i + 2 > address.Length)
+                        mediaUrls = new KeyValuePair<string, string>(address[i], address[i]);
+                    else
+                        mediaUrls = new KeyValuePair<string, string>(address[i], address[i + 1]);
+                    string info = string.Format("{0}{1} {2}#视频源",
+                        cr.BuildingName, cr.TerminalId, n + 1);
+                    ucMonitorMeta monitor = new ucMonitorMeta(info, mediaUrls, cr.Id);
+                    monitor.Margin = new Thickness(2);
+                    monitor.Width = double.NaN;
+                    monitor.Height = double.NaN;
+                    monitor.Tag = i;
+                    monitor.StatusChanged += RoomStatusChangedExec;
+                    roomMonitors.Add(monitor);
+                    monitor.Margin = new Thickness(2);
+                    n++;
+                }
                 //monitor.Play();
                 i++;
             }

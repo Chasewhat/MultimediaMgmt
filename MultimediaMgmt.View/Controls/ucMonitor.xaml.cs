@@ -25,14 +25,16 @@ namespace MultimediaMgmt.View.Controls
         public delegate void StatusChangedEvent(ucMonitor uc, bool isDetail);
         public event StatusChangedEvent StatusChanged;
         private bool isSet = false;
-        public string MediaUrl = string.Empty;
+        public KeyValuePair<string,string> MediaUrls;//主码/副码
+        private string MediaUrl = string.Empty;
         public int Id = 0;
-        public ucMonitor(string info, string mediaUrl, int id)
+        public ucMonitor(string info, KeyValuePair<string, string> mediaUrls, int id)
         {
             InitializeComponent();
             this.DataContext = monitorViewModel = ViewModelSource.Create<MonitorViewModel>();
             monitorInfo.Content = info;
-            MediaUrl = mediaUrl;
+            MediaUrls = mediaUrls;
+            MediaUrl = MediaUrls.Value;
             Id = id;
         }
 
@@ -44,7 +46,7 @@ namespace MultimediaMgmt.View.Controls
                 this.vlcTest.SourceProvider.MediaPlayer.Audio.Volume = int.Parse(this.volumnChange.EditValue.ToString());
         }
 
-        public void Dispose()
+        public Task Dispose()
         {
             //if (this.vlcTest.SourceProvider.MediaPlayer != null)
             //{
@@ -58,7 +60,7 @@ namespace MultimediaMgmt.View.Controls
             this.volumnChange.EditValue = 0;
             monitorViewModel.Image = Constants.Images["imagePlay"];
 
-            Task.Run(() =>
+            return Task.Run(() =>
             {
                 this.vlcTest.Dispose();
                 GC.Collect();
@@ -74,10 +76,15 @@ namespace MultimediaMgmt.View.Controls
             isSet = false;
         }
 
-        private void StatusChange(bool isDetail)
+        private async void StatusChange(bool isDetail)
         {
             StatusChangedEvent handler = StatusChanged;
             handler?.Invoke(this, isDetail);
+            await Dispose();
+            if (isDetail)
+                MediaUrl = MediaUrls.Key;
+            else
+                MediaUrl = MediaUrls.Value;
         }
 
         public void StatusSet()
