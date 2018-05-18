@@ -21,6 +21,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual Dictionary<byte, string> Signals { get; set; }
         public virtual List<DataStandard> EnergyConsumptions { get; protected set; }
         public Action<string> MessageShow;
+        private IRestConnection restConnection = null;
 
         public EquipmentControlDetailViewModel()
         {
@@ -33,6 +34,9 @@ namespace MultimediaMgmt.ViewModel.Controls
             EnergyConsumptions = temp;
 
             Signals = Constants.Signals;
+            string url = ConfigHelper.Main.WebUrl;
+            if (!string.IsNullOrEmpty(url))
+                restConnection = new RestConnection(url);
         }
 
         public void Init(ClassRoomEx cr)
@@ -57,7 +61,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                     MessageShow("获取教室状态属性异常");
                     return;
                 }
-                bool result = await GetExec(CurrClassRoom.TerminalIp,
+                bool result = await GetExec(CurrClassRoom.TerminalId,
                     pro.GetValue(CurrClassRoom, null).ToString(), e.PropertyName);
                 if (result)
                     MessageShow("执行设置命令成功!");
@@ -70,16 +74,19 @@ namespace MultimediaMgmt.ViewModel.Controls
             }
         }
 
-        private Task<bool> GetExec(string ip, string status, string target)
+        private Task<bool> GetExec(string terminal, string status, string target)
         {
             return Task.Run<bool>(() =>
              {
                  try
                  {
-                     string url = string.Format("http://{0}/TERMINAL_STATUS?{1}={2}",
-                         ip, target, status);
-                     string response = WebHelper.Get(url, 2000);
-                     JObject jo = JObject.Parse(response);
+                     if (restConnection == null)
+                         return false;
+                     Dictionary<string, string> parameters = new Dictionary<string, string>();
+                     parameters.Add("_dc", "1504179824079");
+                     parameters.Add("terminalId", terminal);
+                     parameters.Add("param", string.Format("{0}={1}", target, status.ToLower()));
+                     JObject jo = restConnection.Get("api/TerminalOperate/TerminalSet", parameters);
                      if ((bool)jo["success"])
                          return true;
                      else

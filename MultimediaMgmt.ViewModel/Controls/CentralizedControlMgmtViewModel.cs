@@ -132,21 +132,21 @@ namespace MultimediaMgmt.ViewModel.Controls
                 StringBuilder temp = new StringBuilder();
                 if (cc.System.HasValue && !TokenSource.IsCancellationRequested)
                 {
-                    if (GetExec(cc.TerminalIp, cc.System.Value, "System"))
+                    if (GetExec(cc.TerminalId, cc.System.Value, "System"))
                         temp.Append("中控执行成功,");
                     else
                         temp.Append("中控执行失败,");
                 }
                 if (cc.AirConitioner.HasValue && !TokenSource.IsCancellationRequested)
                 {
-                    if (GetExec(cc.TerminalIp, cc.AirConitioner.Value, "AirConitioner"))
+                    if (GetExec(cc.TerminalId, cc.AirConitioner.Value, "AirConitioner"))
                         temp.Append("空调执行成功,");
                     else
                         temp.Append("空调执行失败,");
                 }
                 if (cc.Lamp.HasValue && !TokenSource.IsCancellationRequested)
                 {
-                    if (GetExec(cc.TerminalIp, cc.Lamp.Value, "Lamp"))
+                    if (GetExec(cc.TerminalId, cc.Lamp.Value, "Lamp"))
                         temp.Append("照明执行成功,");
                     else
                         temp.Append("照明执行失败,");
@@ -161,18 +161,29 @@ namespace MultimediaMgmt.ViewModel.Controls
             TokenSource = null;
         }
 
-        private bool GetExec(string ip, bool status, string target)
+        private bool GetExec(string terminal, bool status, string target)
         {
             try
             {
-                string url = string.Format("http://{0}/TERMINAL_STATUS?{1}={2}",
-                    ip, target, status);
-                string response = WebHelper.Get(url);
-                JObject jo = JObject.Parse(response);
+                if (restConnection == null)
+                    return false;
+                Dictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("_dc", "1504179824079");
+                parameters.Add("terminalId", terminal);
+                parameters.Add("param", string.Format("{0}={1}", target, status));
+                JObject jo = restConnection.Get("api/TerminalOperate/TerminalSet", parameters);
                 if ((bool)jo["success"])
                     return true;
                 else
                     return false;
+                //string url = string.Format("http://{0}/TERMINAL_STATUS?{1}={2}",
+                //    ip, target, status);
+                //string response = WebHelper.Get(url);
+                //JObject jo = JObject.Parse(response);
+                //if (jo! = null)
+                //    return true;
+                //else
+                //    return false;
             }
             catch
             {
