@@ -43,19 +43,14 @@ namespace MultimediaMgmt.ViewModel.Controls
             ClassRoomInfo = string.Format("{0}{1}", cr.BuildingName, cr.RoomName);
             CourseName = cr.CourseName;
             PersonName = cr.PersonName;
-            if (cr.System.HasValue && cr.System.Value)
-            {
-                if (cr.IsConnected)
-                    IsConnect = Constants.Images["Connect"];
-                else
-                    IsConnect = Constants.Images["UnConnect"];
-                Status1 = Constants.Images["Systemo"];
-            }
+            if (cr.IsConnected)
+                IsConnect = Constants.Images["Connect"];
             else
-            {
                 IsConnect = Constants.Images["UnConnect"];
+            if (cr.System.HasValue && cr.System.Value)
+                Status1 = Constants.Images["Systemo"];
+            else
                 Status1 = Constants.Images["Systemc"];
-            }
 
             flag++;
             DisplayConfig dc = multimediaEntities.DisplayConfig.FirstOrDefault(s => s.TerminalId == cr.TerminalId);
