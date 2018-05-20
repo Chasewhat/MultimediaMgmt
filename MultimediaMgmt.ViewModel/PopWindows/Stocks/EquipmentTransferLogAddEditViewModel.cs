@@ -69,7 +69,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 }
                 else
                 {
-                    multimediaEntities.EquipmentTransferLog.Add(CurrTransferLog);
+                    multimediaEntities.Entry(CurrTransferLog).State = EntityState.Added;
+                    //multimediaEntities.EquipmentTransferLog.Add(CurrTransferLog);
                     multimediaEntities.SaveChanges();
                 }
                 MessageShow("保存成功!");
@@ -80,6 +81,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             }
             if (currId > 0)
                 CloseWindow();
+            else
+                CurrTransferLog = new EquipmentTransferLog() { TransferDate = DateTime.Now.Date };
         }
     }
 }

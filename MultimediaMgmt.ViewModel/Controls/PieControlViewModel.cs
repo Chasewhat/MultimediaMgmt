@@ -26,11 +26,11 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void Init(int buildingId, int type)
         {
             int count = 0, tcount = 0;
+            ClassroomBuilding building = null;
             switch (type)
             {
                 case 1:
-                case 2:
-                    ClassroomBuilding building = multimediaEntities.ClassroomBuilding.FirstOrDefault(s => s.Id == buildingId);
+                    building = multimediaEntities.ClassroomBuilding.FirstOrDefault(s => s.Id == buildingId);
                     if (building == null)
                         return;
                     tcount = multimediaEntities.ClassRoom.Where(s => s.BuildingId == buildingId).Count();
@@ -46,29 +46,62 @@ namespace MultimediaMgmt.ViewModel.Controls
                                t.System.HasValue && t.System.Value
                              select c.Id).Count();
                     Rates = new List<DataPie>() {
-                        new DataPie((type == 1 ? "在线设备" : "上课教室"), count, Brushes.DarkGreen),
-                        new DataPie((type == 1 ? "离线设备" : "未上课教室"), tcount-count, Brushes.DarkRed)
+                        new DataPie("在线设备", count, Brushes.DarkGreen),
+                        new DataPie("离线设备", tcount-count, Brushes.DarkRed)
+                    };
+                    Title = string.Format("{0}:{1}%", building.BuildingName,
+                        (tcount == 0 ? 0 : Math.Round((double)count / tcount * 100, 2)));
+                    break;
+                case 2:
+                    building = multimediaEntities.ClassroomBuilding.FirstOrDefault(s => s.Id == buildingId);
+                    if (building == null)
+                        return;
+                    tcount = multimediaEntities.ClassRoom.Where(s => s.BuildingId == buildingId).Count();
+                    count = (from c in multimediaEntities.ClassRoom
+                             join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
+                             join t in (from tt in multimediaEntities.TerminalInfo
+                                        group tt by new
+                                        {
+                                            tt.TerminalId
+                                        } into g
+                                        select g.Where(p => p.LogTime == g.Max(m => m.LogTime)).FirstOrDefault()) on c.TerminalId equals t.TerminalId
+                             where b.Id == buildingId &&
+                               t.System.HasValue && t.System.Value
+                             select c.Id).Count();
+                    Rates = new List<DataPie>() {
+                        new DataPie("上课教室", count, Brushes.DarkGreen),
+                        new DataPie("未上课教室", tcount-count, Brushes.DarkRed)
                     };
                     Title = string.Format("{0}:{1}%", building.BuildingName,
                         (tcount == 0 ? 0 : Math.Round((double)count / tcount * 100, 2)));
                     break;
                 case 3:
                     TitleVisible = false;
-                    tcount = multimediaEntities.ClassRoom.Count();
-                    EquipmentType etype = multimediaEntities.EquipmentType.AsEnumerable().FirstOrDefault(
-                        s => s.EquipmentCategory == "中控");
-                    if (etype == null)
-                    {
-                        count = 0;
-                    }
-                    else
-                    {
-                        string typeName = etype.EquipmentName;
-                        count = (from e in multimediaEntities.EquipmentRepairLog
-                                 join i in multimediaEntities.EquipmentInStock on e.SerialNumber equals i.SerialNumber
-                                 where !e.RepairDate.HasValue && i.Name == typeName
-                                 select e.ID).Count();
-                    }
+                    //EquipmentType etype = multimediaEntities.EquipmentType.AsEnumerable().FirstOrDefault(
+                    //    s => s.EquipmentCategory == "中控");
+                    //if (etype == null)
+                    //{
+                    //    tcount =count = 0;
+                    //}
+                    //else
+                    //{
+                    //    string typeName = etype.EquipmentName;
+
+                    //实际设备总数=入库设备总数-报废总数
+                    tcount = (from e in multimediaEntities.EquipmentInStock
+                              join i in multimediaEntities.EquipmentScrapLog on e.SerialNumber equals i.SerialNumber into temp
+                              from t in temp.DefaultIfEmpty()
+                              where t == null
+                              //&& i.Name == typeName
+                              select e.ID).Count();
+                    //设备在修率=设备在修总数/实际设备总数
+                    count = (from e in multimediaEntities.EquipmentRepairLog
+                             join i in multimediaEntities.EquipmentInStock on e.SerialNumber equals i.SerialNumber into temp
+                             from t in temp.DefaultIfEmpty()
+                             where (!e.RepairDate.HasValue || e.RepairDate.HasValue && e.RepairDate.Value > DateTime.Now)
+                             //&& i.Name == typeName
+                             select e.ID).Count();
+                    //}
                     Rates = new List<DataPie>() {
                         new DataPie("正常设备", tcount-count, Brushes.DarkGreen),
                         new DataPie("在修设备", count, Brushes.DarkRed),

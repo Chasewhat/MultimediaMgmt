@@ -45,33 +45,34 @@
                         <control:ucPieControl x:Name="repairPie"/>
                     </dxdo:LayoutPanel>
                     <dxdo:LayoutPanel Caption="能耗曲线" ItemWidth="*" AllowFloat="False" AllowClose="False">
-                        <dxc:ChartControl Padding="0" Margin="0" BorderThickness="0">
-                            <dxc:ChartControl.Legends>
-                                <dxc:Legend HorizontalPosition="Right" VerticalPosition="BottomOutside" Orientation="Horizontal" IndentFromDiagram="0" Padding="2"/>
-                            </dxc:ChartControl.Legends>
-                            <dxc:ChartControl.CrosshairOptions>
-                                <dxc:CrosshairOptions ShowValueLine="True" ShowOnlyInFocusedPane="False"/>
-                            </dxc:ChartControl.CrosshairOptions>
-                            <dxc:XYDiagram2D>
-                                <dxc:XYDiagram2D.AxisY>
-                                    <dxc:AxisY2D Logarithmic="False" Interlaced="False" GridLinesMinorVisible="True">
-                                        <dxc:AxisY2D.WholeRange>
-                                            <dxc:Range x:Name="indicatorRange"/>
-                                        </dxc:AxisY2D.WholeRange>
-                                    </dxc:AxisY2D>
-                                </dxc:XYDiagram2D.AxisY>
-                                <dxc:XYDiagram2D.AxisX>
-                                    <dxc:AxisX2D Visible="False" GridLinesVisible="True" TickmarksMinorVisible="True" TickmarksVisible="True" GridLinesMinorVisible="True"/>
-                                </dxc:XYDiagram2D.AxisX>
-                                <dxc:SplineSeries2D Brush="{StaticResource NewYellow}" ArgumentScaleType="DateTime" DisplayName="能耗" DataSource="{Binding EnergyConsumptions}" 
-                                              ArgumentDataMember="Date" ValueDataMember="Value" CrosshairLabelPattern="{}Date：{A:yyyy-MM-dd}&#xA;{S}：{V:F3}KWH"
-                                                  MarkerVisible="True">
-                                    <dxc:SplineSeries2D.LineStyle>
-                                        <dxc:LineStyle DashCap="Triangle" Thickness="1"/>
-                                    </dxc:SplineSeries2D.LineStyle>
-                                </dxc:SplineSeries2D>
-                            </dxc:XYDiagram2D>
-                        </dxc:ChartControl>
+                        <DockPanel>
+                            <dxe:ComboBoxEdit x:Name="roomCb" ItemsSource="{Binding ClassRooms}" EditValueChanged="roomCb_EditValueChanged"
+                                              DockPanel.Dock="Top" IsTextEditable="False" ValueMember="Key" DisplayMember="Value">
+                                <dxe:ComboBoxEdit.StyleSettings>
+                                    <dxe:CheckedTokenComboBoxStyleSettings/>
+                                </dxe:ComboBoxEdit.StyleSettings>
+                            </dxe:ComboBoxEdit>
+                            <dxc:ChartControl Padding="0" Margin="0" BorderThickness="0">
+                                <dxc:ChartControl.Legends>
+                                    <dxc:Legend HorizontalPosition="Right" VerticalPosition="BottomOutside" Orientation="Horizontal" IndentFromDiagram="0" Padding="2"/>
+                                </dxc:ChartControl.Legends>
+                                <dxc:ChartControl.CrosshairOptions>
+                                    <dxc:CrosshairOptions ShowValueLine="True" ShowOnlyInFocusedPane="False"/>
+                                </dxc:ChartControl.CrosshairOptions>
+                                <dxc:XYDiagram2D x:Name="powerChart">
+                                    <dxc:XYDiagram2D.AxisY>
+                                        <dxc:AxisY2D Logarithmic="False" Interlaced="False" GridLinesMinorVisible="True">
+                                            <dxc:AxisY2D.WholeRange>
+                                                <dxc:Range x:Name="indicatorRange"/>
+                                            </dxc:AxisY2D.WholeRange>
+                                        </dxc:AxisY2D>
+                                    </dxc:XYDiagram2D.AxisY>
+                                    <dxc:XYDiagram2D.AxisX>
+                                        <dxc:AxisX2D Visible="False" GridLinesVisible="True" TickmarksMinorVisible="True" TickmarksVisible="True" GridLinesMinorVisible="True"/>
+                                    </dxc:XYDiagram2D.AxisX>
+                                </dxc:XYDiagram2D>
+                            </dxc:ChartControl>
+                        </DockPanel>
                     </dxdo:LayoutPanel>
                 </dxdo:LayoutGroup>
             </dxdo:LayoutGroup>

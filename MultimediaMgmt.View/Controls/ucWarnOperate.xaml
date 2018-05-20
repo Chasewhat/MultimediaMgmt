@@ -28,6 +28,7 @@
             <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
         </dxb:ToolBarControl>
         <dxg:GridControl ItemsSource="{Binding WarnOperates}"
+                         SelectedItem="{Binding SelectedWarnOperate}"
                 		x:Name="gridControl"
                         AllowInitiallyFocusedRow="False" 
                         >

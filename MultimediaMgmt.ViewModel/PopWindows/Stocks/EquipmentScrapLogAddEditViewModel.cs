@@ -69,7 +69,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 }
                 else
                 {
-                    multimediaEntities.EquipmentScrapLog.Add(CurrScrapLog);
+                    multimediaEntities.Entry(CurrScrapLog).State = EntityState.Added;
+                    //multimediaEntities.EquipmentScrapLog.Add(CurrScrapLog);
                     multimediaEntities.SaveChanges();
                 }
                 MessageShow("保存成功!");
@@ -80,6 +81,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             }
             if (currId > 0)
                 CloseWindow();
+            else
+                CurrScrapLog = new EquipmentScrapLog() { Date = DateTime.Now.Date };
         }
     }
 }

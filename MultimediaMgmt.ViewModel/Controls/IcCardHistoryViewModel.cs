@@ -62,14 +62,15 @@ namespace MultimediaMgmt.ViewModel.Controls
                        join c in multimediaEntities.IcCard on l.HexCode equals c.HexCode
                        join r in multimediaEntities.ClassRoom on l.TerminalId equals r.TerminalId
                        join b in multimediaEntities.ClassroomBuilding on r.BuildingId equals b.Id
-                       join p in multimediaEntities.IcCard on c.PersonId equals p.PersonId
+                       join p in multimediaEntities.IcCard on c.PersonId equals p.PersonId into temp
+                       from t in temp
                        select new CardLogEx()
                        {
                            Id = (int)l.Id,
                            HexCode = l.HexCode,
                            CardNum = c.CardNum,
-                           PersonId = c.PersonId,
-                           Name = p.Name,
+                           PersonId = l.PersonId,
+                           Name = (t == null ? "" : t.Name),
                            RoomId = r.Id,
                            RoomNum = r.RoomNum,
                            BuildingName = b.BuildingName,
@@ -86,14 +87,15 @@ namespace MultimediaMgmt.ViewModel.Controls
                        join c in multimediaEntities.IcCard on l.HexCode equals c.HexCode
                        join r in multimediaEntities.ClassRoom on l.TerminalId equals r.TerminalId
                        join b in multimediaEntities.ClassroomBuilding on r.BuildingId equals b.Id
-                       join p in multimediaEntities.IcCard on c.PersonId equals p.PersonId
+                       join p in multimediaEntities.IcCard on c.PersonId equals p.PersonId into temp
+                       from t in temp
                        select new CardLogEx()
                        {
                            Id = l.Id,
                            HexCode = l.HexCode,
                            CardNum = c.CardNum,
-                           PersonId = c.PersonId,
-                           Name = p.Name,
+                           PersonId = l.PersonId,
+                           Name = (t == null ? "" : t.Name),
                            RoomId = r.Id,
                            RoomNum = r.RoomNum,
                            BuildingName = b.BuildingName,

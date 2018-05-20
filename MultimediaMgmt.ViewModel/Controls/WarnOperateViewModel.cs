@@ -25,6 +25,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual List<KeyValuePair<int, string>> Buildings { get; set; }
 
         private IRestConnection restConnection = null;
+        public Action<string> MessageShow;
 
         public WarnOperateViewModel()
         {
@@ -126,13 +127,48 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
-        public void AlarmControl(bool status)
+        public async void AlarmControl(bool status)
         {
             if (SelectedWarnOperate == null)
                 return;
-            string url = string.Format("http://{0}/Alarm_Control={1}", SelectedWarnOperate.TerminalIp, status);
-            string response = WebHelper.Get(url);
+             try
+            {
+                bool result = await GetExec(SelectedWarnOperate.TerminalId, status.ToString(), "Alarm_Control");
+                if (result)
+                    MessageShow("执行命令成功!");
+                else
+                    MessageShow("执行命令失败!");
+            }
+            catch (Exception ex)
+            {
+                MessageShow(ex.Message);
+            }
             WarnOperateQuery();
+        }
+
+        private Task<bool> GetExec(string terminal, string status, string target)
+        {
+            return Task.Run<bool>(() =>
+            {
+                try
+                {
+                    if (restConnection == null)
+                        return false;
+                    Dictionary<string, string> parameters = new Dictionary<string, string>();
+                    parameters.Add("_dc", "1504179824079");
+                    parameters.Add("terminalId", terminal);
+                    parameters.Add("param", string.Format("{0}={1}", target, status.ToLower()));
+                    JObject jo = restConnection.Get("api/TerminalOperate/TerminalSet", parameters);
+                    if ((bool)jo["success"])
+                        return true;
+                    else
+                        return false;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
     }
 }

@@ -21,12 +21,13 @@ namespace MultimediaMgmt.ViewModel.Controls
             try
             {
                 List<CommonTree> temp = new List<CommonTree>();
+                var rooms = multimediaEntities.ClassRoom.AsEnumerable();
                 foreach (ClassroomBuilding build in multimediaEntities.ClassroomBuilding)
                 {
                     CommonTree tr = new CommonTree()
                     {
                         ID = build.Id,
-                        Name = build.BuildingName,
+                        Name = string.Format("{0}({1})", build.BuildingName,rooms.Where(s=>s.BuildingId==build.Id).Count()),
                         Image = Constants.Images["build16"],
                         IsChecked = false,
                         Items = new List<CommonTree>()
@@ -36,7 +37,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                         tr.Items.Add(new CommonTree()
                         {
                             ID = data.Key,
-                            Name = string.Format("{0}层", data.Key),
+                            Name = string.Format("{0}层({1})", data.Key,data.Count()),
                             Image = Constants.Images["floor16"],
                             IsChecked = false,
                             Items = (data.Select(c => new CommonTree()

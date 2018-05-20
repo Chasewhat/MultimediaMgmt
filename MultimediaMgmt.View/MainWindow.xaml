@@ -47,7 +47,6 @@
                         <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="6|卡控及预约管理" x:Name="biPermit" GroupIndex="1" Hint="卡控及预约管理" LargeGlyph="{StaticResource imgPermit}"/>
                         <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="7|刷卡记录" x:Name="biCard" GroupIndex="1" Hint="刷卡记录" LargeGlyph="{StaticResource imgCard}"/>
                         <dxb:BarCheckItem Command="{Binding OperationSelectCommand}" CommandParameter="8|设备资产管理" x:Name="biStock" GroupIndex="1" Hint="设备资产管理" LargeGlyph="{StaticResource imgStock}"/>
-                        <dxb:BarButtonItem ItemClick="SystemConfig" Alignment="Far" Hint="系统配置" Glyph="{dx:DXImageOffice2013 Image=Properties_16x16.png}"/>
                     </dxb:ToolBarControl>
                 </Grid>
             </Grid>

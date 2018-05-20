@@ -7,6 +7,7 @@
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" 
     mc:Ignorable="d Anno"
 	x:Class="MultimediaMgmt.View.Login"
 	x:Name="Window" WindowStyle="None" AllowsTransparency="True"
@@ -147,10 +148,11 @@
                 </RadialGradientBrush>
             </Ellipse.Fill>
         </Ellipse>
-        <Grid x:Name="wind" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid x:Name="wind" Margin="0,85,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <!--<TextBlock x:Name="textBlock" Text="用户登录" FontSize="36" VerticalAlignment="Center" Foreground="#FFD44015" Margin="90,0" HorizontalAlignment="Center"/>-->
             <Image Source="{StaticResource imgMultimedia}" Stretch="Uniform"/>
@@ -174,6 +176,9 @@
                     </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>
             </dxlc:LayoutControl>
+            <dxb:ToolBarControl Grid.Row="2" ShowBackground="False">
+                <dxb:BarButtonItem ItemClick="SystemConfig" Alignment="Far" Hint="系统配置" Glyph="{dx:DXImageOffice2013 Image=Properties_16x16.png}"/>
+            </dxb:ToolBarControl>
         </Grid>
     </Grid>
 </Window>

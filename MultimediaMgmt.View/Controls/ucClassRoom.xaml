@@ -21,10 +21,10 @@
                                                     ExpandNodesOnFiltering="True" AllowRecursiveNodeChecking="True"
                                                   CheckBoxFieldName="IsChecked" ShowCheckboxes="True" 
                                                   AutoExpandAllNodes="False" VerticalScrollbarVisibility="Auto" 
-                                                  ShowColumnHeaders="False" NodeCheckStateChanged="Tree_NodeCheckStateChanged"/>
+                                                  ShowColumnHeaders="True" NodeCheckStateChanged="Tree_NodeCheckStateChanged"/>
         </dxg:GridControl.View>
         <dxg:GridControl.Columns>
-            <dxg:GridColumn  Header="名称" FieldName="Name" AllowEditing="False"/>
+            <dxg:GridColumn  Header="教室编号" FieldName="Name" AllowEditing="False" SortOrder="Ascending"/>
         </dxg:GridControl.Columns>
     </dxg:GridControl>
 </UserControl>

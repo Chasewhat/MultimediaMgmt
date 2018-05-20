@@ -1,4 +1,6 @@
 ﻿using DevExpress.Mvvm.POCO;
+using DevExpress.Xpf.Charts;
+using MultimediaMgmt.Common.Helper;
 using MultimediaMgmt.ViewModel.Controls;
 using System;
 using System.Collections.Generic;
@@ -24,11 +26,19 @@ namespace MultimediaMgmt.View.Controls
         private void buildCb1_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
         {
             PiesInit(e.NewValue, e.OldValue, 1);
+            ConfigHelper.Main.Buildings1 = string.Join(",", ((List<object>)e.NewValue).Cast<int>().ToArray());
         }
 
         private void buildCb2_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
         {
             PiesInit(e.NewValue, e.OldValue, 2);
+            ConfigHelper.Main.Buildings2 = string.Join(",", ((List<object>)e.NewValue).Cast<int>().ToArray());
+        }
+
+        private void roomCb_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
+        {
+            SplinesInit(e.NewValue);
+            ConfigHelper.Main.ClassRooms = string.Join(",", ((List<object>)e.NewValue).Cast<int>().ToArray());
         }
 
         private void PiesInit(object newb, object oldb, int type)
@@ -75,9 +85,43 @@ namespace MultimediaMgmt.View.Controls
             }
         }
 
+        private void SplinesInit(object newb)
+        {
+            if (newb == null)
+                return;
+            List<int> rooms = ((List<object>)newb).Cast<int>().ToList();
+            if (rooms.Count <= 0)
+                return;
+            powerChart.Series.Clear();
+            foreach (int id in rooms)
+            {
+                SplineSeries2D ss = new SplineSeries2D();
+                ss.DisplayName = mainMgmtViewModel.GetRoomNum(id);
+                ss.ArgumentScaleType = ScaleType.DateTime;
+                ss.ArgumentDataMember = "Date";
+                ss.ValueDataMember = "Value";
+                ss.DataSource = mainMgmtViewModel.GetPowerData();
+                ss.MarkerVisible = true;
+                ss.CrosshairLabelPattern = "Date：{A:yyyy-MM-dd}\n{S}：{V:F3}KWH";
+                LineStyle ls = new LineStyle(1);
+                ls.DashCap = System.Windows.Media.PenLineCap.Triangle;
+                ss.LineStyle = ls;
+                powerChart.Series.Add(ss);
+            }
+        }
+
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             repairPie.Init(0, 3);
+            string config = ConfigHelper.Main.Buildings1;
+            if (!string.IsNullOrEmpty(config))
+                this.buildCb1.EditValue = config.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s=>int.Parse(s)).Cast<object>().ToList();
+            config = ConfigHelper.Main.Buildings2;
+            if (!string.IsNullOrEmpty(config))
+                this.buildCb2.EditValue = config.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => int.Parse(s)).Cast<object>().ToList();
+            config = ConfigHelper.Main.ClassRooms;
+            if (!string.IsNullOrEmpty(config))
+                this.roomCb.EditValue = config.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => int.Parse(s)).Cast<object>().ToList();
         }
     }
 }

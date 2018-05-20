@@ -39,7 +39,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                 restConnection = new RestConnection(url);
             //每隔30秒刷新一次
             DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.ApplicationIdle);
-            timer.Interval = TimeSpan.FromSeconds(30);
+            timer.Interval = TimeSpan.FromSeconds(10);
             timer.Tick += (s, se) => { Refresh(); };
             timer.Start();
         }
@@ -70,7 +70,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                         CardLogExs = logs.ToSmartObservableCollection();
                 }
             }
-            catch { }
+            catch(Exception ex) { }
         }
     }
 }

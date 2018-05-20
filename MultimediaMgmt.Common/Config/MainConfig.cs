@@ -16,7 +16,43 @@
             }
             set
             {
-                Set("WEBURL", value.ToString());
+                Set("WEBURL", value);
+            }
+        }
+
+        public string Buildings1
+        {
+            get
+            {
+                return Get("BUILDINGS1");
+            }
+            set
+            {
+                Set("BUILDINGS1", value);
+            }
+        }
+
+        public string Buildings2
+        {
+            get
+            {
+                return Get("BUILDINGS2");
+            }
+            set
+            {
+                Set("BUILDINGS2", value);
+            }
+        }
+
+        public string ClassRooms
+        {
+            get
+            {
+                return Get("CLASSROOMS");
+            }
+            set
+            {
+                Set("CLASSROOMS", value);
             }
         }
     }

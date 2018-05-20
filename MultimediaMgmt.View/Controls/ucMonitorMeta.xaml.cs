@@ -81,22 +81,32 @@ namespace MultimediaMgmt.View.Controls
             StatusChangedEvent handler = StatusChanged;
             handler?.Invoke(this, isDetail);
 
-            //切换视频  主码/副码  最大化时使用主码  其他使用副码
-            this.volumnChange.EditValue = 0;
-            monitorViewModel.Image = Constants.Images["imagePlay"];
-            vlcPlayer.Stop();
-            //if (vlcPlayer.VlcMediaPlayer.Media != null)
-            //    vlcPlayer.VlcMediaPlayer.Media.Dispose();
-            if (isDetail)
-                MediaUrl = MediaUrls.Key;
-            else
-                MediaUrl = MediaUrls.Value;
+            ChangeMedia(isDetail);
         }
 
         public void StatusSet()
         {
             isSet = true;
             statusChange.IsChecked = false;
+        }
+
+        public void ChangeMedia(bool isDetail)
+        {
+            //切换视频  主码/副码  最大化时使用主码  其他使用副码
+            this.volumnChange.EditValue = 0;
+            monitorViewModel.Image = Constants.Images["imagePlay"];
+            try
+            {
+                //if (vlcPlayer.State == Meta.Vlc.Interop.Media.MediaState.Playing)
+                vlcPlayer.Stop();
+            }
+            catch { }
+            //if (vlcPlayer.VlcMediaPlayer.Media != null)
+            //    vlcPlayer.VlcMediaPlayer.Media.Dispose();
+            if (isDetail)
+                MediaUrl = MediaUrls.Key;
+            else
+                MediaUrl = MediaUrls.Value;
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)

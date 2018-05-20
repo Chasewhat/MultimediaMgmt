@@ -21,6 +21,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
 
         [Required(ErrorMessage = "IC卡号不能为空")]
         public virtual string HexCode { get; set; }
+        [Required(ErrorMessage = "IC卡编号不能为空")]
+        public virtual string CardNum { get; set; }
         [Required(ErrorMessage = "工号不能为空")]
         public virtual string PersonId { get; set; }
         protected void OnPersonIdChanged()
@@ -94,6 +96,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (CurrIcCard == null)
                 CurrIcCard = new IcCard();
             HexCode = CurrIcCard.HexCode;
+            CardNum = CurrIcCard.CardNum;
+            Name = CurrIcCard.Name;
             CardType = CurrIcCard.CardType;
             CardTypes = Constants.CardTypes;
             Sexs = Constants.Sexs;
@@ -103,8 +107,10 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         public void Confirm()
         {
             if (string.IsNullOrEmpty(HexCode) ||
+                string.IsNullOrEmpty(CardNum) ||
                 string.IsNullOrEmpty(CardType) ||
-                string.IsNullOrEmpty(PersonId))
+                string.IsNullOrEmpty(PersonId)||
+                string.IsNullOrEmpty(Name))
             {
                 MessageShow("请确认必填项");
                 return;
@@ -120,12 +126,15 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             try
             {
                 CurrIcCard.HexCode = HexCode;
+                CurrIcCard.CardNum = CardNum;
                 CurrIcCard.CardType = CardType;
                 CurrIcCard.PersonId = PersonId;
+                CurrIcCard.Name = Name;
                 if (currId > 0)
                     multimediaEntities.Entry(CurrIcCard).State = EntityState.Modified;
                 else
-                    multimediaEntities.IcCard.Add(CurrIcCard);
+                    multimediaEntities.Entry(CurrIcCard).State = EntityState.Added;
+                //multimediaEntities.IcCard.Add(CurrIcCard);
                 if (IsSyncPerson.HasValue && IsSyncPerson.Value)
                 {
                     //同步维护Person 老数据库不再同步维护
@@ -160,7 +169,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                     student.Email = Email;
                     student.Phone = Phone;
                     if (isAdd)
-                        multimediaEntities.Student.Add(student);
+                        multimediaEntities.Entry(student).State = EntityState.Added;
                     else
                         multimediaEntities.Entry(student).State = EntityState.Modified;
                 }
@@ -174,6 +183,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             }
             if (currId > 0)
                 CloseWindow();
+            else
+                CurrIcCard = new IcCard();
         }
     }
 }

@@ -22,8 +22,8 @@
                     <dxlc:LayoutItem Label="IC卡号:" Foreground="Red" IsRequired="True">
                         <dxe:TextEdit EditValue="{Binding HexCode}"/>
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="IC卡编号:">
-                        <dxe:TextEdit EditValue="{Binding CurrIcCard.CardNum}"/>
+                    <dxlc:LayoutItem Label="IC卡编号:" Foreground="Red" IsRequired="True">
+                        <dxe:TextEdit EditValue="{Binding CardNum}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="工号:" Foreground="Red" IsRequired="True">
                         <dxe:TextEdit EditValue="{Binding PersonId}"/>

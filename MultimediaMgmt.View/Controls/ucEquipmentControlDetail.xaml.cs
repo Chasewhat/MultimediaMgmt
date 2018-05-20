@@ -96,7 +96,7 @@ namespace MultimediaMgmt.View.Controls
                     monitor.Margin = new Thickness(5);
                     monitor.Width = double.NaN;
                     monitor.Height = double.NaN;
-                    monitor.Tag = i;
+                    monitor.Tag = n;
                     monitor.StatusChanged += StatusChangedExec;
                     this.monitorsPanel.Children.Add(monitor);
                     n++;

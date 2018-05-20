@@ -61,7 +61,7 @@ namespace MultimediaMgmt.View.Controls
                     monitor.Margin = new Thickness(2);
                     monitor.Width = double.NaN;
                     monitor.Height = double.NaN;
-                    monitor.Tag = 0;
+                    monitor.Tag = -1;
                     monitor.StatusChanged += StatusChangedExec;
                     monitors.Add(monitor);
                     this.overviewPanel.Children.Add(monitor);
@@ -70,6 +70,8 @@ namespace MultimediaMgmt.View.Controls
                 }
                 else
                 {
+                    if (isShowRoom && currMonitor.Value.Id == classRoom.ID)
+                        RestoreInit();
                     //删除视频
                     ucMonitorMeta rm = monitors.FirstOrDefault(s => s.Id == classRoom.ID);
                     if (rm == null)
@@ -148,12 +150,12 @@ namespace MultimediaMgmt.View.Controls
                     else
                         mediaUrls = new KeyValuePair<string, string>(address[i], address[i + 1]);
                     string info = string.Format("{0}{1} {2}#视频源",
-                        cr.BuildingName, cr.TerminalId, n + 1);
+                        cr.BuildingName, cr.RoomName, n + 1);
                     ucMonitorMeta monitor = new ucMonitorMeta(info, mediaUrls, cr.Id);
                     monitor.Margin = new Thickness(2);
                     monitor.Width = double.NaN;
                     monitor.Height = double.NaN;
-                    monitor.Tag = i;
+                    monitor.Tag = n - 1;
                     monitor.StatusChanged += RoomStatusChangedExec;
                     roomMonitors.Add(monitor);
                     monitor.Margin = new Thickness(2);
@@ -217,9 +219,15 @@ namespace MultimediaMgmt.View.Controls
                 {
                     ucMonitorMeta temp = this.detailPanel.Content as ucMonitorMeta;
                     temp.StatusSet();
-                    temp.Dispose();
+                    temp.ChangeMedia(false);
+                    //temp.Dispose();
                     this.detailPanel.Content = null;
-                    this.overviewRoomPanel.Children.Insert((int)temp.Tag, temp);
+                    int index = (int)temp.Tag;
+                    if ((int)temp.Tag != -1 && index == 0)
+                        index = 1;
+                    if (index == -1)
+                        index = 0;
+                    this.overviewRoomPanel.Children.Insert(index, temp);
                 }
                 this.overviewRoomPanel.Children.Remove(ucc);
                 ucc.Width = double.NaN;

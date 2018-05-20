@@ -139,14 +139,5 @@ namespace MultimediaMgmt.View
                 this.barMax.IsVisible = false;
             }
         }
-
-        private void SystemConfig(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
-        {
-            new PopWindows.wndSystemConfig()
-            {
-                Owner = Window.GetWindow(this),
-                ShowInTaskbar = false
-            }.ShowDialog();
-        }
     }
 }

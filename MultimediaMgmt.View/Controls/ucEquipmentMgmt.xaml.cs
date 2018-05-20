@@ -19,6 +19,8 @@ namespace MultimediaMgmt.View.Controls
     {
         private EquipmentMgmtViewModel classRoomMgmtViewModel;
         private List<ucEquipmentControl> equipments = new List<ucEquipmentControl>();
+        private int currId = 0;
+        private bool isAsc = true;
         public ucEquipmentMgmt()
         {
             InitializeComponent();
@@ -83,6 +85,8 @@ namespace MultimediaMgmt.View.Controls
                     //新增设备
                     if (!classRoomMgmtViewModel.ids.Contains(classRoom.ID.Value))
                         classRoomMgmtViewModel.ids.Add(classRoom.ID.Value);
+                    else
+                        return;
                     classRoomMgmtViewModel.ClassRoomListRefresh();
                     if (classRoomMgmtViewModel.ClassRoomExs == null)
                         return;
@@ -95,19 +99,24 @@ namespace MultimediaMgmt.View.Controls
                     ucc.Height = 200;
                     ucc.StatusChanged += StatusChangedExec;
                     equipments.Add(ucc);
-                    this.overviewPanel.Children.Insert(0, ucc);
                     ucc.Init(cr);
+                    SortInsert(ucc);
+                    //this.overviewPanel.Children.Insert(0, ucc);
                     //if (this.listPanel.ItemWidth == new GridLength(0))
                     //    this.listPanel.ItemWidth = new GridLength(220);
                 }
                 else
                 {
+                    if (currId == classRoom.ID)
+                        StatusChangedExec(null, false);
                     //删除设备
                     ucEquipmentControl eq = equipments.FirstOrDefault(s => s.Id == classRoom.ID);
                     if (eq == null)
                         return;
                     equipments.Remove(eq);
                     this.overviewPanel.Children.Remove(eq);
+                    classRoomMgmtViewModel.ids.Remove(classRoom.ID.Value);
+                    classRoomMgmtViewModel.ClassRoomListRefresh();
                     //if (this.overviewPanel.Children.Count <= 0)
                     //    this.listPanel.ItemWidth = new GridLength(0);
                 }
@@ -136,6 +145,7 @@ namespace MultimediaMgmt.View.Controls
                 ucc.Width = double.NaN;
                 ucc.Height = double.NaN;
                 this.detailPanel.Content = ucc;
+                currId = ucc.Id;
             }
             else
             {
@@ -170,7 +180,8 @@ namespace MultimediaMgmt.View.Controls
                 this.detailPanel.Content = null;
                 temp.Width = 180;
                 temp.Height = 200;
-                this.overviewPanel.Children.Insert(0, temp);
+                SortInsert(temp);
+                //this.overviewPanel.Children.Insert(0, temp);
             }
             if (this.detailPanel.Content is ucEquipmentControlDetail)
             {
@@ -195,6 +206,37 @@ namespace MultimediaMgmt.View.Controls
             ucEquipmentControlDetail detail = new ucEquipmentControlDetail();
             this.detailPanel.Content = detail;
             detail.Init(classRoomMgmtViewModel.SelectedClassRoomEx);
+            currId = classRoomMgmtViewModel.SelectedClassRoomEx.Id;
+        }
+
+        private void SortAsc(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            this.overviewPanel.Children.Clear();
+            foreach (ucEquipmentControl ec in equipments.OrderBy(s=>s.RoomNum))
+            {
+                this.overviewPanel.Children.Add(ec);
+            }
+            isAsc = true;
+        }
+
+        private void SortDesc(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            this.overviewPanel.Children.Clear();
+            foreach (ucEquipmentControl ec in equipments.OrderByDescending(s => s.RoomNum))
+            {
+                this.overviewPanel.Children.Add(ec);
+            }
+            isAsc = false;
+        }
+
+        private void SortInsert(ucEquipmentControl ec)
+        {
+            int index = 0;
+            if (isAsc)
+                index = equipments.OrderBy(s => s.RoomNum).ToList().IndexOf(ec);
+            else
+                index = equipments.OrderByDescending(s => s.RoomNum).ToList().IndexOf(ec);
+            this.overviewPanel.Children.Insert(index,ec);
         }
     }
 }

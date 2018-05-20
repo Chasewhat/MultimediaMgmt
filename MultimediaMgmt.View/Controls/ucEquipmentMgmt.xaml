@@ -34,6 +34,10 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <dxb:ToolBarControl Grid.Row="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                                <dxb:BarCheckItem GroupIndex="2" Hint="升序排列" Glyph="{dx:DXImageOffice2013 Image=MoveUp_16x16.png}" ItemClick="SortAsc" IsChecked="True"/>
+                                <dxb:BarCheckItem GroupIndex="2" Hint="降序排列" Glyph="{dx:DXImageOffice2013 Image=MoveDown_16x16.png}" ItemClick="SortDesc"/>
+                                <dxb:BarStaticItem Alignment="Far" Content="{Binding RoomTotal}"/>
+                                <dxb:BarItemSeparator Alignment="Far"/>
                                 <dxb:BarCheckItem x:Name="bcMatrix" GroupIndex="1" Alignment="Far" Hint="矩阵模式显示" Glyph="{StaticResource imgMatrix}" ItemClick="MatrixShow" IsChecked="True"/>
                                 <dxb:BarCheckItem x:Name="bcList" GroupIndex="1" Alignment="Far" Hint="列表模式显示" Glyph="{StaticResource imgList}" ItemClick="ListShow"/>
                             </dxb:ToolBarControl>

@@ -59,5 +59,14 @@ namespace MultimediaMgmt.View
                 return;
             }
         }
+
+        private void SystemConfig(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            new PopWindows.wndSystemConfig()
+            {
+                Owner = this,
+                ShowInTaskbar = false
+            }.ShowDialog();
+        }
     }
 }

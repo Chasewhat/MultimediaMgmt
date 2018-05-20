@@ -98,19 +98,18 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0 ||
                 restConnection == null)
                 return;
+            CentralizedControls.BeginUpdate();
             foreach (var cc in SelectedCentralizedControls)
             {
                 dynamic dy = new ExpandoObject();
                 dy.TerminalId = cc.TerminalId;
                 JObject jo = restConnection.Post("api/TerminalOperate/CopyIcCardToTerminal", dy);
-                if (jo == null)
-                {
-                    MessageShowFail("写入未返回结果");
-                    return;
-                }
-                string result = jo["message"].ToString();
-                MessageShowSucc(result);
+                if (jo == null || !((bool)jo["success"]))
+                    cc.ExecResult = "写入执行失败";
+                else
+                    cc.ExecResult = "写入执行成功";
             }
+            CentralizedControls.EndUpdate();
         }
         [Command]
         public void ControlStop()

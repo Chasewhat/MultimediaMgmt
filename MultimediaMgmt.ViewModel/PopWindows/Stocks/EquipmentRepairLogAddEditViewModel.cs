@@ -64,7 +64,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 }
                 else
                 {
-                    multimediaEntities.EquipmentRepairLog.Add(CurrRepairLog);
+                    multimediaEntities.Entry(CurrRepairLog).State = EntityState.Added;
+                    //multimediaEntities.EquipmentRepairLog.Add(CurrRepairLog);
                     multimediaEntities.SaveChanges();
                 }
                 MessageShow("保存成功!");
@@ -75,6 +76,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             }
             if (currId > 0)
                 CloseWindow();
+            else
+                CurrRepairLog = new EquipmentRepairLog() { DeclarationDate = DateTime.Now.Date };
         }
     }
 }

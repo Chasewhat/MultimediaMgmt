@@ -21,6 +21,7 @@ namespace MultimediaMgmt.View.Controls
         public event StatusChangedEvent StatusChanged;
         private bool isSet = false;
         public int Id = 0;
+        public string RoomNum = string.Empty;
 
         public ucEquipmentControl()
         {
@@ -31,6 +32,7 @@ namespace MultimediaMgmt.View.Controls
         public void Init(ClassRoomEx cr)
         {
             Id = cr.Id;
+            RoomNum = cr.RoomName;
             classControlViewModel.Init(cr);
         }
 

@@ -147,7 +147,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                         PersonId = CurrPermit.PersonId,
                         PermitTime = CurrPermit.PermitTime
                     };
-                    multimediaEntities.ClassRoomPermit.Add(permit);
+                    multimediaEntities.Entry(permit).State = EntityState.Added;
+                    //multimediaEntities.ClassRoomPermit.Add(permit);
                 }
                 multimediaEntities.SaveChanges();
                 MessageShow("保存成功!");

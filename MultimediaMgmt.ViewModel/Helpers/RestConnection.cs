@@ -204,6 +204,7 @@ namespace MultimediaMgmt.ViewModel
             parameters.Add("page", page.ToString());
             parameters.Add("start", start.ToString());
             parameters.Add("limit", limit.ToString());
+            parameters.Add("sWhere", "");
             JObject jo = Get(url, parameters);
             if (jo.Value<bool>("success"))
             {

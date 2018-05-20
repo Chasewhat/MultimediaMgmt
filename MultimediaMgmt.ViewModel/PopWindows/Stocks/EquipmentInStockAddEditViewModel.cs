@@ -80,7 +80,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 }
                 else
                 {
-                    multimediaEntities.EquipmentInStock.Add(CurrInStock);
+                    multimediaEntities.Entry(CurrInStock).State = EntityState.Added;
+                    //multimediaEntities.EquipmentInStock.Add(CurrInStock);
                     multimediaEntities.SaveChanges();
                 }
                 MessageShow("保存成功!");
@@ -91,6 +92,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             }
             if (currId > 0)
                 CloseWindow();
+            else
+                CurrInStock = new EquipmentInStock() { Intime = DateTime.Now };
         }
     }
 }

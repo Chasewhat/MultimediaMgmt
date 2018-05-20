@@ -69,7 +69,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 }
                 else
                 {
-                    multimediaEntities.SurveillanceLog.Add(CurrSurveillanceLog);
+                    multimediaEntities.Entry(CurrSurveillanceLog).State = EntityState.Added;
+                    //multimediaEntities.SurveillanceLog.Add(CurrSurveillanceLog);
                     multimediaEntities.SaveChanges();
                 }
                 MessageShow("保存成功!");
@@ -80,6 +81,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             }
             if (currId > 0)
                 CloseWindow();
+            else
+                CurrSurveillanceLog = new SurveillanceLog() { LogDate = DateTime.Now.Date };
         }
     }
 }

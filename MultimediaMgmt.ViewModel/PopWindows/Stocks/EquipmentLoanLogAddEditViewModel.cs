@@ -74,7 +74,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 }
                 else
                 {
-                    multimediaEntities.EquipmentLoanLog.Add(CurrLoanLog);
+                    multimediaEntities.Entry(CurrLoanLog).State = EntityState.Added;
+                    //multimediaEntities.EquipmentLoanLog.Add(CurrLoanLog);
                     multimediaEntities.SaveChanges();
                 }
                 MessageShow("保存成功!");
@@ -85,6 +86,8 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             }
             if (currId > 0)
                 CloseWindow();
+            else
+                CurrLoanLog = new EquipmentLoanLog() { LoanDate = DateTime.Now.Date };
         }
     }
 }

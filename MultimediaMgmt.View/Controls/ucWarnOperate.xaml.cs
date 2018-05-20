@@ -20,6 +20,10 @@ namespace MultimediaMgmt.View.Controls
         {
             InitializeComponent();
             this.DataContext = warnOperateViewModel = ViewModelSource.Create<WarnOperateViewModel>();
+            warnOperateViewModel.MessageShow = (s) =>
+            {
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            };
         }
 
     }

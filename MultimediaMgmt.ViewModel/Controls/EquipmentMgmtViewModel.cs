@@ -18,6 +18,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual SmartObservableCollection<ClassRoomEx> ClassRoomExs { get; set; }
         public virtual ClassRoomEx SelectedClassRoomEx { get; set; }
         public virtual Dictionary<byte, string> Signals { get; set; }
+
+        public virtual string RoomTotal { get; set; }
         public virtual string WaitIndiContent { get; set; }
         public virtual bool IsLoad { get; set; }
         public List<int> ids = new List<int>();
@@ -116,6 +118,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                 }
             }
             catch { }
+            if (ClassRoomExs != null)
+                RoomTotal = string.Format("已选教室数量:{0}", ClassRoomExs.Count);
             #endregion
             #region 最新数据库版本
             //var data = from c in multimediaEntities.ClassRoom
