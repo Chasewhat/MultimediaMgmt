@@ -105,13 +105,13 @@ namespace MultimediaMgmt.ViewModel.Controls
                                        Opereate_Last = t.Opereate_Last,
                                        IsConnected = t.IsConnected,
                                        //暂时不知如何获取  取默认值
-                                       PersonId = "11111",
-                                       PersonName = "张三丰",
-                                       CourseName = "数据库系统概论",
-                                       ClassName = "2017级自动化1班",
-                                       StudentSum = 30,
-                                       RealStudentSum = 25,
-                                       Temperature = "25℃"
+                                       //PersonId = "11111",
+                                       //PersonName = "张三丰",
+                                       //CourseName = "数据库系统概论",
+                                       //ClassName = "2017级自动化1班",
+                                       //StudentSum = 30,
+                                       //RealStudentSum = 25,
+                                       //Temperature = "25℃"
                                    };
                         ClassRoomExs = data.ToSmartObservableCollection();
                     }

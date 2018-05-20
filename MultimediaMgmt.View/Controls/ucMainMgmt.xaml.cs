@@ -102,7 +102,7 @@ namespace MultimediaMgmt.View.Controls
                 ss.ValueDataMember = "Value";
                 ss.DataSource = mainMgmtViewModel.GetPowerData();
                 ss.MarkerVisible = true;
-                ss.CrosshairLabelPattern = "Date：{A:yyyy-MM-dd}\n{S}：{V:F3}KWH";
+                ss.CrosshairLabelPattern = "{S}：{V:F3}KWH";
                 LineStyle ls = new LineStyle(1);
                 ls.DashCap = System.Windows.Media.PenLineCap.Triangle;
                 ss.LineStyle = ls;
