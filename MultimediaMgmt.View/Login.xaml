@@ -176,7 +176,7 @@
                     </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>
             </dxlc:LayoutControl>
-            <dxb:ToolBarControl Grid.Row="2" ShowBackground="False">
+            <dxb:ToolBarControl Grid.Row="2" ShowBackground="False" AllowCustomizationMenu="False" AllowQuickCustomization="False">
                 <dxb:BarButtonItem ItemClick="SystemConfig" Alignment="Far" Hint="系统配置" Glyph="{dx:DXImageOffice2013 Image=Properties_16x16.png}"/>
             </dxb:ToolBarControl>
         </Grid>

@@ -20,5 +20,7 @@ namespace MultimediaMgmt.Model.Models
         /// 课程日期
         /// </summary>
         public string Date { get; set; }
+
+        public List<ReservationCourseTableEx> Courses { get; set; }
     }
 }

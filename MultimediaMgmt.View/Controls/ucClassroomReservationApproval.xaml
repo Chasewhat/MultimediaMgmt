@@ -65,6 +65,27 @@
                 		            x:Name="gridControl"
                                     AllowInitiallyFocusedRow="False"
                                     >
+                            <dxg:GridControl.DetailDescriptor>
+                                <!--#region Courses-->
+                                <dxg:DataControlDetailDescriptor Name="gridDetailDescriptor" ItemsSourceBinding="{Binding Path=Courses}" ShowHeader="True">
+                                    <dxg:GridControl Name="detailGrid">
+                                        <dxg:GridControl.Columns>
+                                            <dxg:GridColumn Header="日期" FieldName="Date" Width="100"/>
+                                            <dxg:GridColumn Header="教室" FieldName="RoomNum" Width="60"/>
+                                            <dxg:GridColumn Header="课序" FieldName="ClassOrd" Width="60"/>
+                                            <dxg:GridColumn Header="上课" FieldName="BeginTime" Width="80"/>
+                                            <dxg:GridColumn Header="下课" FieldName="EndTime" Width="80"/>
+                                            <dxg:GridColumn Header="课程" FieldName="CourseName" Width="80"/>
+                                            <dxg:GridColumn Header="教师" FieldName="Name" Width="120"/>
+                                        </dxg:GridControl.Columns>
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView Name="detailView" DetailHeaderContent="申请明细"
+                                                           UseAnimationWhenExpanding="true" AllowEditing="False"/>
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+                                </dxg:DataControlDetailDescriptor>
+                                <!--#endregion-->
+                            </dxg:GridControl.DetailDescriptor>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="gridView" AllowEditing="False" >
                                     <dxg:TableView.RowCellMenuCustomizations>
@@ -77,7 +98,7 @@
                                     <dxe:TextEditSettings Mask="yyyy-MM-dd HH:mm:ss" MaskType="DateTime" MaskUseAsDisplayFormat="True"/>
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="ReservationPersonName" Header="预约人" Width="80"/>
+                            <dxg:GridColumn FieldName="ReservationPersonName" Header="预约人" Width="120"/>
                             <dxg:GridColumn FieldName="Description" Header="预约说明" Width="200"/>
                             <dxg:GridColumn FieldName="ReservationState" Header="预约状态" Width="80">
                                 <dxg:GridColumn.CellTemplate>

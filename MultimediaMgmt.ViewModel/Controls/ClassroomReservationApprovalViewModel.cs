@@ -41,26 +41,42 @@ namespace MultimediaMgmt.ViewModel.Controls
             RoomItems = Constants.RoomItems;
             ReserveState = Constants.ReserveState;
             ApproveState = Constants.ApproveState;
-
+            SelectedApproveState = 0;
         }
 
         [Command]
         public void Query()
         {
             var data = (from r in multimediaEntities.ClassroomReservation
-                        join a in multimediaEntities.ClassroomReservationApproval on r.Id equals a.ClassroomReservationId
-                        join s in multimediaEntities.ReservationCourseTable on r.Id equals s.ClassroomReservationId
+                            //join s in multimediaEntities.ReservationCourseTable on r.Id equals s.ClassroomReservationId
+                        join a in multimediaEntities.ClassroomReservationApproval on r.Id equals a.ClassroomReservationId into temp
+                        from t in temp.DefaultIfEmpty()
                         select new ClassroomReservationEx()
                         {
                             Id = r.Id,
-                            RoomId = s.RoomId,
+                            //RoomId = s.RoomId,
                             ReservationPersonId = r.ReservationPersonId,
                             Description = r.Description,
                             ReservationTime = r.ReservationTime,
                             ReservationState = r.ReservationState,
-                            ReservationPersonName = r.ReservationPersonName,
-                            ApprovalState = a.ApprovalState,
-                            Date = s.Date
+                            ReservationPersonName = r.ReservationPersonName + "(" + r.ReservationPersonId + ")",
+                            ApprovalState = (t == null ? 0 : t.ApprovalState),
+                            //Date = s.Date,
+                            Courses = (from c in r.ReservationCourseTable
+                                       join m in multimediaEntities.ClassRoom on c.RoomId equals m.Id into tempc
+                                       from o in tempc.DefaultIfEmpty()
+                                       join d in multimediaEntities.IcCard on c.PersonId equals d.PersonId into tempp
+                                       from p in tempp.DefaultIfEmpty().Take(1)
+                                       select new ReservationCourseTableEx()
+                                       {
+                                           Date = c.Date,
+                                           BeginTime = c.BeginTime,
+                                           EndTime = c.EndTime,
+                                           ClassOrd = c.ClassOrd,
+                                           Name = (p == null ? "" : p.Name) + "(" + c.PersonId + ")",
+                                           CourseName = c.CourseName,
+                                           RoomNum = (o == null ? c.RoomId + "" : o.RoomNum)
+                                       }).ToList()
                         }).AsEnumerable();
             if (SelectedDateItem.HasValue && SelectedDateItem.Value == 1)
             {

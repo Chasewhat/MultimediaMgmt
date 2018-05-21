@@ -131,6 +131,7 @@
     <Compile Include="Models\CourseWeekEx.cs" />
     <Compile Include="Models\CourseEx.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\ReservationCourseTableEx.cs" />
     <Compile Include="Models\ReservationEx.cs" />
     <Compile Include="Models\CardLogEx.cs" />
     <Compile Include="Models\EquipmentStatusEx.cs" />

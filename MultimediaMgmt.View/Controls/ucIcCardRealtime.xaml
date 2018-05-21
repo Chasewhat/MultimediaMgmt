@@ -44,7 +44,11 @@
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="LogTime" Header="记录时间" Width="120"/>
+            <dxg:GridColumn FieldName="LogTime" Header="记录时间" Width="180">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings Mask="yyyy-MM-dd HH:mm:ss" MaskType="DateTime" MaskUseAsDisplayFormat="True"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
         </dxg:GridControl>
     </DockPanel>
 </UserControl>

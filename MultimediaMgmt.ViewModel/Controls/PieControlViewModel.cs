@@ -8,6 +8,8 @@ using MultimediaMgmt.Common.Extend;
 using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.Model;
 using System.Windows.Media;
+using Newtonsoft.Json.Linq;
+using System.Collections.ObjectModel;
 
 namespace MultimediaMgmt.ViewModel.Controls
 {
@@ -34,17 +36,43 @@ namespace MultimediaMgmt.ViewModel.Controls
                     if (building == null)
                         return;
                     tcount = multimediaEntities.ClassRoom.Where(s => s.BuildingId == buildingId).Count();
-                    count = (from c in multimediaEntities.ClassRoom
-                             join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
-                             join t in (from tt in multimediaEntities.TerminalInfo
-                                        group tt by new
-                                        {
-                                            tt.TerminalId
-                                        } into g
-                                        select g.Where(p => p.LogTime == g.Max(m => m.LogTime)).FirstOrDefault()) on c.TerminalId equals t.TerminalId
-                             where b.Id == buildingId &&
-                               t.System.HasValue && t.System.Value
-                             select c.Id).Count();
+                    #region 从Web获取IsConnected状态
+                    string url = Common.Helper.ConfigHelper.Main.WebUrl;
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        IRestConnection restConnection = new RestConnection(url);
+                        ICollection<WebClassRoom> classrooms = multimediaEntities.ClassRoom.Where(s => s.BuildingId == buildingId).Select(
+                            s => new WebClassRoom() { TerminalId = s.TerminalId }).ToList();
+                        try
+                        {
+                            JObject jo = restConnection.Post("api/TerminalInfo/QueryLastTerminalInfos", classrooms);
+                            if (jo.Value<bool>("success"))
+                            {
+                                JArray ja = jo.Value<JArray>("data");
+                                if (ja != null)
+                                {
+                                    Collection<WebTerminalInfo> terminalInfos = ja.ToObject<Collection<WebTerminalInfo>>();
+                                    count = terminalInfos.Where(s => s.IsConnected).Count();
+                                }
+                            }
+                        }
+                        catch { }
+                    }
+                    #endregion
+
+                    //#region 从数据库获取
+                    //count = (from c in multimediaEntities.ClassRoom
+                    //         join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
+                    //         join t in (from tt in multimediaEntities.TerminalInfo
+                    //                    group tt by new
+                    //                    {
+                    //                        tt.TerminalId
+                    //                    } into g
+                    //                    select g.Where(p => p.LogTime == g.Max(m => m.LogTime)).FirstOrDefault()) on c.TerminalId equals t.TerminalId
+                    //         where b.Id == buildingId &&
+                    //           t.System.HasValue && t.System.Value
+                    //         select c.Id).Count();
+                    //#endregion
                     Rates = new List<DataPie>() {
                         new DataPie("在线设备", count, Brushes.DarkGreen),
                         new DataPie("离线设备", tcount-count, Brushes.DarkRed)
