@@ -1,11 +1,13 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -155,7 +157,7 @@ namespace MultimediaMgmt.ViewModel
             }
             try
             {
-                result = JObject.Parse(response.Content);
+                result = JsonConvert.DeserializeObject(response.Content) as JObject;
             }
             catch (Exception e)
             {
@@ -191,6 +193,13 @@ namespace MultimediaMgmt.ViewModel
                 throw e;
             }
             return result;
+        }
+
+        protected T DeserializeJson<T>(string json) where T : class
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            StringReader sr = new StringReader(json);
+            return serializer.Deserialize(new JsonTextReader(sr), typeof(T)) as T;
         }
 
         public Collection<T> GetPageValues<T>(string url, int page, int start, int limit, Dictionary<string, string> parameters, ref int total)

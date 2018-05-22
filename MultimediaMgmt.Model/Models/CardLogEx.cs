@@ -35,5 +35,7 @@ namespace MultimediaMgmt.Model.Models
         //8、管理员刷卡
         public int State { get; set; }
         public DateTime? LogTime { get; set; }
+
+        public bool Unlocked { get; set; }
     }
 }

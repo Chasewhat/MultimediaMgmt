@@ -126,8 +126,12 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = data.Where(s => s.State == SelectedCardStatus.Value);
             if (BeginDate.HasValue && BeginDate.Value != default(DateTime))
                 data = data.Where(s => s.LogTime >= BeginDate);
+            else
+                data = data.Where(s => s.LogTime >= DateTime.Now.Date.AddDays(-6));
+            DateTime tempDt=DateTime.Now.AddDays(1).Date.AddSeconds(-1);
             if (EndDate.HasValue && EndDate.Value != default(DateTime))
-                data = data.Where(s => s.LogTime <= EndDate);
+                tempDt = EndDate.Value.AddDays(1).Date.AddSeconds(-1);
+            data = data.Where(s => s.LogTime <= tempDt);
 
             CardLogExs = data.ToSmartObservableCollection();
         }
