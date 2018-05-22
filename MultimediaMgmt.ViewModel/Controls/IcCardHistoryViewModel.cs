@@ -128,7 +128,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = data.Where(s => s.LogTime >= BeginDate);
             else
                 data = data.Where(s => s.LogTime >= DateTime.Now.Date.AddDays(-6));
-            DateTime tempDt=DateTime.Now.AddDays(1).Date.AddSeconds(-1);
+            DateTime tempDt = DateTime.Now.AddDays(1).Date.AddSeconds(-1);
             if (EndDate.HasValue && EndDate.Value != default(DateTime))
                 tempDt = EndDate.Value.AddDays(1).Date.AddSeconds(-1);
             data = data.Where(s => s.LogTime <= tempDt);
