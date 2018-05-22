@@ -16,7 +16,7 @@
         <dxg:GridControl.View>
             <dxg:TreeListView  ShowSearchPanelMode="Always" EnableDynamicLoading="False" SearchColumns="Name" SearchPanelNullText="搜索"
                                                   SearchPanelAllowFilter="True" SearchPanelHighlightResults="True" AllowEditing="False" ImageFieldName="Image" ShowNodeImages="True"
-                                                  TreeDerivationMode="HierarchicalDataTemplate" ShowFocusedRectangle="False"
+                                                  TreeDerivationMode="HierarchicalDataTemplate" ShowFocusedRectangle="True"
                                                   ShowHorizontalLines="False" ShowVerticalLines="False" ShowIndicator="False" AutoWidth="True" 
                                                     ExpandNodesOnFiltering="True"
                                                   AutoExpandAllNodes="False" VerticalScrollbarVisibility="Auto" 
