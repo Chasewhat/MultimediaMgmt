@@ -86,6 +86,7 @@ namespace MultimediaMgmt.View.Controls
             finally
             {
                 monitorMgmtViewModel.IsLoad = false;
+                totalShow.Content = string.Format("已选教室数量:{0}", monitors.Count);
             }
         }
 
@@ -188,6 +189,7 @@ namespace MultimediaMgmt.View.Controls
             currMonitor.Value.StatusChanged -= RoomStatusChangedExec;
             currMonitor.Value.StatusChanged += StatusChangedExec;
             this.overviewPanel.Children.Insert(0, currMonitor.Value);
+            isShowRoom = false;
         }
 
         public void StatusChangedExec(ucMonitorMeta ucc, bool isDetail)

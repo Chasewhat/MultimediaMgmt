@@ -35,6 +35,8 @@
                                 <!--<RowDefinition Height="Auto"/>-->
                             </Grid.RowDefinitions>
                             <dxb:ToolBarControl Grid.Row="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                                <dxb:BarStaticItem x:Name="totalShow" Alignment="Far"/>
+                                <dxb:BarItemSeparator Alignment="Far"/>
                                 <dxb:BarCheckItem x:Name="bcC1" GroupIndex="1" Alignment="Far" Hint="1" Glyph="{StaticResource img1}" Command="{Binding ShowCountCommand}" CommandParameter="1"/>
                                 <dxb:BarCheckItem x:Name="bcC4" GroupIndex="1" Alignment="Far" Hint="4" Glyph="{StaticResource img4}" Command="{Binding ShowCountCommand}" CommandParameter="4"/>
                                 <dxb:BarCheckItem x:Name="bcC9" GroupIndex="1" Alignment="Far" Hint="9" Glyph="{StaticResource img9}" Command="{Binding ShowCountCommand}" CommandParameter="9"/>

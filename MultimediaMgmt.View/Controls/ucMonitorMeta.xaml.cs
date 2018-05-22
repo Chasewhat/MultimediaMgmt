@@ -28,7 +28,7 @@ namespace MultimediaMgmt.View.Controls
         public KeyValuePair<string, string> MediaUrls;//主码/副码
         private string MediaUrl = string.Empty;
         public int Id = 0;
-        private bool isLoad = false;
+        private bool isDispose = false;
         public ucMonitorMeta(string info, KeyValuePair<string, string> mediaUrls, int id)
         {
             InitializeComponent();
@@ -62,6 +62,7 @@ namespace MultimediaMgmt.View.Controls
             return Task.Run(() =>
             {
                 vlcPlayer.Dispose();
+                isDispose = true;
                 //Meta.Vlc.Wpf.ApiManager.ReleaseAll();
                 GC.Collect();
             });
@@ -98,7 +99,8 @@ namespace MultimediaMgmt.View.Controls
             try
             {
                 //if (vlcPlayer.State == Meta.Vlc.Interop.Media.MediaState.Playing)
-                vlcPlayer.Stop();
+                if (!isDispose)
+                    vlcPlayer.Stop();
             }
             catch { }
             //if (vlcPlayer.VlcMediaPlayer.Media != null)

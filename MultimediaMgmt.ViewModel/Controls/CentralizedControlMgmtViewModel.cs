@@ -93,7 +93,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
-        public void CopyIcCardToTerminal()
+        public async void CopyIcCardToTerminal()
         {
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0 ||
                 restConnection == null)
@@ -101,15 +101,41 @@ namespace MultimediaMgmt.ViewModel.Controls
             CentralizedControls.BeginUpdate();
             foreach (var cc in SelectedCentralizedControls)
             {
-                dynamic dy = new ExpandoObject();
-                dy.TerminalId = cc.TerminalId;
-                JObject jo = restConnection.Post("api/TerminalOperate/CopyIcCardToTerminal", dy);
-                if (jo == null || !((bool)jo["success"]))
+                if (await CardWrite(cc.TerminalId))
                     cc.ExecResult = "写入执行失败";
                 else
                     cc.ExecResult = "写入执行成功";
             }
             CentralizedControls.EndUpdate();
+        }
+
+        private Task<bool> CardWrite(string terminal)
+        {
+            return Task.Run<bool>(() =>
+            {
+                try
+                {
+                    dynamic dy = new ExpandoObject();
+                    dy.TerminalId = terminal;
+                    JObject jo = restConnection.Post("api/TerminalOperate/CopyIcCardToTerminal", dy);
+                    if (jo == null || !((bool)jo["success"]))
+                        return true;
+                    else
+                        return false;
+                    //string url = string.Format("http://{0}/TERMINAL_STATUS?{1}={2}",
+                    //    ip, target, status);
+                    //string response = WebHelper.Get(url);
+                    //JObject jo = JObject.Parse(response);
+                    //if (jo! = null)
+                    //    return true;
+                    //else
+                    //    return false;
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
         [Command]
         public void ControlStop()
@@ -118,7 +144,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         }
 
         [Command]
-        public void ControlExec()
+        public async void ControlExec()
         {
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0)
                 return;
@@ -131,24 +157,27 @@ namespace MultimediaMgmt.ViewModel.Controls
                 StringBuilder temp = new StringBuilder();
                 if (cc.System.HasValue && !TokenSource.IsCancellationRequested)
                 {
-                    if (GetExec(cc.TerminalId, cc.System.Value, "System"))
-                        temp.Append("中控执行成功,");
+                    temp.AppendFormat("中控{0}", cc.System.Value ? "开" : "关");
+                    if (await GetExec(cc.TerminalId, cc.System.Value, "System"))
+                        temp.Append("执行成功,");
                     else
-                        temp.Append("中控执行失败,");
+                        temp.Append("执行失败,");
                 }
                 if (cc.AirConitioner.HasValue && !TokenSource.IsCancellationRequested)
                 {
-                    if (GetExec(cc.TerminalId, cc.AirConitioner.Value, "AirConitioner"))
-                        temp.Append("空调执行成功,");
+                    temp.AppendFormat("空调{0}", cc.System.Value ? "开" : "关");
+                    if (await GetExec(cc.TerminalId, cc.AirConitioner.Value, "AirConitioner"))
+                        temp.Append("执行成功,");
                     else
-                        temp.Append("空调执行失败,");
+                        temp.Append("执行失败,");
                 }
                 if (cc.Lamp.HasValue && !TokenSource.IsCancellationRequested)
                 {
-                    if (GetExec(cc.TerminalId, cc.Lamp.Value, "Lamp"))
-                        temp.Append("照明执行成功,");
+                    temp.AppendFormat("照明{0}", cc.System.Value ? "开" : "关");
+                    if (await GetExec(cc.TerminalId, cc.Lamp.Value, "Lamp"))
+                        temp.Append("执行成功,");
                     else
-                        temp.Append("照明执行失败,");
+                        temp.Append("执行失败,");
                 }
                 if (temp.Length > 0)
                 {
@@ -160,34 +189,37 @@ namespace MultimediaMgmt.ViewModel.Controls
             TokenSource = null;
         }
 
-        private bool GetExec(string terminal, bool status, string target)
+        private Task<bool> GetExec(string terminal, bool status, string target)
         {
-            try
+            return Task.Run<bool>(() =>
             {
-                if (restConnection == null)
+                try
+                {
+                    if (restConnection == null)
+                        return false;
+                    Dictionary<string, string> parameters = new Dictionary<string, string>();
+                    parameters.Add("_dc", "1504179824079");
+                    parameters.Add("terminalId", terminal);
+                    parameters.Add("param", string.Format("{0}={1}", target, status));
+                    JObject jo = restConnection.Get("api/TerminalOperate/TerminalSet", parameters);
+                    if ((bool)jo["success"])
+                        return true;
+                    else
+                        return false;
+                    //string url = string.Format("http://{0}/TERMINAL_STATUS?{1}={2}",
+                    //    ip, target, status);
+                    //string response = WebHelper.Get(url);
+                    //JObject jo = JObject.Parse(response);
+                    //if (jo! = null)
+                    //    return true;
+                    //else
+                    //    return false;
+                }
+                catch
+                {
                     return false;
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
-                parameters.Add("_dc", "1504179824079");
-                parameters.Add("terminalId", terminal);
-                parameters.Add("param", string.Format("{0}={1}", target, status));
-                JObject jo = restConnection.Get("api/TerminalOperate/TerminalSet", parameters);
-                if ((bool)jo["success"])
-                    return true;
-                else
-                    return false;
-                //string url = string.Format("http://{0}/TERMINAL_STATUS?{1}={2}",
-                //    ip, target, status);
-                //string response = WebHelper.Get(url);
-                //JObject jo = JObject.Parse(response);
-                //if (jo! = null)
-                //    return true;
-                //else
-                //    return false;
-            }
-            catch
-            {
-                return false;
-            }
+                }
+            });
         }
 
         [Command]

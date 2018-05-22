@@ -31,22 +31,25 @@ namespace MultimediaMgmt.ViewModel.Controls
         public void Query()
         {
             var data = (from b in multimediaEntities.ReservationCourseTable
-                       join c in multimediaEntities.ClassRoom on b.RoomId equals c.Id
-                       join p in multimediaEntities.IcCard on b.PersonId equals p.PersonId
-                       select new ReservationEx(){
-                           Id = b.Id,
-                           Date = b.Date,
-                           ClassOrd = b.ClassOrd,
-                           BeginTime=b.BeginTime,
-                           EndTime = b.EndTime,
-                           RoomId = b.RoomId,
-                           RoomNum = c.RoomNum,
-                           PersonId = b.PersonId,
-                           CourseName = b.CourseName,
-                           ClassroomReservationId = b.ClassroomReservationId,
-                           TerminalId = c.TerminalId,
-                           Name = p.Name
-                       }).AsEnumerable();
+                        join a in multimediaEntities.ClassroomReservationApproval on b.ClassroomReservationId equals a.ClassroomReservationId
+                        join c in multimediaEntities.ClassRoom on b.RoomId equals c.Id
+                        join p in multimediaEntities.IcCard on b.PersonId equals p.PersonId
+                        where a.ApprovalState == 1
+                        select new ReservationEx()
+                        {
+                            Id = b.Id,
+                            Date = b.Date,
+                            ClassOrd = b.ClassOrd,
+                            BeginTime = b.BeginTime,
+                            EndTime = b.EndTime,
+                            RoomId = b.RoomId,
+                            RoomNum = c.RoomNum,
+                            PersonId = b.PersonId,
+                            CourseName = b.CourseName,
+                            ClassroomReservationId = b.ClassroomReservationId,
+                            TerminalId = c.TerminalId,
+                            Name = p.Name
+                        }).AsEnumerable();
             if (!string.IsNullOrEmpty(PersonId))
                 data = data.Where(s => s.PersonId == PersonId);
             if (!string.IsNullOrEmpty(RoomNum))
