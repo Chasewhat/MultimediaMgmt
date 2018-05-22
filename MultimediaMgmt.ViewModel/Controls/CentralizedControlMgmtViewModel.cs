@@ -200,7 +200,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                     Dictionary<string, string> parameters = new Dictionary<string, string>();
                     parameters.Add("_dc", "1504179824079");
                     parameters.Add("terminalId", terminal);
-                    parameters.Add("param", string.Format("{0}={1}", target, status));
+                    parameters.Add("param", string.Format("{0}={1}", target, status.ToString().ToLower()));
                     JObject jo = restConnection.Get("api/TerminalOperate/TerminalSet", parameters);
                     if ((bool)jo["success"])
                         return true;

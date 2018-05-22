@@ -201,7 +201,7 @@ namespace MultimediaMgmt.View.Controls
             this.detailPanel.Visibility = Visibility.Visible;
             this.detailPanel.Caption = string.Format("{0}{1}",
                     classRoomMgmtViewModel.SelectedClassRoomEx.BuildingName,
-                    classRoomMgmtViewModel.SelectedClassRoomEx.TerminalId);
+                    classRoomMgmtViewModel.SelectedClassRoomEx.RoomName);
             this.detailPanel.ShowCaption = true;
             ucEquipmentControlDetail detail = new ucEquipmentControlDetail();
             this.detailPanel.Content = detail;
