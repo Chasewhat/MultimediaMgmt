@@ -51,7 +51,8 @@ namespace MultimediaMgmt.View.Controls
             foreach (ucEquipmentControl ucc in equipments)
             {
                 ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == ucc.Id);
-                ucc.Init(cr);
+                if (cr != null)
+                    ucc.Init(cr);
             }
             if (detailPanel.Content != null)
             {
@@ -61,13 +62,15 @@ namespace MultimediaMgmt.View.Controls
                     {
                         ucEquipmentControlDetail temp = this.detailPanel.Content as ucEquipmentControlDetail;
                         ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
-                        temp.Init(cr, true);
+                        if (cr != null)
+                            temp.Init(cr, true);
                     }
                     else if (this.detailPanel.Content is ucEquipmentControl)
                     {
                         ucEquipmentControl temp = this.detailPanel.Content as ucEquipmentControl;
                         ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
-                        temp.DetailInit(cr);
+                        if (cr != null)
+                            temp.DetailInit(cr);
                     }
                 }
                 catch { }
@@ -90,7 +93,7 @@ namespace MultimediaMgmt.View.Controls
                     classRoomMgmtViewModel.ClassRoomListRefresh();
                     if (classRoomMgmtViewModel.ClassRoomExs == null)
                         return;
-                    ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID);
+                    ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID.Value);
                     if (cr == null)
                         return;
                     ucEquipmentControl ucc = new ucEquipmentControl();
@@ -107,10 +110,10 @@ namespace MultimediaMgmt.View.Controls
                 }
                 else
                 {
-                    if (currId == classRoom.ID)
+                    if (currId == classRoom.ID.Value)
                         StatusChangedExec(null, false);
                     //删除设备
-                    ucEquipmentControl eq = equipments.FirstOrDefault(s => s.Id == classRoom.ID);
+                    ucEquipmentControl eq = equipments.FirstOrDefault(s => s.Id == classRoom.ID.Value);
                     if (eq == null)
                         return;
                     equipments.Remove(eq);
@@ -212,7 +215,7 @@ namespace MultimediaMgmt.View.Controls
         private void SortAsc(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             this.overviewPanel.Children.Clear();
-            foreach (ucEquipmentControl ec in equipments.OrderBy(s=>s.RoomNum))
+            foreach (ucEquipmentControl ec in equipments.OrderBy(s => s.RoomNum))
             {
                 this.overviewPanel.Children.Add(ec);
             }
@@ -236,7 +239,7 @@ namespace MultimediaMgmt.View.Controls
                 index = equipments.OrderBy(s => s.RoomNum).ToList().IndexOf(ec);
             else
                 index = equipments.OrderByDescending(s => s.RoomNum).ToList().IndexOf(ec);
-            this.overviewPanel.Children.Insert(index,ec);
+            this.overviewPanel.Children.Insert(index, ec);
         }
     }
 }

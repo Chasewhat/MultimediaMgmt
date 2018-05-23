@@ -25,11 +25,12 @@ namespace MultimediaMgmt.ViewModel.Controls
             TitleVisible = true;
         }
 
-        public void Init(int buildingId, int type)
+        public async void Init(int buildingId, int type)
         {
             int count = 0, tcount = 0;
             ClassroomBuilding building = null;
             string url = string.Empty;
+
             switch (type)
             {
                 case 1:
@@ -44,20 +45,23 @@ namespace MultimediaMgmt.ViewModel.Controls
                         IRestConnection restConnection = new RestConnection(url);
                         ICollection<WebClassRoom> classrooms = multimediaEntities.ClassRoom.Where(s => s.BuildingId == buildingId).Select(
                             s => new WebClassRoom() { TerminalId = s.TerminalId }).ToList();
-                        try
+                        await Task.Run(() =>
                         {
-                            JObject jo = restConnection.Post("api/TerminalInfo/QueryLastTerminalInfos", classrooms);
-                            if (jo.Value<bool>("success"))
+                            try
                             {
-                                JArray ja = jo.Value<JArray>("data");
-                                if (ja != null)
+                                JObject jo = restConnection.Post("api/TerminalInfo/QueryLastTerminalInfos", classrooms);
+                                if (jo.Value<bool>("success"))
                                 {
-                                    Collection<WebTerminalInfo> terminalInfos = ja.ToObject<Collection<WebTerminalInfo>>();
-                                    count = terminalInfos.Where(s => s.IsConnected).Count();
+                                    JArray ja = jo.Value<JArray>("data");
+                                    if (ja != null)
+                                    {
+                                        Collection<WebTerminalInfo> terminalInfos = ja.ToObject<Collection<WebTerminalInfo>>();
+                                        count = terminalInfos.Where(s => s.IsConnected).Count();
+                                    }
                                 }
                             }
-                        }
-                        catch { }
+                            catch { }
+                        });
                     }
                     #endregion
 
@@ -93,20 +97,23 @@ namespace MultimediaMgmt.ViewModel.Controls
                         IRestConnection restConnection = new RestConnection(url);
                         ICollection<WebClassRoom> classrooms = multimediaEntities.ClassRoom.Where(s => s.BuildingId == buildingId).Select(
                             s => new WebClassRoom() { TerminalId = s.TerminalId }).ToList();
-                        try
+                        await Task.Run(() =>
                         {
-                            JObject jo = restConnection.Post("api/TerminalInfo/QueryLastTerminalInfos", classrooms);
-                            if (jo.Value<bool>("success"))
+                            try
                             {
-                                JArray ja = jo.Value<JArray>("data");
-                                if (ja != null)
+                                JObject jo = restConnection.Post("api/TerminalInfo/QueryLastTerminalInfos", classrooms);
+                                if (jo.Value<bool>("success"))
                                 {
-                                    Collection<WebTerminalInfo> terminalInfos = ja.ToObject<Collection<WebTerminalInfo>>();
-                                    count = terminalInfos.Where(s => s.IsConnected && s.System.HasValue && s.System.Value).Count();
+                                    JArray ja = jo.Value<JArray>("data");
+                                    if (ja != null)
+                                    {
+                                        Collection<WebTerminalInfo> terminalInfos = ja.ToObject<Collection<WebTerminalInfo>>();
+                                        count = terminalInfos.Where(s => s.IsConnected && s.System.HasValue && s.System.Value).Count();
+                                    }
                                 }
                             }
-                        }
-                        catch { }
+                            catch { }
+                        });
                     }
                     #endregion
                     //#region 从数据库获取
