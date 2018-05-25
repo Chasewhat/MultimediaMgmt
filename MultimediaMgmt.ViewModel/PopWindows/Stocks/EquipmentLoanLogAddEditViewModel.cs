@@ -87,7 +87,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (currId > 0)
                 CloseWindow();
             else
-                CurrLoanLog = new EquipmentLoanLog() { LoanDate = DateTime.Now.Date };
+                multimediaEntities.Entry(CurrLoanLog).State = EntityState.Detached;
         }
     }
 }

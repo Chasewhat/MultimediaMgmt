@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace MultimediaMgmt.View.Controls
 {
@@ -72,6 +73,7 @@ namespace MultimediaMgmt.View.Controls
             foreach (int id in buildings)
             {
                 ucPieControl pie = new ucPieControl();
+                pie.Tag = id;
                 pie.Init(id, type);
                 switch (type)
                 {
@@ -115,13 +117,35 @@ namespace MultimediaMgmt.View.Controls
             repairPie.Init(0, 3);
             string config = ConfigHelper.Main.Buildings1;
             if (!string.IsNullOrEmpty(config))
-                this.buildCb1.EditValue = config.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s=>int.Parse(s)).Cast<object>().ToList();
+                this.buildCb1.EditValue = config.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => int.Parse(s)).Cast<object>().ToList();
             config = ConfigHelper.Main.Buildings2;
             if (!string.IsNullOrEmpty(config))
                 this.buildCb2.EditValue = config.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => int.Parse(s)).Cast<object>().ToList();
             config = ConfigHelper.Main.ClassRooms;
             if (!string.IsNullOrEmpty(config))
                 this.roomCb.EditValue = config.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => int.Parse(s)).Cast<object>().ToList();
+            //每隔3秒刷新一次
+            DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.ApplicationIdle);
+            timer.Interval = TimeSpan.FromSeconds(int.Parse(System.Configuration.ConfigurationManager.AppSettings["RefreshInterval"]));
+            timer.Tick += (s, se) => { Refresh(); };
+            timer.Start();
+        }
+
+        private void Refresh()
+        {
+            foreach (var p1 in pies1.Children)
+            {
+                ucPieControl p = p1 as ucPieControl;
+                if (p != null)
+                    p.Init(int.Parse(p.Tag.ToString()), 1);
+            }
+            foreach (var p2 in pies2.Children)
+            {
+                ucPieControl p = p2 as ucPieControl;
+                if (p != null)
+                    p.Init(int.Parse(p.Tag.ToString()), 2);
+            }
+            repairPie.Init(0, 3);
         }
     }
 }

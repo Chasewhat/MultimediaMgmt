@@ -15,46 +15,43 @@
             <DockPanel>
                 <dxb:ToolBarControl Cursor="Hand" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
                     <dxb:BarStaticItem Content="{Binding ClassRoomInfo}" ShowBorder="False"/>
-                    <dxb:BarCheckItem x:Name="statusChange" Alignment="Far" Glyph="{dx:DXImageOffice2013 Image=Merge_16x16.png}" CheckedChanged="showDetail_CheckedChanged"/>
+                    <dxb:BarButtonItem x:Name="statusChange" Alignment="Far" Glyph="{dx:DXImageOffice2013 Image=Merge_16x16.png}" ItemClick="showDetail"/>
                 </dxb:ToolBarControl>
-                <Grid>
-                    <Grid x:Name="infoOverview" Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="50"/>
-                        </Grid.RowDefinitions>
-                        <Image Source="{Binding Status1}" Stretch="None" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <Image Source="{Binding Status2}" Stretch="None" Grid.Row="0" Grid.Column="2"/>
-                        <Image Source="{Binding Status3}" Stretch="None" Grid.Row="0" Grid.Column="4"/>
-                        <Image Source="{Binding Status4}" Stretch="None" Grid.Row="2" Grid.Column="0"/>
-                        <Image Source="{Binding Status5}" Stretch="None" Grid.Row="2" Grid.Column="2"/>
-                        <Image Source="{Binding Status6}" Stretch="None" Grid.Row="2" Grid.Column="4"/>
-                        <Image Source="{Binding Status7}" Stretch="None" Grid.Row="4" Grid.Column="0"/>
-                        <Image Source="{Binding Status8}" Stretch="None" Grid.Row="4" Grid.Column="2"/>
-                        <Image Source="{Binding Status9}" Stretch="None" Grid.Row="4" Grid.Column="4"/>
-                        <Border Margin="0,10,0,0" Grid.Row="5" Grid.ColumnSpan="5" 
+                <Grid x:Name="infoOverview" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="{Binding Status1}" Stretch="None" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image Source="{Binding Status2}" Stretch="None" Grid.Row="0" Grid.Column="2"/>
+                    <Image Source="{Binding Status3}" Stretch="None" Grid.Row="0" Grid.Column="4"/>
+                    <Image Source="{Binding Status4}" Stretch="None" Grid.Row="2" Grid.Column="0"/>
+                    <Image Source="{Binding Status5}" Stretch="None" Grid.Row="2" Grid.Column="2"/>
+                    <Image Source="{Binding Status6}" Stretch="None" Grid.Row="2" Grid.Column="4"/>
+                    <Image Source="{Binding Status7}" Stretch="None" Grid.Row="4" Grid.Column="0"/>
+                    <Image Source="{Binding Status8}" Stretch="None" Grid.Row="4" Grid.Column="2"/>
+                    <Image Source="{Binding Status9}" Stretch="None" Grid.Row="4" Grid.Column="4"/>
+                    <Border Margin="0,10,0,0" Grid.Row="5" Grid.ColumnSpan="5" 
                                 BorderThickness="0,0.5,0,0" BorderBrush="DarkGray">
-                            <DockPanel>
-                                <Image DockPanel.Dock="Right" Stretch="Uniform" Source="{Binding IsConnect}"/>
-                                <StackPanel>
-                                    <TextBlock Foreground="White" Margin="0,3,0,3" Text="{Binding CurrClassRoom.PersonName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Foreground="White" Text="{Binding CurrClassRoom.CourseName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </DockPanel>
-                        </Border>
-                    </Grid>
-                    <control:ucEquipmentControlDetail x:Name="infoDetail" Visibility="Collapsed"/>
+                        <DockPanel>
+                            <Image DockPanel.Dock="Right" Stretch="Uniform" Source="{Binding IsConnect}"/>
+                            <StackPanel>
+                                <TextBlock Foreground="White" Margin="0,3,0,3" Text="{Binding CurrClassRoom.PersonName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Foreground="White" Text="{Binding CurrClassRoom.CourseName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
                 </Grid>
             </DockPanel>
         </dxb:BarManager>

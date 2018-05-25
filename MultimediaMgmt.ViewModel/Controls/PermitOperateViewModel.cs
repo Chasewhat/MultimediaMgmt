@@ -23,6 +23,8 @@ namespace MultimediaMgmt.ViewModel.Controls
 
         public virtual List<KeyValuePair<int, string>> Buildings { get; set; }
 
+        public Action<string> MessageShow;
+
         public PermitOperateViewModel()
         {
             Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
@@ -92,6 +94,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                 return;
             multimediaEntities.ClassRoomPermit.Remove(permit);
             multimediaEntities.SaveChanges();
+            MessageShow("删除成功!");
+            Query();
         }
     }
 }

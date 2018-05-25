@@ -168,6 +168,7 @@ namespace MultimediaMgmt.View.Controls
             roomMonitors.ForEach(m =>
             {
                 this.overviewRoomPanel.Children.Add(m);
+                m.Play();
             });
             this.overviewPanel.Children.Remove(currMonitor.Value);
             currMonitor.Value.StatusChanged -= StatusChangedExec;
@@ -205,11 +206,20 @@ namespace MultimediaMgmt.View.Controls
                 ucc.Width = double.NaN;
                 ucc.Height = double.NaN;
                 this.detailPanel.Content = ucc;
+                ucc.Play();
             }
             else
             {
                 RestoreInit();
             }
+        }
+
+        private void AllPlay(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            monitors.ForEach(m =>
+            {
+                m.Play();
+            });
         }
 
         public void RoomStatusChangedExec(ucMonitorMeta ucc, bool isDetail)
@@ -235,6 +245,7 @@ namespace MultimediaMgmt.View.Controls
                 ucc.Width = double.NaN;
                 ucc.Height = double.NaN;
                 this.detailPanel.Content = ucc;
+                ucc.Play();
             }
             else
             {

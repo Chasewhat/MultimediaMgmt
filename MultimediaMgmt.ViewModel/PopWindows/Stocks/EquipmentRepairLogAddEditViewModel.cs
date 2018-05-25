@@ -77,7 +77,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (currId > 0)
                 CloseWindow();
             else
-                CurrRepairLog = new EquipmentRepairLog() { DeclarationDate = DateTime.Now.Date };
+                multimediaEntities.Entry(CurrRepairLog).State = EntityState.Detached;
         }
     }
 }

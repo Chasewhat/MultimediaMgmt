@@ -82,7 +82,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (currId > 0)
                 CloseWindow();
             else
-                CurrScrapLog = new EquipmentScrapLog() { Date = DateTime.Now.Date };
+                multimediaEntities.Entry(CurrScrapLog).State = EntityState.Detached;
         }
     }
 }

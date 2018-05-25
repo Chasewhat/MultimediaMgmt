@@ -35,6 +35,7 @@
                                 <!--<RowDefinition Height="Auto"/>-->
                             </Grid.RowDefinitions>
                             <dxb:ToolBarControl Grid.Row="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                                <dxb:BarButtonItem Content="一键预览" Glyph="{dx:DXImageOffice2013 Image=DoubleNext_16x16.png}" BarItemDisplayMode="ContentAndGlyph" ItemClick="AllPlay"/>
                                 <dxb:BarStaticItem x:Name="totalShow" Alignment="Far"/>
                                 <dxb:BarItemSeparator Alignment="Far"/>
                                 <dxb:BarCheckItem x:Name="bcC1" GroupIndex="1" Alignment="Far" Hint="1" Glyph="{StaticResource img1}" Command="{Binding ShowCountCommand}" CommandParameter="1"/>

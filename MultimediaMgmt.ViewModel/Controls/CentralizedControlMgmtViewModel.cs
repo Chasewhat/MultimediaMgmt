@@ -11,6 +11,7 @@ using MultimediaMgmt.Common.Helper;
 using Newtonsoft.Json.Linq;
 using System.Dynamic;
 using System.Threading;
+using System.Windows.Media;
 
 namespace MultimediaMgmt.ViewModel.Controls
 {
@@ -102,9 +103,15 @@ namespace MultimediaMgmt.ViewModel.Controls
             foreach (var cc in SelectedCentralizedControls)
             {
                 if (await CardWrite(cc.TerminalId))
-                    cc.ExecResult = "写入执行失败";
+                {
+                    cc.ExecStatus = true;
+                    cc.ExecResult = "写入执行成功"; 
+                }
                 else
-                    cc.ExecResult = "写入执行成功";
+                {
+                    cc.ExecStatus = false;
+                    cc.ExecResult = "写入执行失败";
+                }
             }
             CentralizedControls.EndUpdate();
         }
@@ -118,7 +125,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                     dynamic dy = new ExpandoObject();
                     dy.TerminalId = terminal;
                     JObject jo = restConnection.Post("api/TerminalOperate/CopyIcCardToTerminal", dy);
-                    if (jo == null || !((bool)jo["success"]))
+                    if (jo != null && ((bool)jo["success"]))
                         return true;
                     else
                         return false;
@@ -149,11 +156,13 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0)
                 return;
             TokenSource = new CancellationTokenSource();
+            bool tempFlag;
             CentralizedControls.BeginUpdate();
             foreach (var cc in SelectedCentralizedControls)
             {
                 if (TokenSource.IsCancellationRequested)
                     break;
+                tempFlag = true;
                 StringBuilder temp = new StringBuilder();
                 if (cc.System.HasValue && !TokenSource.IsCancellationRequested)
                 {
@@ -161,7 +170,10 @@ namespace MultimediaMgmt.ViewModel.Controls
                     if (await GetExec(cc.TerminalId, cc.System.Value, "System"))
                         temp.Append("执行成功,");
                     else
+                    {
                         temp.Append("执行失败,");
+                        tempFlag = false;
+                    }
                 }
                 if (cc.AirConitioner.HasValue && !TokenSource.IsCancellationRequested)
                 {
@@ -169,7 +181,10 @@ namespace MultimediaMgmt.ViewModel.Controls
                     if (await GetExec(cc.TerminalId, cc.AirConitioner.Value, "AirConitioner"))
                         temp.Append("执行成功,");
                     else
+                    {
                         temp.Append("执行失败,");
+                        tempFlag = false;
+                    }
                 }
                 if (cc.Lamp.HasValue && !TokenSource.IsCancellationRequested)
                 {
@@ -177,12 +192,16 @@ namespace MultimediaMgmt.ViewModel.Controls
                     if (await GetExec(cc.TerminalId, cc.Lamp.Value, "Lamp"))
                         temp.Append("执行成功,");
                     else
+                    {
                         temp.Append("执行失败,");
+                        tempFlag = false;
+                    }
                 }
                 if (temp.Length > 0)
                 {
                     temp = temp.Remove(temp.Length - 1, 1);
                     cc.ExecResult = temp.ToString();
+                    cc.ExecStatus = tempFlag;
                 }
             }
             CentralizedControls.EndUpdate();

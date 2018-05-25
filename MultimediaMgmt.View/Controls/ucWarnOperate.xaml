@@ -41,27 +41,50 @@
             <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" />
             <dxg:GridColumn FieldName="Alarm_Control" Header="设防布防状态" Width="100"/>
             <dxg:GridColumn FieldName="Alarm_In1" Header="安防" Width="80"/>
-            <dxg:GridColumn FieldName="Alarm_In1" Header="消防报警" Width="80"/>
-            <dxg:GridColumn FieldName="Alarm_In1" Header="Alarm3" Width="80" />
-            <dxg:GridColumn FieldName="Alarm_In1" Header="Alarm4" Width="80"/>
-            <dxg:GridColumn Header="撤防操作" Width="100">
+            <dxg:GridColumn FieldName="Alarm_In2" Header="消防报警" Width="80"/>
+            <dxg:GridColumn FieldName="Alarm_In3" Header="Alarm3" Width="80" />
+            <dxg:GridColumn FieldName="Alarm_In4" Header="Alarm4" Width="80"/>
+            <dxg:GridColumn Header="撤防" Width="120">
+                <dxg:GridColumn.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <!--<dxe:CheckEdit IsChecked="{Binding AirConitionerCheck}" HorizontalAlignment="Center"/>-->
+                            <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <dx:SimpleButton Margin="2,2" Content="一键撤防" BorderThickness="0"
+                                         Command="{Binding View.DataContext.AllAlarmControlCommand}"
+                                         CommandParameter="False"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dx:SimpleButton Margin="10,2" Content="撤防" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Cancel_16x16.png}"
+                        <dx:SimpleButton Margin="25,2" Content="撤防" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Cancel_16x16.png}"
                                          Command="{Binding View.DataContext.AlarmControlCommand}"
                                          CommandParameter="False"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="TerminalIp" Header="布防操作" Width="100">
+            <dxg:GridColumn FieldName="TerminalIp" Header="布防" Width="120">
+                <dxg:GridColumn.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <!--<dxe:CheckEdit IsChecked="{Binding AirConitionerCheck}" HorizontalAlignment="Center"/>-->
+                            <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <dx:SimpleButton Margin="2,2" Content="一键布防" BorderThickness="0"
+                                         Command="{Binding View.DataContext.AllAlarmControlCommand}"
+                                         CommandParameter="True"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dx:SimpleButton Margin="10,2" Content="布防" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Apply_16x16.png}"
+                        <dx:SimpleButton Margin="25,2" Content="布防" BorderThickness="0" Glyph="{dx:DXImageOffice2013 Image=Apply_16x16.png}"
                                          Command="{Binding View.DataContext.AlarmControlCommand}"
                                          CommandParameter="True"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
+            <dxg:GridColumn FieldName="ExecResult" Header="命令执行结果" Width="200" AllowEditing="False"/>
         </dxg:GridControl>
     </DockPanel>
 </UserControl>

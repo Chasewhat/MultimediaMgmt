@@ -36,9 +36,9 @@ namespace MultimediaMgmt.View.Controls
                  this.detailPanel.Visibility = Visibility.Collapsed;
                  this.listPanel.ItemWidth = new GridLength(1, GridUnitType.Star);
              });
-            //每隔60秒刷新一次
+            //每隔3秒刷新一次
             DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.ApplicationIdle);
-            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Interval = TimeSpan.FromSeconds(int.Parse(System.Configuration.ConfigurationManager.AppSettings["RefreshInterval"]));
             timer.Tick += (s, se) => { Refresh(); };
             timer.Start();
         }
@@ -64,13 +64,6 @@ namespace MultimediaMgmt.View.Controls
                         ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
                         if (cr != null)
                             temp.Init(cr, true);
-                    }
-                    else if (this.detailPanel.Content is ucEquipmentControl)
-                    {
-                        ucEquipmentControl temp = this.detailPanel.Content as ucEquipmentControl;
-                        ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
-                        if (cr != null)
-                            temp.DetailInit(cr);
                     }
                 }
                 catch { }
@@ -110,21 +103,22 @@ namespace MultimediaMgmt.View.Controls
                 }
                 else
                 {
+
                     if (currId == classRoom.ID.Value)
-                        StatusChangedExec(null, false);
+                        this.detailPanel.CloseCommand.Execute(null);
+                    classRoomMgmtViewModel.ids.Remove(classRoom.ID.Value);
                     //删除设备
                     ucEquipmentControl eq = equipments.FirstOrDefault(s => s.Id == classRoom.ID.Value);
                     if (eq == null)
                         return;
                     equipments.Remove(eq);
                     this.overviewPanel.Children.Remove(eq);
-                    classRoomMgmtViewModel.ids.Remove(classRoom.ID.Value);
                     classRoomMgmtViewModel.ClassRoomListRefresh();
                     //if (this.overviewPanel.Children.Count <= 0)
                     //    this.listPanel.ItemWidth = new GridLength(0);
                 }
             }
-            catch
+            catch (Exception ex)
             { }
             finally
             {
@@ -132,30 +126,20 @@ namespace MultimediaMgmt.View.Controls
             }
         }
 
-        public void StatusChangedExec(ucEquipmentControl ucc, bool isDetail)
+        public void StatusChangedExec(ClassRoomEx cr)
         {
-            if (isDetail)
-            {
-                this.overviewPanel.Children.Remove(ucc);
-                this.listPanel.ItemWidth = new GridLength(0);
-                //if (this.overviewPanel.Children.Count <= 0)
-                //    this.listPanel.ItemWidth = new GridLength(0);
-                //else
-                //    this.listPanel.ItemWidth = new GridLength(220);
-                this.detailPanel.Visibility = Visibility.Visible;
-                this.detailPanel.ShowCaption = false;
-                DetailClear(true);
-                ucc.Width = double.NaN;
-                ucc.Height = double.NaN;
-                this.detailPanel.Content = ucc;
-                currId = ucc.Id;
-            }
-            else
-            {
-                this.listPanel.ItemWidth = new GridLength(1, GridUnitType.Star);
-                this.detailPanel.Visibility = Visibility.Collapsed;
-                DetailClear();
-            }
+            DetailClear();
+            //this.listPanel.ItemWidth = new GridLength(220);
+            this.listPanel.ItemWidth = new GridLength(0);
+            this.detailPanel.Visibility = Visibility.Visible;
+            this.detailPanel.Caption = string.Format("{0}{1}",
+                   cr.BuildingName,
+                    cr.RoomName);
+            this.detailPanel.ShowCaption = true;
+            ucEquipmentControlDetail detail = new ucEquipmentControlDetail();
+            this.detailPanel.Content = detail;
+            detail.Init(cr);
+            currId = cr.Id;
         }
 
         private void MatrixShow(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -170,22 +154,10 @@ namespace MultimediaMgmt.View.Controls
             this.listInfo.Visibility = Visibility.Visible;
         }
 
-        private void DetailClear(bool isSet = false)
+        private void DetailClear()
         {
             if (this.detailPanel.Content == null)
                 return;
-            if (this.detailPanel.Content is ucEquipmentControl)
-            {
-                ucEquipmentControl temp = this.detailPanel.Content as ucEquipmentControl;
-                if (isSet)
-                    temp.StatusSet();
-                temp.MonitorInit(false);
-                this.detailPanel.Content = null;
-                temp.Width = 180;
-                temp.Height = 200;
-                SortInsert(temp);
-                //this.overviewPanel.Children.Insert(0, temp);
-            }
             if (this.detailPanel.Content is ucEquipmentControlDetail)
             {
                 ucEquipmentControlDetail temp = this.detailPanel.Content as ucEquipmentControlDetail;

@@ -56,13 +56,13 @@ namespace MultimediaMgmt.View.Controls
             //vlcPlayer.SourceProvider.MediaPlayer.Dispose();
             //}
             //vlcPlayer.SourceProvider.Dispose();
+            isDispose = true;
             this.volumnChange.EditValue = 0;
             monitorViewModel.Image = Constants.Images["imagePlay"];
 
             return Task.Run(() =>
             {
                 vlcPlayer.Dispose();
-                isDispose = true;
                 //Meta.Vlc.Wpf.ApiManager.ReleaseAll();
                 GC.Collect();
             });
@@ -109,6 +109,7 @@ namespace MultimediaMgmt.View.Controls
                 MediaUrl = MediaUrls.Key;
             else
                 MediaUrl = MediaUrls.Value;
+            Play();
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -118,6 +119,8 @@ namespace MultimediaMgmt.View.Controls
 
         public void Play()
         {
+            if (isDispose || vlcPlayer.State == Meta.Vlc.Interop.Media.MediaState.Playing)
+                return;
             play_ItemClick(null, null);
         }
 
@@ -146,16 +149,18 @@ namespace MultimediaMgmt.View.Controls
                 }
                 else
                 {
-                    if (vlcPlayer.State == Meta.Vlc.Interop.Media.MediaState.Playing)
-                    {
-                        vlcPlayer.PauseOrResume();
-                        monitorViewModel.Image = Constants.Images["imagePlay"];
-                    }
-                    else
-                    {
-                        vlcPlayer.Play();
-                        monitorViewModel.Image = Constants.Images["imagePause"];
-                    }
+                    vlcPlayer.Stop();
+                    monitorViewModel.Image = Constants.Images["imagePlay"];
+                    //if (vlcPlayer.State == Meta.Vlc.Interop.Media.MediaState.Playing)
+                    //{
+                    //    vlcPlayer.PauseOrResume();
+                    //    monitorViewModel.Image = Constants.Images["imagePlay"];
+                    //}
+                    //else
+                    //{
+                    //    vlcPlayer.Play();
+                    //    monitorViewModel.Image = Constants.Images["imagePause"];
+                    //}
                 }
             });
         }

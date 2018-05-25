@@ -17,12 +17,11 @@ namespace MultimediaMgmt.View.Controls
     {
         private EquipmentControlViewModel classControlViewModel;
 
-        public delegate void StatusChangedEvent(ucEquipmentControl uc, bool isDetail);
+        public delegate void StatusChangedEvent(ClassRoomEx uc);
         public event StatusChangedEvent StatusChanged;
-        private bool isSet = false;
         public int Id = 0;
         public string RoomNum = string.Empty;
-
+        public ClassRoomEx currRoom = null;
         public ucEquipmentControl()
         {
             InitializeComponent();
@@ -34,47 +33,18 @@ namespace MultimediaMgmt.View.Controls
             Id = cr.Id;
             RoomNum = cr.RoomName;
             classControlViewModel.Init(cr);
+            currRoom = cr;
         }
 
-        public void DetailInit(ClassRoomEx cr)
-        {
-            this.infoDetail.Init(cr, true);
-        }
-
-        private void showDetail_CheckedChanged(object sender, ItemClickEventArgs e)
-        {
-            if (statusChange.IsChecked == true)
-            {
-                this.infoOverview.Visibility = Visibility.Collapsed;
-                this.infoDetail.Visibility = Visibility.Visible;
-                this.infoDetail.Init(classControlViewModel.CurrClassRoom);
-                StatusChange(true);
-            }
-            else
-            {
-                this.infoDetail.Visibility = Visibility.Collapsed;
-                this.infoOverview.Visibility = Visibility.Visible;
-                if (!isSet)
-                    StatusChange(false);
-                isSet = false;
-            }
-        }
-
-        private void StatusChange(bool isDetail)
+        private void StatusChange()
         {
             StatusChangedEvent handler = StatusChanged;
-            handler?.Invoke(this, isDetail);
+            handler?.Invoke(currRoom);
         }
 
-        public void StatusSet()
+        private void showDetail(object sender, ItemClickEventArgs e)
         {
-            isSet = true;
-            statusChange.IsChecked = false;
-        }
-
-        public void MonitorInit(bool flag)
-        {
-            this.infoDetail.MonitorInit(flag);
+            StatusChange();
         }
     }
 }

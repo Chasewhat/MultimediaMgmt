@@ -131,19 +131,52 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             if (SelectedWarnOperate == null)
                 return;
-             try
+            try
             {
-                bool result = await GetExec(SelectedWarnOperate.TerminalId, status.ToString(), "Alarm_Control");
-                if (result)
-                    MessageShow("执行命令成功!");
-                else
-                    MessageShow("执行命令失败!");
+                string terminal = SelectedWarnOperate.TerminalId;
+                bool result = await GetExec(terminal, status.ToString(), "Alarm_Control");
+                WarnOperate wo = WarnOperates.FirstOrDefault(s => s.TerminalId == terminal);
+                if (wo != null)
+                {
+                    WarnOperates.BeginUpdate();
+                    wo.ExecStatus = result;
+                    wo.ExecResult = string.Format("{0}执行{1}",
+                        status ? "布防" : "撤防",
+                        result ? "成功" : "失败");
+                    WarnOperates.EndUpdate();
+                }
             }
             catch (Exception ex)
             {
                 MessageShow(ex.Message);
             }
-            WarnOperateQuery();
+            //WarnOperateQuery();
+        }
+
+
+        [Command]
+        public async void AllAlarmControl(bool status)
+        {
+            if (WarnOperates == null)
+                return;
+            WarnOperates.BeginUpdate();
+            try
+            {
+                foreach (WarnOperate wo in WarnOperates)
+                {
+                    bool result = await GetExec(wo.TerminalId, status.ToString(), "Alarm_Control");
+                    wo.ExecStatus = result;
+                    wo.ExecResult = string.Format("{0}执行{1}",
+                        status ? "布防" : "撤防",
+                        result ? "成功" : "失败");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageShow(ex.Message);
+            }
+            WarnOperates.EndUpdate();
+            //WarnOperateQuery();
         }
 
         private Task<bool> GetExec(string terminal, string status, string target)

@@ -184,7 +184,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (currId > 0)
                 CloseWindow();
             else
-                CurrIcCard = new IcCard();
+                multimediaEntities.Entry(CurrIcCard).State = EntityState.Detached;
         }
     }
 }

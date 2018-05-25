@@ -81,7 +81,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (currId > 0)
                 CloseWindow();
             else
-                CurrSerial = new EquipmentInStock() { UseDate = DateTime.Now.Date };
+                multimediaEntities.Entry(CurrSerial).State = EntityState.Detached;
         }
     }
 }

@@ -82,7 +82,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (currId > 0)
                 CloseWindow();
             else
-                CurrTransferLog = new EquipmentTransferLog() { TransferDate = DateTime.Now.Date };
+                multimediaEntities.Entry(CurrTransferLog).State = EntityState.Detached;
         }
     }
 }

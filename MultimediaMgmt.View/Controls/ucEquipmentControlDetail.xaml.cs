@@ -99,6 +99,7 @@ namespace MultimediaMgmt.View.Controls
                     monitor.Tag = n;
                     monitor.StatusChanged += StatusChangedExec;
                     this.monitorsPanel.Children.Add(monitor);
+                    monitor.Play();
                     n++;
                 }
                 i++;

@@ -82,7 +82,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
             if (currId > 0)
                 CloseWindow();
             else
-                CurrSurveillanceLog = new SurveillanceLog() { LogDate = DateTime.Now.Date };
+                multimediaEntities.Entry(CurrSurveillanceLog).State = EntityState.Detached;
         }
     }
 }

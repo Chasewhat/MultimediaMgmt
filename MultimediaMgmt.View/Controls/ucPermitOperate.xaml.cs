@@ -20,6 +20,10 @@ namespace MultimediaMgmt.View.Controls
         {
             InitializeComponent();
             this.DataContext = permitOperateViewModel = ViewModelSource.Create<PermitOperateViewModel>();
+            permitOperateViewModel.MessageShow = (s) =>
+            {
+                DevExpress.Xpf.Core.DXMessageBox.Show(s, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            };
         }
 
         private void Edit_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
