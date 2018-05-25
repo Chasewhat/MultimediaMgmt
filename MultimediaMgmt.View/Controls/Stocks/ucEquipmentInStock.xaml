@@ -62,7 +62,7 @@
                 <dxg:TableView x:Name="gridView" AllowEditing="False">
                     <dxg:TableView.RowCellMenuCustomizations>
                         <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-                        <dxb:BarButtonItem Command="{Binding View.DataContext.StatusInquiryCommand}" Content="状态查询" Glyph="{dx:DXImageOffice2013 Image=Notes_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                        <!--<dxb:BarButtonItem Command="{Binding View.DataContext.StatusInquiryCommand}" Content="状态查询" Glyph="{dx:DXImageOffice2013 Image=Notes_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>-->
                     </dxg:TableView.RowCellMenuCustomizations>
                 </dxg:TableView>
             </dxg:GridControl.View>

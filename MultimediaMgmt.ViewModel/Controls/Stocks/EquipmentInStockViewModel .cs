@@ -17,6 +17,10 @@ namespace MultimediaMgmt.ViewModel.Controls
     {
         public virtual SmartObservableCollection<EquipmentInStock> EquipmentInStocks { get; set; }
         public virtual EquipmentInStock SelectedEquipmentInStock { get; set; }
+        protected void OnSelectedEquipmentInStockChanged()
+        {
+            StatusInquiry();
+        }
         public virtual string SerialNumber { get; set; }
         public virtual DateTime? InBegin { get; set; }
         public virtual DateTime? InEnd { get; set; }
@@ -65,7 +69,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             InBegin = InEnd = UseBegin = UseEnd = null;
         }
 
-        [Command]
+        //[Command]
         public void StatusInquiry()
         {
             if (SelectedEquipmentInStock != null)
