@@ -47,6 +47,9 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void Query()
         {
+            int tempRoom = 0;
+            if (SelectedRoomItem.HasValue)
+                tempRoom = RoomId;
             var data = (from r in multimediaEntities.ClassroomReservation
                             //join s in multimediaEntities.ReservationCourseTable on r.Id equals s.ClassroomReservationId
                         join a in multimediaEntities.ClassroomReservationApproval on r.Id equals a.ClassroomReservationId into temp
@@ -67,6 +70,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                        from o in tempc.DefaultIfEmpty()
                                        join d in multimediaEntities.IcCard on c.PersonId equals d.PersonId into tempp
                                        from p in tempp.DefaultIfEmpty().Take(1)
+                                       where tempRoom == 0 || c.RoomId == tempRoom
                                        select new ReservationCourseTableEx()
                                        {
                                            Date = c.Date,
@@ -75,9 +79,10 @@ namespace MultimediaMgmt.ViewModel.Controls
                                            ClassOrd = c.ClassOrd,
                                            Name = (p == null ? "" : p.Name) + "(" + c.PersonId + ")",
                                            CourseName = c.CourseName,
-                                           RoomNum = (o == null ? c.RoomId + "" : o.RoomNum)
+                                           RoomNum = (o == null ? c.RoomId + "" : o.RoomNum),
+                                           RoomId = c.RoomId
                                        }).ToList()
-                        }).AsEnumerable();
+                        }).AsEnumerable().Where(s => s.Courses.Count > 0).OrderByDescending(s => s.ReservationTime).AsEnumerable();
             if (SelectedDateItem.HasValue && SelectedDateItem.Value == 1)
             {
                 if (BeginDate.HasValue && BeginDate.Value != default(DateTime))
@@ -93,8 +98,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                     data = data.Where(s => s.Date.ToDateTime("yyyy-MM-dd") <= EndDate.Value);
             }
 
-            if (SelectedRoomItem.HasValue)
-                data = data.Where(s => s.RoomId == RoomId);
+            //if (SelectedRoomItem.HasValue)
+            //    data = data.Where(s => s.RoomId == RoomId);
             if (SelectedReserveState.HasValue)
                 data = data.Where(s => s.ReservationState == SelectedReserveState);
             if (SelectedApproveState.HasValue)
@@ -127,7 +132,9 @@ namespace MultimediaMgmt.ViewModel.Controls
             //ClassroomReservationApproval appro = multimediaEntities.ClassroomReservationApproval.FirstOrDefault(s => s.ClassroomReservationId == rid);
             //multimediaEntities.ClassroomReservationApproval.Remove(appro);
             multimediaEntities.SaveChanges();
+            MessageShow("删除成功");
             Query();
+
         }
 
         [Command]

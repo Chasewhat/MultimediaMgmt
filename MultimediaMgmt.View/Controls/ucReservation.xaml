@@ -40,26 +40,59 @@
             <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
         </dxb:ToolBarControl>
         <dxg:GridControl ItemsSource="{Binding Reservations}"
-                         SelectedItem="{Binding SelectedReservation}"
-                		x:Name="gridControl"
-                        AllowInitiallyFocusedRow="False"
-                        >
+                                     SelectedItem="{Binding SelectedReservation}"
+                		            x:Name="gridControl"
+                                    AllowInitiallyFocusedRow="False"
+                                    >
+            <dxg:GridControl.DetailDescriptor>
+                <!--#region Courses-->
+                <dxg:DataControlDetailDescriptor Name="gridDetailDescriptor" ItemsSourceBinding="{Binding Path=Courses}" ShowHeader="True">
+                    <dxg:GridControl Name="detailGrid">
+                        <dxg:GridControl.Columns>
+                            <dxg:GridColumn Header="日期" FieldName="Date" Width="100"/>
+                            <dxg:GridColumn Header="教室" FieldName="RoomNum" Width="60"/>
+                            <dxg:GridColumn Header="课序" FieldName="ClassOrd" Width="60"/>
+                            <dxg:GridColumn Header="上课" FieldName="BeginTime" Width="80"/>
+                            <dxg:GridColumn Header="下课" FieldName="EndTime" Width="80"/>
+                            <dxg:GridColumn Header="课程" FieldName="CourseName" Width="80"/>
+                            <dxg:GridColumn Header="教师" FieldName="Name" Width="120"/>
+                        </dxg:GridControl.Columns>
+                        <dxg:GridControl.View>
+                            <dxg:TableView Name="detailView" DetailHeaderContent="预约明细"
+                                                           UseAnimationWhenExpanding="true" AllowEditing="False"/>
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                </dxg:DataControlDetailDescriptor>
+                <!--#endregion-->
+            </dxg:GridControl.DetailDescriptor>
             <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" AllowEditing="False">
+                <dxg:TableView x:Name="gridView" AllowEditing="False" >
                     <dxg:TableView.RowCellMenuCustomizations>
                         <dxb:BarButtonItem Content="删除" Command="{Binding View.DataContext.DeleteCommand}" Glyph="{dx:DXImageOffice2013 Image=Delete_16x16.png}" Hint="删除选中记录"/>
                     </dxg:TableView.RowCellMenuCustomizations>
                 </dxg:TableView>
             </dxg:GridControl.View>
-            <dxg:GridColumn FieldName="Date" Header="预约日期" Width="80"/>
-            <dxg:GridColumn FieldName="ClassOrd" Header="排序" Width="80" />
-            <dxg:GridColumn FieldName="BeginTime" Header="开始时间" Width="80"/>
-            <dxg:GridColumn FieldName="EndTime" Header="结束时间" Width="80"/>
-            <dxg:GridColumn FieldName="RoomNum" Header="教室编号" Width="80" />
-            <dxg:GridColumn FieldName="TerminalId" Header="终端编号" Width="80" />
-            <dxg:GridColumn FieldName="PersonId" Header="工号" Width="80"/>
-            <dxg:GridColumn FieldName="Name" Header="姓名" Width="80"/>
-            <dxg:GridColumn FieldName="CourseName" Header="课程" Width="80"/>
+            <dxg:GridColumn FieldName="ReservationTime" Header="预约时间" Width="180">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings Mask="yyyy-MM-dd HH:mm:ss" MaskType="DateTime" MaskUseAsDisplayFormat="True"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="ReservationPersonName" Header="预约人" Width="120"/>
+            <dxg:GridColumn FieldName="Description" Header="预约说明" Width="200"/>
+            <dxg:GridColumn FieldName="ReservationState" Header="预约状态" Width="80">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.ReserveState}" DisplayMember="Value" ValueMember="Key"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="ApprovalState" Header="审批状态" Width="80">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock VerticalAlignment="Center" Text="已审批"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
         </dxg:GridControl>
     </DockPanel>
 </UserControl>
