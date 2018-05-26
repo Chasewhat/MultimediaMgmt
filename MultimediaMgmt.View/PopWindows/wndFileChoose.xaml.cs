@@ -79,22 +79,22 @@ namespace MultimediaMgmt.View.PopWindows
             switch (tpType)
             {
                 case 1:
-                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "IC卡导入模板.xlsx");
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "IC卡导入模板.xls");
                     break;
                 case 2:
-                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备入库导入模板.xlsx");
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备入库导入模板.xls");
                     break;
                 case 3:
-                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备维修导入模板.xlsx");
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备维修导入模板.xls");
                     break;
                 case 4:
-                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备借出导入模板.xlsx");
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备借出导入模板.xls");
                     break;
                 case 5:
-                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备报废导入模板.xlsx");
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备报废导入模板.xls");
                     break;
                 case 6:
-                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备转移导入模板.xlsx");
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备转移导入模板.xls");
                     break;
 
             }
