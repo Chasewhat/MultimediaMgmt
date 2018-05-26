@@ -197,6 +197,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                 }
                                 multimediaEntities.EquipmentInStock.Add(card);
                             }
+                            multimediaEntities.SaveChanges();
                         }
                         
                     }

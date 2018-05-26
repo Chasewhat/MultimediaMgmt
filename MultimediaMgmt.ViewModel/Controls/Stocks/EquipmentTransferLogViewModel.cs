@@ -189,6 +189,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                 }
                                 multimediaEntities.EquipmentTransferLog.Add(card);
                             }
+                            multimediaEntities.SaveChanges();
                         }
 
                     }

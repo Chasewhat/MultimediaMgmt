@@ -165,6 +165,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                 }
                                 multimediaEntities.EquipmentRepairLog.Add(card);
                             }
+                            multimediaEntities.SaveChanges();
                         }
 
                     }

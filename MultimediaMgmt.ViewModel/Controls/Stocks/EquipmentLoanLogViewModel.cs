@@ -191,6 +191,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                 }
                                 multimediaEntities.EquipmentLoanLog.Add(card);
                             }
+                            multimediaEntities.SaveChanges();
                         }
 
                     }

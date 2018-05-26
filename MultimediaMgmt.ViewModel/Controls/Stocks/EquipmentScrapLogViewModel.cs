@@ -186,6 +186,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                 }
                                 multimediaEntities.EquipmentScrapLog.Add(card);
                             }
+                            multimediaEntities.SaveChanges();
                         }
 
                     }

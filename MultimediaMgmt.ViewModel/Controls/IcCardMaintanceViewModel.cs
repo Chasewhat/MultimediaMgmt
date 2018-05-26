@@ -235,6 +235,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                 }
                                 multimediaEntities.IcCard.Add(card);
                             }
+                            multimediaEntities.SaveChanges();
                         }
                         //Person表去除
 
