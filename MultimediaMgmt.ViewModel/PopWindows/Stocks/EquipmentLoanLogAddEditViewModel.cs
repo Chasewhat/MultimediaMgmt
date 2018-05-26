@@ -31,7 +31,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         public Action<string> MessageShow;
 
         private int currId = 0;
-        public EquipmentLoanLogAddEditViewModel(int id)
+        public EquipmentLoanLogAddEditViewModel(int id, string serialNum)
         {
             currId = id;
             if (id > 0)
@@ -46,7 +46,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 ButtonContent = "增加";
             }
             if (CurrLoanLog == null)
-                CurrLoanLog = new EquipmentLoanLog() { LoanDate = DateTime.Now.Date };
+                CurrLoanLog = new EquipmentLoanLog() { LoanDate = DateTime.Now.Date, SerialName = serialNum };
             SerialName = CurrLoanLog.SerialName;
             LoanDate = CurrLoanLog.LoanDate;
             Borrower = CurrLoanLog.Borrower;

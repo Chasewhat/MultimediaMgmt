@@ -11,10 +11,10 @@ namespace MultimediaMgmt.View.PopWindows
     public partial class wndEquipmentScrapLogAddEdit : DevExpress.Xpf.Core.DXWindow
     {
         private EquipmentScrapLogAddEditViewModel equipmentScrapLogAddEditViewModel;
-        public wndEquipmentScrapLogAddEdit(int id = 0)
+        public wndEquipmentScrapLogAddEdit(int id = 0, string serialNum = "")
         {
             InitializeComponent();
-            this.DataContext = equipmentScrapLogAddEditViewModel = ViewModelSource.Create(() => new EquipmentScrapLogAddEditViewModel(id));
+            this.DataContext = equipmentScrapLogAddEditViewModel = ViewModelSource.Create(() => new EquipmentScrapLogAddEditViewModel(id, serialNum));
             equipmentScrapLogAddEditViewModel.CloseWindow = () => { this.Close(); };
             equipmentScrapLogAddEditViewModel.MessageShow = (s) =>
             {

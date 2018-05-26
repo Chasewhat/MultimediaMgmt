@@ -15,6 +15,7 @@ namespace MultimediaMgmt.ViewModel.Controls
     public class MonitorViewModel : BaseViewModel
     {
         public virtual ImageSource Image { get; set; }
+        public virtual string MediaUrl { get; set; }
         public MonitorViewModel()
         {
             Image = Constants.Images["imagePlay"];

@@ -36,6 +36,7 @@ namespace MultimediaMgmt.View.Controls
             monitorInfo.Content = info;
             MediaUrls = mediaUrls;
             MediaUrl = MediaUrls.Value;
+            monitorViewModel.MediaUrl = MediaUrl;
             Id = id;
         }
 
@@ -109,6 +110,7 @@ namespace MultimediaMgmt.View.Controls
                 MediaUrl = MediaUrls.Key;
             else
                 MediaUrl = MediaUrls.Value;
+            monitorViewModel.MediaUrl = MediaUrl;
             Play();
         }
 

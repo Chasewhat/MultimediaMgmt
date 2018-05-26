@@ -16,10 +16,10 @@
                                         ShowTabForSinglePage="False" ShowCaption="False" AllowHide="False" AllowClose="False"
                                         ShowCloseButton="False" ShowControlBox="True" ClosePageButtonShowMode="NoWhere" 
                                         TabContentCacheMode="CacheTabsOnSelecting" CaptionLocation="Top">
-                    <dxdo:DocumentPanel Caption="报警操作" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}" IsActive="True">
+                    <dxdo:DocumentPanel Caption="报警操作" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}" IsActive="True">
                         <control:ucWarnOperate/>
                     </dxdo:DocumentPanel>
-                    <dxdo:DocumentPanel Caption="报警记录查询" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                    <dxdo:DocumentPanel Caption="报警记录查询" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                         <control:ucWarnHistory/>
                     </dxdo:DocumentPanel>
                 </dxdo:DocumentGroup>

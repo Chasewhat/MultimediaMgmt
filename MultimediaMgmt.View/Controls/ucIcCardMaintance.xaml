@@ -103,6 +103,7 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
+                <dxg:GridColumn FieldName="FacultyId" Header="学院编号" Width="100"/>
                 <dxg:GridColumn FieldName="Status" Header="卡状态" Width="100"/>
             </dxg:GridControl>
         </DockPanel>

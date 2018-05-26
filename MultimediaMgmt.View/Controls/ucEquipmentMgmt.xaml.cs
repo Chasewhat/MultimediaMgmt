@@ -17,14 +17,14 @@ namespace MultimediaMgmt.View.Controls
     /// </summary>
     public partial class ucEquipmentMgmt : UserControl
     {
-        private EquipmentMgmtViewModel classRoomMgmtViewModel;
+        private EquipmentMgmtViewModel equipmentMgmtViewModel;
         private List<ucEquipmentControl> equipments = new List<ucEquipmentControl>();
         private int currId = 0;
         private bool isAsc = true;
         public ucEquipmentMgmt()
         {
             InitializeComponent();
-            this.DataContext = classRoomMgmtViewModel = ViewModelSource.Create<EquipmentMgmtViewModel>();
+            this.DataContext = equipmentMgmtViewModel = ViewModelSource.Create<EquipmentMgmtViewModel>();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -45,12 +45,12 @@ namespace MultimediaMgmt.View.Controls
 
         public void Refresh()
         {
-            classRoomMgmtViewModel.ClassRoomListRefresh();
-            if (classRoomMgmtViewModel.ClassRoomExs == null)
+            equipmentMgmtViewModel.ClassRoomListRefresh();
+            if (equipmentMgmtViewModel.ClassRoomExs == null)
                 return;
             foreach (ucEquipmentControl ucc in equipments)
             {
-                ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == ucc.Id);
+                ClassRoomEx cr = equipmentMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == ucc.Id);
                 if (cr != null)
                     ucc.Init(cr);
             }
@@ -61,7 +61,7 @@ namespace MultimediaMgmt.View.Controls
                     if (this.detailPanel.Content is ucEquipmentControlDetail)
                     {
                         ucEquipmentControlDetail temp = this.detailPanel.Content as ucEquipmentControlDetail;
-                        ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
+                        ClassRoomEx cr = equipmentMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == temp.Id);
                         if (cr != null)
                             temp.Init(cr, true);
                     }
@@ -72,21 +72,21 @@ namespace MultimediaMgmt.View.Controls
 
         public void CheckedChangedExec(CommonTree classRoom, bool isChecked)
         {
-            classRoomMgmtViewModel.IsLoad = true;
-            classRoomMgmtViewModel.WaitIndiContent = "正在加载...";
+            equipmentMgmtViewModel.IsLoad = true;
+            equipmentMgmtViewModel.WaitIndiContent = "正在加载...";
             try
             {
                 if (isChecked)
                 {
                     //新增设备
-                    if (!classRoomMgmtViewModel.ids.Contains(classRoom.ID.Value))
-                        classRoomMgmtViewModel.ids.Add(classRoom.ID.Value);
+                    if (!equipmentMgmtViewModel.ids.Contains(classRoom.ID.Value))
+                        equipmentMgmtViewModel.ids.Add(classRoom.ID.Value);
                     else
                         return;
-                    classRoomMgmtViewModel.ClassRoomListRefresh();
-                    if (classRoomMgmtViewModel.ClassRoomExs == null)
+                    equipmentMgmtViewModel.ClassRoomListRefresh();
+                    if (equipmentMgmtViewModel.ClassRoomExs == null)
                         return;
-                    ClassRoomEx cr = classRoomMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID.Value);
+                    ClassRoomEx cr = equipmentMgmtViewModel.ClassRoomExs.FirstOrDefault(s => s.Id == classRoom.ID.Value);
                     if (cr == null)
                         return;
                     ucEquipmentControl ucc = new ucEquipmentControl();
@@ -106,14 +106,14 @@ namespace MultimediaMgmt.View.Controls
 
                     if (currId == classRoom.ID.Value)
                         this.detailPanel.CloseCommand.Execute(null);
-                    classRoomMgmtViewModel.ids.Remove(classRoom.ID.Value);
+                    equipmentMgmtViewModel.ids.Remove(classRoom.ID.Value);
                     //删除设备
                     ucEquipmentControl eq = equipments.FirstOrDefault(s => s.Id == classRoom.ID.Value);
                     if (eq == null)
                         return;
                     equipments.Remove(eq);
                     this.overviewPanel.Children.Remove(eq);
-                    classRoomMgmtViewModel.ClassRoomListRefresh();
+                    equipmentMgmtViewModel.ClassRoomListRefresh();
                     //if (this.overviewPanel.Children.Count <= 0)
                     //    this.listPanel.ItemWidth = new GridLength(0);
                 }
@@ -122,7 +122,7 @@ namespace MultimediaMgmt.View.Controls
             { }
             finally
             {
-                classRoomMgmtViewModel.IsLoad = false;
+                equipmentMgmtViewModel.IsLoad = false;
             }
         }
 
@@ -146,12 +146,14 @@ namespace MultimediaMgmt.View.Controls
         {
             this.listInfo.Visibility = Visibility.Collapsed;
             this.matrixInfo.Visibility = Visibility.Visible;
+            equipmentMgmtViewModel.SortVisible = true;
         }
 
         private void ListShow(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             this.matrixInfo.Visibility = Visibility.Collapsed;
             this.listInfo.Visibility = Visibility.Visible;
+            equipmentMgmtViewModel.SortVisible = false;
         }
 
         private void DetailClear()
@@ -168,20 +170,20 @@ namespace MultimediaMgmt.View.Controls
 
         private void listView_RowDoubleClick(object sender, DevExpress.Xpf.Grid.RowDoubleClickEventArgs e)
         {
-            if (classRoomMgmtViewModel.SelectedClassRoomEx == null)
+            if (equipmentMgmtViewModel.SelectedClassRoomEx == null)
                 return;
             DetailClear();
             //this.listPanel.ItemWidth = new GridLength(220);
             this.listPanel.ItemWidth = new GridLength(0);
             this.detailPanel.Visibility = Visibility.Visible;
             this.detailPanel.Caption = string.Format("{0}{1}",
-                    classRoomMgmtViewModel.SelectedClassRoomEx.BuildingName,
-                    classRoomMgmtViewModel.SelectedClassRoomEx.RoomName);
+                    equipmentMgmtViewModel.SelectedClassRoomEx.BuildingName,
+                    equipmentMgmtViewModel.SelectedClassRoomEx.RoomName);
             this.detailPanel.ShowCaption = true;
             ucEquipmentControlDetail detail = new ucEquipmentControlDetail();
             this.detailPanel.Content = detail;
-            detail.Init(classRoomMgmtViewModel.SelectedClassRoomEx);
-            currId = classRoomMgmtViewModel.SelectedClassRoomEx.Id;
+            detail.Init(equipmentMgmtViewModel.SelectedClassRoomEx);
+            currId = equipmentMgmtViewModel.SelectedClassRoomEx.Id;
         }
 
         private void SortAsc(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)

@@ -29,7 +29,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         public Action<string> MessageShow;
 
         private int currId = 0;
-        public EquipmentTransferLogAddEditViewModel(int id)
+        public EquipmentTransferLogAddEditViewModel(int id, string serialNum)
         {
             currId = id;
             if (id > 0)
@@ -44,7 +44,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 ButtonContent = "增加";
             }
             if (CurrTransferLog == null)
-                CurrTransferLog = new EquipmentTransferLog() { TransferDate = DateTime.Now.Date };
+                CurrTransferLog = new EquipmentTransferLog() { TransferDate = DateTime.Now.Date, SerialNumber = serialNum };
             SerialNumber = CurrTransferLog.SerialNumber;
             TransferDate = CurrTransferLog.TransferDate;
         }

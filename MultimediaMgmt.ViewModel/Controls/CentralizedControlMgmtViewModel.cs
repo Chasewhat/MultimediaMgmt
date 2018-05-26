@@ -30,6 +30,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual bool AllControlSwitch { get; set; }
         public virtual bool AllAirConditionerSwitch { get; set; }
         public virtual bool AllLightingSwitch { get; set; }
+        public virtual string RoomTotal { get; set; }
         //public virtual bool SystemCheck { get; set; }
         //public virtual bool AirConitionerCheck { get; set; }
         //public virtual bool LampCheck { get; set; }
@@ -58,12 +59,13 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             var data = from c in multimediaEntities.ClassRoom
                        join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
-                       join t in (from tt in multimediaEntities.TerminalInfo
+                       join te in (from tt in multimediaEntities.TerminalInfo
                                   group tt by new
                                   {
                                       tt.TerminalId
                                   } into g
-                                  select g.Where(p => p.LogTime == g.Max(m => m.LogTime)).FirstOrDefault()) on c.TerminalId equals t.TerminalId
+                                  select g.Where(p => p.LogTime == g.Max(m => m.LogTime)).FirstOrDefault()) on c.TerminalId equals te.TerminalId into temp
+                       from t in temp.DefaultIfEmpty()
                        select new CentralizedControlEx()
                        {
                            Id = c.Id,
@@ -73,9 +75,9 @@ namespace MultimediaMgmt.ViewModel.Controls
                            Floor = c.Floor,
                            RoomName = c.RoomNum,
                            BuildingName = b.BuildingName,
-                           System = t.System,
-                           AirConitioner = null,//t.AirConitioner,
-                           Lamp = t.Lamp
+                           System = (t == null ? false : (t.System ?? false)),
+                           AirConitioner = (t == null ? false : (t.AirConditioner ?? false)),
+                           Lamp = (t == null ? false : (t.Lamp ?? false))
                        };
             if (BuildingId.HasValue && BuildingId.Value > 0)
                 data = data.Where(s => s.BuildingId == BuildingId.Value);
@@ -84,6 +86,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = data.Where(s => s.Floor == floor);
             CentralizedControls = data.ToSmartObservableCollection();
             AllSwitchSet();
+            if (CentralizedControls != null)
+                RoomTotal = string.Format("教室数量:{0}", CentralizedControls.Count);
         }
 
         [Command]

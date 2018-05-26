@@ -67,20 +67,21 @@ namespace MultimediaMgmt.ViewModel.Controls
                         Collection<WebTerminalInfo> terminalInfos = ja.ToObject<Collection<WebTerminalInfo>>();
                         var data = from c in crs
                                    join b in multimediaEntities.ClassroomBuilding on c.BuildingId equals b.Id
-                                   join t in terminalInfos on c.TerminalId equals t.TerminalId
+                                   join te in terminalInfos on c.TerminalId equals te.TerminalId into temp
+                                   from t in temp.DefaultIfEmpty()
                                    select new WarnOperate()
                                    {
                                        BuildingId = b.Id,
                                        ClassRoomId = c.Id,
-                                       TerminalId = t.TerminalId,
+                                       TerminalId = c.TerminalId,
                                        TerminalIp = c.TerminalIp,
                                        BuildingName = b.BuildingName,
                                        RoomNum = c.RoomNum,
-                                       Alarm_Control = t.Alarm_Control,
-                                       Alarm_In1 = t.Alarm_In1,
-                                       Alarm_In2 = t.Alarm_In2
-                                       //Alarm_In3 = t.Alarm_In3,
-                                       //Alarm_In4 = t.Alarm_In4
+                                       Alarm_Control = (t == null ? false : (t.Alarm_Control ?? false)),
+                                       Alarm_In1 = (t == null ? false : (t.Alarm_In1 ?? false)),
+                                       Alarm_In2 = (t == null ? false : (t.Alarm_In2 ?? false)),
+                                       Alarm_In3 = false,
+                                       Alarm_In4 = false
                                    };
                         if (BuildingId.HasValue && BuildingId.Value > 0)
                             data = data.Where(s => s.BuildingId == BuildingId.Value);
@@ -90,7 +91,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                     }
                 }
             }
-            catch { }
+            catch(Exception ex) { }
             #endregion
             #region 新数据库版本
             //var data = from b in multimediaEntities.ClassroomBuilding

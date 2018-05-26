@@ -51,7 +51,7 @@ namespace MultimediaMgmt.View.Controls
 
         public void FileOpen(string info)
         {
-            wndFileChoose wfc = new wndFileChoose(info);
+            wndFileChoose wfc = new wndFileChoose(info, 1);
             bool? rs = wfc.ShowDialog();
             if (rs.HasValue && rs.Value)
             {

@@ -40,7 +40,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public Func<string> FileSave;
         public Action<string> FileOpen;
         public Action<string> MessageShow;
-        public Func<int,MemoryStream> GetExport;
+        public Func<int, MemoryStream> GetExport;
         public IcCardMaintanceViewModel()
         {
             IsLoad = false;
@@ -90,7 +90,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             HexCode = CardNum = PersonId = PersonName = SelectedSex =
                 SelectedCardStatus = SelectedCardType = null;
-            SelectedCardStatus= SelectedCardType = null;
+            SelectedCardStatus = SelectedCardType = null;
         }
 
         [Command]
@@ -150,8 +150,11 @@ namespace MultimediaMgmt.ViewModel.Controls
             }
             catch (Exception e)
             {
-                IsLoad = false;
                 MessageShow(e.Message);
+            }
+            finally
+            {
+                IsLoad = false;
             }
             Query();
         }
@@ -163,9 +166,10 @@ namespace MultimediaMgmt.ViewModel.Controls
             try
             {
                 string filePath = FileSave();
+                if (string.IsNullOrEmpty(filePath))
+                    return;
                 bool task = ExportToExcel(filePath);
                 //task.Wait();
-                IsLoad = false;
                 if (!task)
                 {
                     MessageShow("导出时发生异常");
@@ -173,14 +177,18 @@ namespace MultimediaMgmt.ViewModel.Controls
             }
             catch (Exception e)
             {
-                IsLoad = false;
                 MessageShow(e.Message);
+            }
+            finally
+            {
+                IsLoad = false;
             }
         }
 
-        private List<string> IcCardField = new List<string>() { "HexCode", "CardNum", "PersonId", "CardType", "Status" };
-        private List<string> PersonField = new List<string>() { "PersonId", "Name", "Account", "Password", "Sex", "FacultyId", "ClassId", "Email", "Phone", "EntryTime", "DepartureDate" };
-        private List<string> StudentField = new List<string>() { "PersonId", "Name", "Account", "Password", "Sex", "ClassId", "Email", "Phone", "EntryTime" };
+        private List<string> IcCardField = new List<string>() { "HexCode", "CardNum", "PersonId", "Name", "Sex", "Career", "Email",
+                                                                "Phone","CardType","FacultyId", "Status" };
+        //private List<string> PersonField = new List<string>() { "PersonId", "Name", "Account", "Password", "Sex", "FacultyId", "ClassId", "Email", "Phone", "EntryTime", "DepartureDate" };
+        //private List<string> StudentField = new List<string>() { "PersonId", "Name", "Account", "Password", "Sex", "ClassId", "Email", "Phone", "EntryTime" };
 
         public bool ImportFromExcel(bool overwrite, string file, ref string result)
         {
@@ -196,8 +204,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                         if (overwrite)
                         {
                             multimediaEntities.Database.ExecuteSqlCommand("delete from [IcCard]");
-                            multimediaEntities.Database.ExecuteSqlCommand("delete from [Person]");
-                            multimediaEntities.Database.ExecuteSqlCommand("delete from [Student]");
+                            //multimediaEntities.Database.ExecuteSqlCommand("delete from [Person]");
+                            //multimediaEntities.Database.ExecuteSqlCommand("delete from [Student]");
                         }
                         IWorkbook workbook = WorkbookFactory.Create(file);
                         IEnumerator rows;
@@ -257,33 +265,36 @@ namespace MultimediaMgmt.ViewModel.Controls
                         //        multimediaEntities.Person.Add(person);
                         //    }
                         //}
-                        pis = typeof(Student).GetProperties();
-                        sheetName = "学生名单";
-                        sheet = workbook.GetSheet(sheetName);
-                        if (sheet != null)
-                        {
-                            rows = sheet.GetRowEnumerator();
-                            rows.MoveNext();
-                            while (rows.MoveNext())
-                            {
-                                HSSFRow row = (HSSFRow)rows.Current;
-                                Student student = new Student();
-                                for (int i = 0; i < row.LastCellNum; i++)
-                                {
-                                    PropertyInfo pi = pis.Where(p => p.Name.Equals(IcCardField[i])).FirstOrDefault();
-                                    if (null != pi)
-                                    {
-                                        ICell cell = row.GetCell(i);
-                                        if (cell != null)
-                                        {
-                                            string s = cell.ToString();
-                                            pi.SetValue(student, Convert.ChangeType(cell.ToString(), pi.PropertyType), null);
-                                        }
-                                    }
-                                }
-                                multimediaEntities.Student.Add(student);
-                            }
-                        }
+
+                        //Student表去除
+
+                        //pis = typeof(Student).GetProperties();
+                        //sheetName = "学生名单";
+                        //sheet = workbook.GetSheet(sheetName);
+                        //if (sheet != null)
+                        //{
+                        //    rows = sheet.GetRowEnumerator();
+                        //    rows.MoveNext();
+                        //    while (rows.MoveNext())
+                        //    {
+                        //        HSSFRow row = (HSSFRow)rows.Current;
+                        //        Student student = new Student();
+                        //        for (int i = 0; i < row.LastCellNum; i++)
+                        //        {
+                        //            PropertyInfo pi = pis.Where(p => p.Name.Equals(IcCardField[i])).FirstOrDefault();
+                        //            if (null != pi)
+                        //            {
+                        //                ICell cell = row.GetCell(i);
+                        //                if (cell != null)
+                        //                {
+                        //                    string s = cell.ToString();
+                        //                    pi.SetValue(student, Convert.ChangeType(cell.ToString(), pi.PropertyType), null);
+                        //                }
+                        //            }
+                        //        }
+                        //        multimediaEntities.Student.Add(student);
+                        //    }
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -304,7 +315,7 @@ namespace MultimediaMgmt.ViewModel.Controls
 
         public bool ExportToExcel(string filename)
         {
-            
+
             FileStream stream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
             try
             {

@@ -92,7 +92,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical" Width="150" ItemSpace="10">
                     <dxlc:LayoutItem Label="待选名单: " IsRequired="True" LabelPosition="Top">
-                        <dxg:GridControl Width="150" Height="270" AllowInitiallyFocusedRow="False" SelectionMode="Row"
+                        <dxg:GridControl Width="150" Height="270" AllowInitiallyFocusedRow="False" SelectionMode="Cell"
                                          ItemsSource="{Binding Persons}" SelectedItems="{Binding SelectedPersons}">
                             <dxg:GridControl.View>
                                 <dxg:TableView AllowEditing="False"
@@ -113,7 +113,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical" Width="150" ItemSpace="10">
                     <dxlc:LayoutItem Label="已选名单: " IsRequired="True" Foreground="Red" LabelPosition="Top">
-                        <dxg:GridControl Width="150" Height="270" AllowInitiallyFocusedRow="False" SelectionMode="Row"
+                        <dxg:GridControl Width="150" Height="270" AllowInitiallyFocusedRow="False" SelectionMode="Cell"
                                           ItemsSource="{Binding ChoosedPersons}" SelectedItems="{Binding SelectedChoosedPersons}">
                             <dxg:GridControl.View>
                                 <dxg:TableView AllowEditing="False"

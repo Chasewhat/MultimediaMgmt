@@ -25,6 +25,7 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
             <dx:SimpleButton x:Name="btnConfrim"  Content="确认" Glyph="{dx:DXImageOffice2013 Image=Apply_16x16.png}" Click="btnConfrim_Click" />
+            <dx:SimpleButton Margin="10,0,0,0" x:Name="btnTemplate"  Content="模板下载" Glyph="{dx:DXImageOffice2013 Image=Download_16x16.png}" Click="btnTemplate_Click" />
         </StackPanel>
     </Grid>
 </dx:DXWindow>

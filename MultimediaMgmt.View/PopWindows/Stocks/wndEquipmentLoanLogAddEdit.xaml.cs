@@ -11,10 +11,10 @@ namespace MultimediaMgmt.View.PopWindows
     public partial class wndEquipmentLoanLogAddEdit : DevExpress.Xpf.Core.DXWindow
     {
         private EquipmentLoanLogAddEditViewModel equipmentLoanLogAddEditViewModel;
-        public wndEquipmentLoanLogAddEdit(int id = 0)
+        public wndEquipmentLoanLogAddEdit(int id = 0, string serialNum = "")
         {
             InitializeComponent();
-            this.DataContext = equipmentLoanLogAddEditViewModel = ViewModelSource.Create(() => new EquipmentLoanLogAddEditViewModel(id));
+            this.DataContext = equipmentLoanLogAddEditViewModel = ViewModelSource.Create(() => new EquipmentLoanLogAddEditViewModel(id, serialNum));
             equipmentLoanLogAddEditViewModel.CloseWindow = () => { this.Close(); };
             equipmentLoanLogAddEditViewModel.MessageShow = (s) =>
             {

@@ -32,7 +32,7 @@
         <dxb:BarManager AllowCustomization="False" AllowHotCustomization="False" AllowQuickCustomization="False" AllowUIAutomationSupport="False">
             <DockPanel>
                 <dxb:ToolBarControl DockPanel.Dock="Top" Cursor="Hand" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-                    <dxb:BarStaticItem x:Name="monitorInfo" ShowBorder="False"/>
+                    <dxb:BarStaticItem x:Name="monitorInfo" ShowBorder="False" Hint="{Binding MediaUrl}"/>
                     <dxb:BarItemSeparator/>
                     <dxb:BarButtonItem x:Name="mediaPlay" Content="播放" Glyph="{Binding Image}" ItemClick="play_ItemClick"/>
                     <dxb:BarEditItem x:Name="volumnChange" Content="音量:" ClosePopupOnChangingEditValue="False" EditWidth="65"

@@ -16,13 +16,13 @@
                                         ShowTabForSinglePage="False" ShowCaption="False" AllowHide="False" AllowClose="False"
                                         ShowCloseButton="False" ShowControlBox="True" ClosePageButtonShowMode="NoWhere" 
                                         TabContentCacheMode="CacheTabsOnSelecting" CaptionLocation="Top">
-                    <dxdo:DocumentPanel Caption="历史记录查询" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}" IsActive="True">
+                    <dxdo:DocumentPanel Caption="历史记录查询" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}" IsActive="True">
                         <control:ucIcCardHistory/>
                     </dxdo:DocumentPanel>
-                    <dxdo:DocumentPanel Caption="实时记录查询" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                    <dxdo:DocumentPanel Caption="实时记录查询" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                         <control:ucIcCardRealtime/>
                     </dxdo:DocumentPanel>
-                    <dxdo:DocumentPanel Caption="IC卡号管理" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                    <dxdo:DocumentPanel Caption="IC卡号管理" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                         <control:ucIcCardMaintance/>
                     </dxdo:DocumentPanel>
                 </dxdo:DocumentGroup>

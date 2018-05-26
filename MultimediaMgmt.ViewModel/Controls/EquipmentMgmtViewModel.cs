@@ -22,6 +22,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual string RoomTotal { get; set; }
         public virtual string WaitIndiContent { get; set; }
         public virtual bool IsLoad { get; set; }
+        public virtual bool SortVisible { get; set; }
         public List<int> ids = new List<int>();
         private IRestConnection restConnection = null;
         public EquipmentMgmtViewModel()
@@ -32,6 +33,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             Signals = Constants.Signals;
             //ClassRoomListRefresh();
             IsLoad = false;
+            SortVisible = true;
         }
 
         public void ClassRoomListRefresh()
@@ -62,7 +64,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                                    join te in terminalInfos on c.TerminalId equals te.TerminalId into temp
                                    from t in temp.DefaultIfEmpty()
                                    where ids.Contains(c.Id)
-                                   orderby c.BuildingId, c.Floor, c.RoomNum
+                                   orderby c.RoomNum
                                    select new ClassRoomEx()
                                    {
                                        Id = c.Id,
@@ -74,34 +76,34 @@ namespace MultimediaMgmt.ViewModel.Controls
                                        Location = b.Location,
                                        Floor = c.Floor,
                                        VedioAddress = c.VedioAddress,
-                                       System = (t?.System),
-                                       //FPD = (t?.FPD),
-                                       ComputerStatus = (t?.Computer_Status),
-                                       Projector = (t?.Projector),
-                                       ProjectorScreen = (t?.Projection_Screen),
-                                       //Curtain =(t?.Curtain),
-                                       //Lamp =(t?.Lamp),
-                                       Volume = (t?.Volume_Mute),
-                                       //Record =(t?.Record),
-                                       Lock_Status = (t?.Lock_Status),
-                                       //Door_Status =(t?.Door_Status),
-                                       ACRelay1 = (t?.AC_Relay1),
-                                       //Large_Screen =(t?.Large_Screen),
-                                       //AirConitioner =(t?.AirConitioner),
+                                       System = (t == null ? false : (t.System ?? false)),
+                                       FPD = false,
+                                       ComputerStatus = (t == null ? false : (t.Computer_Status ?? false)),
+                                       Projector = (t == null ? false : (t.Projector ?? false)),
+                                       ProjectorScreen = (t == null ? false : (t.Projection_Screen ?? false)),
+                                       Curtain = false,
+                                       Lamp = false,
+                                       Volume = (t == null ? false : (t.Volume_Mute ?? false)),
+                                       Record = false,
+                                       Lock_Status = (t == null ? false : (t.Lock_Status ?? false)),
+                                       Door_Status = false,
+                                       ACRelay1 = (t == null ? false : (t.AC_Relay1 ?? false)),
+                                       Large_Screen = false,
+                                       AirConitioner = false,
                                        ProjectionSignal = (t?.Projection_Signal),
                                        ComputerSignal = (t?.Computer_Signal),
-                                       LAN1 = (t?.LAN1),
-                                       LAN2 = (t?.LAN2),
-                                       LAN3 = (t?.LAN3),
-                                       LAN4 = (t?.LAN4),
-                                       Alarm_In1 = (t?.Alarm_In1),
-                                       Alarm_In2 = (t?.Alarm_In2),
-                                       //Alarm_In3 =(t?.Alarm_In3),
-                                       //Alarm_In4 =(t?.Alarm_In4),
-                                       Alarm_Control = (t?.Alarm_Control),
-                                       //IN_STATUS1 =(t?.IN_STATUS1),
-                                       //IN_STATUS2 =(t?.IN_STATUS2),
-                                       //IN_STATUS3 =(t?.IN_STATUS3),
+                                       LAN1 = (t == null ? false : (t.LAN1 ?? false)),
+                                       LAN2 = (t == null ? false : (t.LAN2 ?? false)),
+                                       LAN3 = (t == null ? false : (t.LAN3 ?? false)),
+                                       LAN4 = (t == null ? false : (t.LAN4 ?? false)),
+                                       Alarm_In1 = (t == null ? false : (t.Alarm_In1 ?? false)),
+                                       Alarm_In2 = (t == null ? false : (t.Alarm_In2 ?? false)),
+                                       Alarm_In3 = false,
+                                       Alarm_In4 = false,
+                                       Alarm_Control = (t == null ? false : (t.Alarm_Control ?? false)),
+                                       IN_STATUS1 = false,
+                                       IN_STATUS2 = false,
+                                       IN_STATUS3 = false,
                                        //HexCode =(t?.HexCode),
                                        Opereate_Last = (t?.Opereate_Last),
                                        IsConnected = (t == null ? false : t.IsConnected),

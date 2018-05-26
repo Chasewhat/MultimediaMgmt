@@ -10,41 +10,51 @@
     x:Class="MultimediaMgmt.View.Controls.ucEquipmentRepairLog" 
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="800">
-    <DockPanel>
-        <dxb:ToolBarControl Padding="0" Height="35" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-            <dxb:BarEditItem Content="设备编号:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+    <UserControl.Resources>
+        <DataTemplate x:Key="splashScreenTemplate">
+            <dx:WaitIndicator DeferedVisibility="True" Content="{Binding WaitIndiContent}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <dx:LoadingDecorator x:Name="loadWait" IsSplashScreenShown="{Binding IsLoad}" SplashScreenDataContext="{Binding}" OwnerLock="LoadingContent" SplashScreenTemplate="{StaticResource splashScreenTemplate}">
+
+        <DockPanel>
+            <dxb:ToolBarControl Padding="0" Height="35" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                <dxb:BarEditItem Content="设备编号:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding SerialNumber}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:TextEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-            <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-            <dxb:BarItemSeparator/>
-            <dxb:BarButtonItem Content="增加" ItemClick="Add_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Add_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-        </dxb:ToolBarControl>
-        <dxg:GridControl ItemsSource="{Binding EquipmentRepairLogs}"
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:TextEditSettings/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarItemSeparator/>
+                <dxb:BarButtonItem Content="增加" ItemClick="Add_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Add_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarButtonItem Content="导出Excel" Command="{Binding ExportExcelCommand}" Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarButtonItem Content="导入Excel" Command="{Binding ImportExcelCommand}" Glyph="{dx:DXImage Image=SaveTo_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+            </dxb:ToolBarControl>
+            <dxg:GridControl ItemsSource="{Binding EquipmentRepairLogs}"
                          SelectedItem="{Binding SelectedEquipmentRepairLog}"
                 		x:Name="gridControl"
                         AllowInitiallyFocusedRow="False" 
                         >
-            <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" AllowEditing="False">
-                    <dxg:TableView.RowCellMenuCustomizations>
-                        <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-                    </dxg:TableView.RowCellMenuCustomizations>
-                </dxg:TableView>
-            </dxg:GridControl.View>
-            <dxg:GridColumn FieldName="SerialNumber" Header="设备编码" Width="80" Fixed="Left"/>
-            <dxg:GridColumn FieldName="Fault" Header="故障描述" Width="120" />
-            <dxg:GridColumn FieldName="Proposer" Header="申报维修人" Width="80"/>
-            <dxg:GridColumn FieldName="DeclarationDate" Header="申报日期" Width="80"/>
-            <dxg:GridColumn FieldName="RepairDate" Header="修复日期" Width="80"/>
-            <dxg:GridColumn FieldName="RepairPrice" Header="维修费用" Width="80" />
-            <dxg:GridColumn FieldName="RepairComment" Header="维修内容" Width="120"/>
-            <dxg:GridColumn FieldName="ApproverOfficer" Header="批准人" Width="80"/>
-            <dxg:GridColumn FieldName="Operator" Header="操作员" Width="80"/>
-            <dxg:GridColumn FieldName="Remarks" Header="备注" Width="100"/>
-        </dxg:GridControl>
-    </DockPanel>
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gridView" AllowEditing="False">
+                        <dxg:TableView.RowCellMenuCustomizations>
+                            <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                        </dxg:TableView.RowCellMenuCustomizations>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+                <dxg:GridColumn FieldName="SerialNumber" Header="设备编码" Width="80" Fixed="Left"/>
+                <dxg:GridColumn FieldName="Fault" Header="故障描述" Width="120" />
+                <dxg:GridColumn FieldName="Proposer" Header="申报维修人" Width="80"/>
+                <dxg:GridColumn FieldName="DeclarationDate" Header="申报日期" Width="80"/>
+                <dxg:GridColumn FieldName="RepairDate" Header="修复日期" Width="80"/>
+                <dxg:GridColumn FieldName="RepairPrice" Header="维修费用" Width="80" />
+                <dxg:GridColumn FieldName="RepairComment" Header="维修内容" Width="120"/>
+                <dxg:GridColumn FieldName="ApproverOfficer" Header="批准人" Width="80"/>
+                <dxg:GridColumn FieldName="Operator" Header="操作员" Width="80"/>
+                <dxg:GridColumn FieldName="Remarks" Header="备注" Width="100"/>
+            </dxg:GridControl>
+        </DockPanel>
+    </dx:LoadingDecorator>
 </UserControl>

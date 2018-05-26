@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -11,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MultimediaMgmt.View.PopWindows
 {
@@ -21,10 +21,12 @@ namespace MultimediaMgmt.View.PopWindows
     public partial class wndFileChoose : DevExpress.Xpf.Core.DXWindow
     {
         private string showInfo = "";
-        public wndFileChoose(string info = "")
+        private int tpType = 0;
+        public wndFileChoose(string info = "", int etype = 0)
         {
             InitializeComponent();
             showInfo = info;
+            tpType = etype;
         }
 
         private void DXWindow_Loaded(object sender, RoutedEventArgs e)
@@ -59,6 +61,49 @@ namespace MultimediaMgmt.View.PopWindows
         {
             filePath = this.fileText.EditValue.ToString();
             isOverride = this.isOverrideCk.IsChecked.Value;
+        }
+
+        private void btnTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            if (tpType == 0)
+            {
+                DevExpress.Xpf.Core.DXMessageBox.Show("当前导入项未配置模板", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+            dialog.Filter = "Excel 文件(*.xls)|*.xls|Excel 文件(*.xlsx)|*.xlsx|所有文件(*.*)|*.*";
+            dialog.FilterIndex = 1;
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                return;
+            string sourcePath = "";
+            switch (tpType)
+            {
+                case 1:
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "IC卡导入模板.xlsx");
+                    break;
+                case 2:
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备入库导入模板.xlsx");
+                    break;
+                case 3:
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备维修导入模板.xlsx");
+                    break;
+                case 4:
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备借出导入模板.xlsx");
+                    break;
+                case 5:
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备报废导入模板.xlsx");
+                    break;
+                case 6:
+                    sourcePath = Path.Combine(Environment.CurrentDirectory, "ExcelTemplate", "设备转移导入模板.xlsx");
+                    break;
+
+            }
+            if (!string.IsNullOrEmpty(sourcePath))
+                try
+                {
+                    File.Copy(sourcePath, dialog.FileName, true);
+                }
+                catch { }
         }
     }
 }

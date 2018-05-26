@@ -8,7 +8,7 @@
     xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     x:Class="MultimediaMgmt.View.Controls.ucWarnOperate" 
-    mc:Ignorable="d" 
+    mc:Ignorable="d" x:Name="mainUc"
     d:DesignHeight="300" d:DesignWidth="800">
     <DockPanel>
         <dxb:ToolBarControl Height="35" Padding="0" Margin="0" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
@@ -39,11 +39,11 @@
             <dxg:GridColumn FieldName="RoomNum" Header="教室编号" Width="80"/>
             <dxg:GridColumn FieldName="TerminalId" Header="终端编号" Width="80"/>
             <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" />
-            <dxg:GridColumn FieldName="Alarm_Control" Header="设防布防状态" Width="100"/>
-            <dxg:GridColumn FieldName="Alarm_In1" Header="安防" Width="80"/>
-            <dxg:GridColumn FieldName="Alarm_In2" Header="消防报警" Width="80"/>
-            <dxg:GridColumn FieldName="Alarm_In3" Header="Alarm3" Width="80" />
-            <dxg:GridColumn FieldName="Alarm_In4" Header="Alarm4" Width="80"/>
+            <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=布防, UncheckedStateContent=撤防}" FieldName="Alarm_Control" Header="设防布防状态" Width="90"/>
+            <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Alarm_In1" Header="安防" Width="70"/>
+            <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Alarm_In2" Header="消防报警" Width="70"/>
+            <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Alarm_In3" Header="Alarm3" Width="70" />
+            <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Alarm_In4" Header="Alarm4" Width="70"/>
             <dxg:GridColumn Header="撤防" Width="120">
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
@@ -51,7 +51,7 @@
                             <!--<dxe:CheckEdit IsChecked="{Binding AirConitionerCheck}" HorizontalAlignment="Center"/>-->
                             <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <dx:SimpleButton Margin="2,2" Content="一键撤防" BorderThickness="0"
-                                         Command="{Binding View.DataContext.AllAlarmControlCommand}"
+                                         Command="{Binding Path=DataContext.AllAlarmControlCommand, ElementName=mainUc}"
                                          CommandParameter="False"/>
                         </StackPanel>
                     </DataTemplate>
@@ -71,7 +71,7 @@
                             <!--<dxe:CheckEdit IsChecked="{Binding AirConitionerCheck}" HorizontalAlignment="Center"/>-->
                             <TextBlock Margin="5,0" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <dx:SimpleButton Margin="2,2" Content="一键布防" BorderThickness="0"
-                                         Command="{Binding View.DataContext.AllAlarmControlCommand}"
+                                         Command="{Binding Path=DataContext.AllAlarmControlCommand, ElementName=mainUc}"
                                          CommandParameter="True"/>
                         </StackPanel>
                     </DataTemplate>

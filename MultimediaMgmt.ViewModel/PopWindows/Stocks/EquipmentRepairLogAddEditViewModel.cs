@@ -24,7 +24,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         public Action<string> MessageShow;
 
         private int currId = 0;
-        public EquipmentRepairLogAddEditViewModel(int id)
+        public EquipmentRepairLogAddEditViewModel(int id, string serialNum)
         {
             currId = id;
             if (id > 0)
@@ -39,7 +39,11 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 ButtonContent = "增加";
             }
             if (CurrRepairLog == null)
-                CurrRepairLog = new EquipmentRepairLog() { DeclarationDate = DateTime.Now.Date };
+                CurrRepairLog = new EquipmentRepairLog()
+                {
+                    DeclarationDate = DateTime.Now.Date,
+                    SerialNumber = serialNum
+                };
             SerialNumber = CurrRepairLog.SerialNumber;
             DeclarationDate = CurrRepairLog.DeclarationDate;
         }

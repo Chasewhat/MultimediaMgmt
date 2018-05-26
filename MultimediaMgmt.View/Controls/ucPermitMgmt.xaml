@@ -16,16 +16,16 @@
                                         ShowTabForSinglePage="False" ShowCaption="False" AllowHide="False" AllowClose="False"
                                         ShowCloseButton="False" ShowControlBox="True" ClosePageButtonShowMode="NoWhere" 
                                         TabContentCacheMode="CacheTabsOnSelecting" CaptionLocation="Top">
-                    <dxdo:DocumentPanel Caption="卡控记录查询与编辑" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}" IsActive="True">
+                    <dxdo:DocumentPanel Caption="卡控记录查询与编辑" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}" IsActive="True">
                         <control:ucPermitOperate/>
                     </dxdo:DocumentPanel>
-                    <dxdo:DocumentPanel Caption="预约成功" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                    <dxdo:DocumentPanel Caption="预约成功" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                         <control:ucReservation/>
                     </dxdo:DocumentPanel>
-                    <dxdo:DocumentPanel Caption="课程安排" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                    <dxdo:DocumentPanel Caption="课程安排" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                         <control:ucStdCourseTable/>
                     </dxdo:DocumentPanel>
-                    <dxdo:DocumentPanel Caption="预约审批" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                    <dxdo:DocumentPanel Caption="预约审批" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                         <control:ucClassroomReservationApproval/>
                     </dxdo:DocumentPanel>
                 </dxdo:DocumentGroup>

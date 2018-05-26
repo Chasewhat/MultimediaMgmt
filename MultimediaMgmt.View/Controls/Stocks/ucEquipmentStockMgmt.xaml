@@ -20,22 +20,22 @@
                                         ShowTabForSinglePage="False" ShowCaption="False" AllowHide="False" AllowClose="False"
                                         ShowCloseButton="False" ShowControlBox="True" ClosePageButtonShowMode="NoWhere" 
                                         TabContentCacheMode="CacheTabsOnSelecting" CaptionLocation="Top">
-                        <dxdo:DocumentPanel Caption="维修管理" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                        <dxdo:DocumentPanel Caption="维修管理" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                             <control:ucEquipmentRepairLog/>
                         </dxdo:DocumentPanel>
-                        <dxdo:DocumentPanel Caption="借出管理" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                        <dxdo:DocumentPanel Caption="借出管理" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                             <control:ucEquipmentLoanLog/>
                         </dxdo:DocumentPanel>
-                        <dxdo:DocumentPanel Caption="状态管理" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                        <dxdo:DocumentPanel Caption="状态管理" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                             <control:ucEquipmentStatus/>
                         </dxdo:DocumentPanel>
-                        <dxdo:DocumentPanel Caption="报废管理" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                        <dxdo:DocumentPanel Caption="报废管理" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                             <control:ucEquipmentScrapLog/>
                         </dxdo:DocumentPanel>
-                        <dxdo:DocumentPanel Caption="转移管理" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                        <dxdo:DocumentPanel Caption="转移管理" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                             <control:ucEquipmentTransferLog/>
                         </dxdo:DocumentPanel>
-                        <dxdo:DocumentPanel Caption="巡查日志" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
+                        <dxdo:DocumentPanel Caption="巡查日志" AllowFloat="False" AllowClose="False" AllowHide="False" CaptionImage="{dx:DXImageOffice2013 Image=Tag_16x16.png}">
                             <control:ucSurveillanceLog/>
                         </dxdo:DocumentPanel>
                     </dxdo:DocumentGroup>

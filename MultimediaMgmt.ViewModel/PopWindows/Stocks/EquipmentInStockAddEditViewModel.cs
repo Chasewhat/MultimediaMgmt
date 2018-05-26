@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace MultimediaMgmt.ViewModel.PopWindows
 {
@@ -27,10 +28,16 @@ namespace MultimediaMgmt.ViewModel.PopWindows
 
         public Action CloseWindow;
         public Action<string> MessageShow;
+        public virtual string WaitIndiContent { get; set; }
+        public virtual bool IsLoad { get; set; }
+        public Func<string> FileSave;
+        public Action<string> FileOpen;
+        public Func<int, MemoryStream> GetExport;
 
         private int currId = 0;
         public EquipmentInStockAddEditViewModel(int id)
         {
+            IsLoad = false;
             currId = id;
             EquipmentTypes = multimediaEntities.EquipmentType.Select(s => new
             {

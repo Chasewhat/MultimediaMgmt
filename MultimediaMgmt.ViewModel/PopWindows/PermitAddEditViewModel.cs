@@ -101,9 +101,9 @@ namespace MultimediaMgmt.ViewModel.PopWindows
                 List<Person> temp = new List<Person>();
                 foreach (var p in CurrPermit.PersonId.Split(';'))
                 {
-                    Person tp = multimediaEntities.IcCard.Select(s => new Person() { PersonId = s.PersonId, Name = s.Name }).FirstOrDefault();
+                    IcCard tp = multimediaEntities.IcCard.FirstOrDefault(s => s.PersonId == p);
                     if (tp != null)
-                        temp.Add(tp);
+                        temp.Add(new Person() { PersonId = p, Name = tp.Name });
                 }
                 ChoosedPersons = temp.ToSmartObservableCollection();
             }

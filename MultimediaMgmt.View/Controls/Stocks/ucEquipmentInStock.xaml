@@ -10,77 +10,93 @@
     x:Class="MultimediaMgmt.View.Controls.ucEquipmentInStock" 
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="800">
-    <DockPanel>
-        <dxb:ToolBarControl Padding="0" Height="35" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-            <dxb:BarEditItem Content="设备编号:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+    <UserControl.Resources>
+        <DataTemplate x:Key="splashScreenTemplate">
+            <dx:WaitIndicator DeferedVisibility="True" Content="{Binding WaitIndiContent}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <dx:LoadingDecorator x:Name="loadWait" IsSplashScreenShown="{Binding IsLoad}" SplashScreenDataContext="{Binding}" OwnerLock="LoadingContent" SplashScreenTemplate="{StaticResource splashScreenTemplate}">
+
+        <DockPanel>
+            <dxb:ToolBarControl Padding="0" Height="35" BorderThickness="0" DockPanel.Dock="Top" AllowCustomizationMenu="False" AllowQuickCustomization="False">
+                <dxb:BarEditItem Content="设备编号:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding SerialNumber}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:TextEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarEditItem Content="入库日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:TextEditSettings/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarEditItem Content="入库日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding InBegin}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:DateEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarEditItem Content="至:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarEditItem Content="至:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding InEnd}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:DateEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarEditItem Content="启用日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarEditItem Content="启用日期:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding UseBegin}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:DateEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarEditItem Content="至:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarEditItem Content="至:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding UseEnd}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:DateEditSettings/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarEditItem Content="设备名称:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarEditItem Content="设备名称:" ClosePopupOnChangingEditValue="True" EditWidth="100"
                               EditValue="{Binding Name}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:ComboBoxEditSettings ItemsSource="{Binding EquipmentTypes}" IsTextEditable="False" DisplayMember="Value" ValueMember="Key"/>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-            <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-            <dxb:BarItemSeparator/>
-            <dxb:BarButtonItem Content="增加" ItemClick="Add_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Add_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-        </dxb:ToolBarControl>
-        <dxg:GridControl ItemsSource="{Binding EquipmentInStocks}"
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:ComboBoxEditSettings ItemsSource="{Binding EquipmentTypes}" IsTextEditable="False" DisplayMember="Value" ValueMember="Key"/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarEditItem Content="使用地点:" ClosePopupOnChangingEditValue="True" EditWidth="100"
+                              EditValue="{Binding UsePlace}">
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:TextEditSettings/>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarItemSeparator/>
+                <dxb:BarButtonItem Content="增加" ItemClick="Add_ItemClick" Glyph="{dx:DXImageOffice2013 Image=Add_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarButtonItem Content="导出Excel" Command="{Binding ExportExcelCommand}" Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                <dxb:BarButtonItem Content="导入Excel" Command="{Binding ImportExcelCommand}" Glyph="{dx:DXImage Image=SaveTo_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+            </dxb:ToolBarControl>
+            <dxg:GridControl ItemsSource="{Binding EquipmentInStocks}"
                          SelectedItem="{Binding SelectedEquipmentInStock}"
                 		x:Name="gridControl"
                         AllowInitiallyFocusedRow="False" 
                         >
-            <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" AllowEditing="False">
-                    <dxg:TableView.RowCellMenuCustomizations>
-                        <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-                        <!--<dxb:BarButtonItem Command="{Binding View.DataContext.StatusInquiryCommand}" Content="状态查询" Glyph="{dx:DXImageOffice2013 Image=Notes_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>-->
-                    </dxg:TableView.RowCellMenuCustomizations>
-                </dxg:TableView>
-            </dxg:GridControl.View>
-            <dxg:GridColumn FieldName="SerialNumber" Header="设备编码" Width="80" Fixed="Left"/>
-            <dxg:GridColumn FieldName="Name" Header="名称" Width="80" />
-            <dxg:GridColumn FieldName="Manufacturer" Header="厂家" Width="80"/>
-            <dxg:GridColumn FieldName="SaleCompany" Header="销售商" Width="80"/>
-            <dxg:GridColumn FieldName="Type" Header="型号" Width="80"/>
-            <dxg:GridColumn FieldName="Configuration" Header="配置" Width="80" />
-            <dxg:GridColumn FieldName="ProduceDate" Header="出厂日期" Width="80"/>
-            <dxg:GridColumn FieldName="UserDepartment" Header="使用部门" Width="80"/>
-            <dxg:GridColumn FieldName="Place" Header="使用地点" Width="80"/>
-            <dxg:GridColumn FieldName="Keeper" Header="保管人" Width="80"/>
-            <dxg:GridColumn FieldName="Price" Header="单价" Width="80"/>
-            <dxg:GridColumn FieldName="IncreaseType" Header="新增类型" Width="80"/>
-            <dxg:GridColumn FieldName="UseDate" Header="启用日期" Width="80"/>
-            <dxg:GridColumn FieldName="Intime" Header="入库日期" Width="80"/>
-            <dxg:GridColumn FieldName="Remarks" Header="备注" Width="100"/>
-        </dxg:GridControl>
-    </DockPanel>
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gridView" AllowEditing="False">
+                        <dxg:TableView.RowCellMenuCustomizations>
+                            <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                            <!--<dxb:BarButtonItem Command="{Binding View.DataContext.StatusInquiryCommand}" Content="状态查询" Glyph="{dx:DXImageOffice2013 Image=Notes_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>-->
+                        </dxg:TableView.RowCellMenuCustomizations>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+                <dxg:GridColumn FieldName="SerialNumber" Header="设备编码" Width="80" Fixed="Left"/>
+                <dxg:GridColumn FieldName="Name" Header="名称" Width="80" />
+                <dxg:GridColumn FieldName="Manufacturer" Header="厂家" Width="80"/>
+                <dxg:GridColumn FieldName="SaleCompany" Header="销售商" Width="80"/>
+                <dxg:GridColumn FieldName="Type" Header="型号" Width="80"/>
+                <dxg:GridColumn FieldName="Configuration" Header="配置" Width="80" />
+                <dxg:GridColumn FieldName="ProduceDate" Header="出厂日期" Width="80"/>
+                <dxg:GridColumn FieldName="UserDepartment" Header="使用部门" Width="80"/>
+                <dxg:GridColumn FieldName="Place" Header="使用地点" Width="80"/>
+                <dxg:GridColumn FieldName="Keeper" Header="保管人" Width="80"/>
+                <dxg:GridColumn FieldName="Price" Header="单价" Width="80"/>
+                <dxg:GridColumn FieldName="IncreaseType" Header="新增类型" Width="80"/>
+                <dxg:GridColumn FieldName="UseDate" Header="启用日期" Width="80"/>
+                <dxg:GridColumn FieldName="Intime" Header="入库日期" Width="80"/>
+                <dxg:GridColumn FieldName="Remarks" Header="备注" Width="100"/>
+            </dxg:GridControl>
+        </DockPanel>
+    </dx:LoadingDecorator>
 </UserControl>

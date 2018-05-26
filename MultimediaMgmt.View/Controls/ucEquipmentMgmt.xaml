@@ -34,8 +34,8 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <dxb:ToolBarControl Grid.Row="0" AllowCustomizationMenu="False" AllowQuickCustomization="False">
-                                <dxb:BarCheckItem GroupIndex="2" Hint="升序排列" Glyph="{dx:DXImageOffice2013 Image=MoveUp_16x16.png}" ItemClick="SortAsc" IsChecked="True"/>
-                                <dxb:BarCheckItem GroupIndex="2" Hint="降序排列" Glyph="{dx:DXImageOffice2013 Image=MoveDown_16x16.png}" ItemClick="SortDesc"/>
+                                <dxb:BarCheckItem GroupIndex="2" Hint="升序排列" Glyph="{dx:DXImageOffice2013 Image=MoveUp_16x16.png}" ItemClick="SortAsc" IsChecked="True" IsVisible="{Binding SortVisible}"/>
+                                <dxb:BarCheckItem GroupIndex="2" Hint="降序排列" Glyph="{dx:DXImageOffice2013 Image=MoveDown_16x16.png}" ItemClick="SortDesc" IsVisible="{Binding SortVisible}"/>
                                 <dxb:BarStaticItem Alignment="Far" Content="{Binding RoomTotal}"/>
                                 <dxb:BarItemSeparator Alignment="Far"/>
                                 <dxb:BarCheckItem x:Name="bcMatrix" GroupIndex="1" Alignment="Far" Hint="矩阵模式显示" Glyph="{StaticResource imgMatrix}" ItemClick="MatrixShow" IsChecked="True"/>
@@ -57,20 +57,21 @@
                                 <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" Fixed="Left"/>
                                 <dxg:GridColumn FieldName="RoomName" Header="教室编号" Width="80" Fixed="Left"/>
                                 <dxg:GridColumn FieldName="TerminalId" Header="终端编号" Width="80" Fixed="Left"/>
-                                <dxg:GridColumn Binding="{Binding System,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="中控" Width="60" />
-                                <dxg:GridColumn Binding="{Binding ACRelay1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电源" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding FPD,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电视" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding ComputerStatus,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电脑" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Projector,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="投影机" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Curtain,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="窗帘" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Lamp,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="照明" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding ProjectorScreen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="幕布" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Volume,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="音响" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Record,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="录播" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding AirConitioner,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="空调" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Lock_Status,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="电控柜门" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Door_Status,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="门禁" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Large_Screen,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="大屏" Width="60"/>
+                                <dxg:GridColumn FieldName="TerminalIp" Header="终端IP" Width="120" Fixed="Left"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="System" Header="中控" Width="70" />
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="ACRelay1" Header="电源" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="FPD" Header="电视" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="ComputerStatus" Header="电脑" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Projector" Header="投影机" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Curtain" Header="窗帘" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Lamp" Header="照明" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="ProjectorScreen" Header="幕布" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Volume" Header="音响" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Record" Header="录播" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="AirConitioner" Header="空调" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Lock_Status" Header="电控柜门" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Door_Status" Header="门禁" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Large_Screen" Header="大屏" Width="70"/>
                                 <dxg:GridColumn FieldName="ProjectionSignal" Header="投影机信号源" Width="100">
                                     <dxg:GridColumn.CellTemplate>
                                         <DataTemplate>
@@ -85,16 +86,16 @@
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
                                 </dxg:GridColumn>
-                                <dxg:GridColumn Binding="{Binding LAN1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口1" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding LAN2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口2" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding LAN3,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口3" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding LAN4,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="内网口4" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Alarm_In1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="安防报警" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Alarm_In2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="报警2" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding Alarm_Control,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="布防" Width="60"/>
-                                <dxg:GridColumn Binding="{Binding IN_STATUS1,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入1" Width="80"/>
-                                <dxg:GridColumn Binding="{Binding IN_STATUS2,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入2" Width="80"/>
-                                <dxg:GridColumn Binding="{Binding IN_STATUS3,Converter={StaticResource statusBoolConverter},ConverterParameter=1}" Header="光耦输入3" Width="80"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="LAN1" Header="内网口1" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="LAN2" Header="内网口2" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="LAN3" Header="内网口3" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="LAN4" Header="内网口4" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Alarm_In1" Header="安防报警" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Alarm_In2" Header="报警2" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="Alarm_Control" Header="布防" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="IN_STATUS1" Header="光耦输入1" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="IN_STATUS2" Header="光耦输入2" Width="70"/>
+                                <dxg:GridColumn EditSettings="{dxe:ToggleSwitchEditSettings CheckedStateContent=开, UncheckedStateContent=关}" FieldName="IN_STATUS3" Header="光耦输入3" Width="70"/>
                             </dxg:GridControl>
                         </Grid>
                     </dxdo:LayoutPanel>

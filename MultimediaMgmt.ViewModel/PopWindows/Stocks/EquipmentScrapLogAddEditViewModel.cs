@@ -29,7 +29,7 @@ namespace MultimediaMgmt.ViewModel.PopWindows
         public Action<string> MessageShow;
 
         private int currId = 0;
-        public EquipmentScrapLogAddEditViewModel(int id)
+        public EquipmentScrapLogAddEditViewModel(int id, string serialNum)
         {
             currId = id;
             if (id > 0)
