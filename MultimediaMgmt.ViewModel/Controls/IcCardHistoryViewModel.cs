@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using MultimediaMgmt.Common.Extend;
 using MultimediaMgmt.Model.Models;
 using MultimediaMgmt.Model;
+using System.Windows.Data;
 
 namespace MultimediaMgmt.ViewModel.Controls
 {
     [POCOViewModel]
     public class IcCardHistoryViewModel : BaseViewModel
     {
-        public virtual SmartObservableCollection<CardLogEx> CardLogExs { get; set; }
+        public virtual PagedCollectionView CardLogExs { get; set; }
 
         public virtual List<KeyValuePair<int, string>> Buildings { get; set; }
         public virtual string BuildingName { get; set; }
@@ -21,6 +22,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual int? SelectedCardStatus { get; set; } = null;
         public virtual Dictionary<int, string> SwCardTypes { get; set; }
         public virtual int SelectedSwCardType { get; set; }
+        public virtual int Size { get; set; }
         protected void OnSelectedSwCardTypeChanged()
         {
             if (SelectedSwCardType == 1)
@@ -51,6 +53,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             CardTypes = Constants.CardTypes;
             SelectedSwCardType = 0;
             BeginDate = EndDate = DateTime.Now.Date;
+            Size = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"]);
         }
 
         [Command]
@@ -133,7 +136,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                 tempDt = EndDate.Value.AddDays(1).Date.AddSeconds(-1);
             data = data.Where(s => s.LogTime <= tempDt);
 
-            CardLogExs = data.ToSmartObservableCollection();
+            CardLogExs = new PagedCollectionView(data);
+
         }
 
         [Command]

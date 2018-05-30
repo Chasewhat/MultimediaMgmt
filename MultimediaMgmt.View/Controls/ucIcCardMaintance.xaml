@@ -68,44 +68,51 @@
                 <dxb:BarButtonItem Content="导出Excel" Command="{Binding ExportExcelCommand}" Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
                 <dxb:BarButtonItem Content="导入Excel" Command="{Binding ImportExcelCommand}" Glyph="{dx:DXImage Image=SaveTo_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
             </dxb:ToolBarControl>
-            <dxg:GridControl ItemsSource="{Binding IcCards}"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <dxg:GridControl ItemsSource="{Binding IcCards}"
                          SelectedItem="{Binding SelectedIcCard}"
                 		x:Name="gridControl"
                         AllowInitiallyFocusedRow="False" 
                         >
-                <dxg:GridControl.View>
-                    <dxg:TableView x:Name="gridView"  AllowEditing="False">
-                        <dxg:TableView.RowCellMenuCustomizations>
-                            <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
-                            <dxb:BarButtonItem Content="删除IC卡" Command="{Binding View.DataContext.DeleteCommand}" Glyph="{dx:DXImageOffice2013 Image=Delete_16x16.png}" Hint="删除选中的IC卡信息"/>
-                            <dxb:BarButtonItem Content="删除IC卡及用户" Command="{Binding View.DataContext.DeleteAllCommand}" Glyph="{dx:DXImageOffice2013 Image=Delete_16x16.png}" Hint="删除选中的IC卡信息及关联用户信息"/>
-                        </dxg:TableView.RowCellMenuCustomizations>
-                    </dxg:TableView>
-                </dxg:GridControl.View>
-                <dxg:GridColumn FieldName="HexCode" Header="IC卡号" Width="80"/>
-                <dxg:GridColumn FieldName="CardNum" Header="IC卡编号" Width="80" />
-                <dxg:GridColumn FieldName="PersonId" Header="工号" Width="80"/>
-                <dxg:GridColumn FieldName="Name" Header="姓名" Width="80"/>
-                <dxg:GridColumn FieldName="Sex" Header="性别" Width="80">
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.Sexs}" DisplayMember="Value" ValueMember="Key"/>
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
-                </dxg:GridColumn>
-                <dxg:GridColumn FieldName="Career" Header="工作单位" Width="80" />
-                <dxg:GridColumn FieldName="Email" Header="邮箱" Width="80"/>
-                <dxg:GridColumn FieldName="Phone" Header="电话" Width="100"/>
-                <dxg:GridColumn FieldName="CardType" Header="卡类别" Width="80">
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.CardTypes}" DisplayMember="Value" ValueMember="Key"/>
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
-                </dxg:GridColumn>
-                <dxg:GridColumn FieldName="FacultyId" Header="学院编号" Width="100"/>
-                <dxg:GridColumn FieldName="Status" Header="卡状态" Width="100"/>
-            </dxg:GridControl>
+                    <dxg:GridControl.View>
+                        <dxg:TableView x:Name="gridView"  AllowEditing="False">
+                            <dxg:TableView.RowCellMenuCustomizations>
+                                <dxb:BarButtonItem ItemClick="Edit_ItemClick" Content="编辑" Glyph="{dx:DXImageOffice2013 Image=PictureShapeOutlineColor_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
+                                <dxb:BarButtonItem Content="删除IC卡" Command="{Binding View.DataContext.DeleteCommand}" Glyph="{dx:DXImageOffice2013 Image=Delete_16x16.png}" Hint="删除选中的IC卡信息"/>
+                                <dxb:BarButtonItem Content="删除IC卡及用户" Command="{Binding View.DataContext.DeleteAllCommand}" Glyph="{dx:DXImageOffice2013 Image=Delete_16x16.png}" Hint="删除选中的IC卡信息及关联用户信息"/>
+                            </dxg:TableView.RowCellMenuCustomizations>
+                        </dxg:TableView>
+                    </dxg:GridControl.View>
+                    <dxg:GridColumn FieldName="HexCode" Header="IC卡号" Width="80"/>
+                    <dxg:GridColumn FieldName="CardNum" Header="IC卡编号" Width="80" />
+                    <dxg:GridColumn FieldName="PersonId" Header="工号" Width="80"/>
+                    <dxg:GridColumn FieldName="Name" Header="姓名" Width="80"/>
+                    <dxg:GridColumn FieldName="Sex" Header="性别" Width="80">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.Sexs}" DisplayMember="Value" ValueMember="Key"/>
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="Career" Header="工作单位" Width="80" />
+                    <dxg:GridColumn FieldName="Email" Header="邮箱" Width="80"/>
+                    <dxg:GridColumn FieldName="Phone" Header="电话" Width="100"/>
+                    <dxg:GridColumn FieldName="CardType" Header="卡类别" Width="80">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.CardTypes}" DisplayMember="Value" ValueMember="Key"/>
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                    <dxg:GridColumn FieldName="FacultyId" Header="学院编号" Width="100"/>
+                    <dxg:GridColumn FieldName="Status" Header="卡状态" Width="100"/>
+                </dxg:GridControl>
+                <dxe:DataPager Source="{Binding IcCards}" PageSize="{Binding Size}" x:Name="DataPager" Grid.Row="1" HorizontalAlignment="Left" ShowTotalPageCount="True" />
+            </Grid>
         </DockPanel>
     </dx:LoadingDecorator>
 </UserControl>

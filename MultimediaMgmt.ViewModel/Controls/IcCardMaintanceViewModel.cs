@@ -14,13 +14,14 @@ using System.Collections;
 using NPOI.HSSF.UserModel;
 using System.IO;
 using NPOI.XSSF.UserModel;
+using System.Windows.Data;
 
 namespace MultimediaMgmt.ViewModel.Controls
 {
     [POCOViewModel]
     public class IcCardMaintanceViewModel : BaseViewModel
     {
-        public virtual SmartObservableCollection<IcCardInfo> IcCards { get; set; }
+        public virtual PagedCollectionView IcCards { get; set; }
         public virtual IcCardInfo SelectedIcCard { get; set; }
         public virtual Dictionary<int, string> CardStatuss { get; set; }
         public virtual string SelectedCardStatus { get; set; }
@@ -37,6 +38,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual string PersonName { get; set; }
         public virtual string WaitIndiContent { get; set; }
         public virtual bool IsLoad { get; set; }
+        public virtual int Size { get; set; }
+
         public Func<string> FileSave;
         public Action<string> FileOpen;
         public Action<string> MessageShow;
@@ -47,6 +50,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             Sexs = Constants.Sexs;
             CardTypes = Constants.CardTypes;
             CardStatuss = Constants.CardStatuss;
+            Size = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"]);
         }
 
         [Command]
@@ -82,7 +86,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                 data = data.Where(s => s.CardType == SelectedCardType);
             if (!string.IsNullOrEmpty(SelectedSex))
                 data = data.Where(s => s.Sex == SelectedSex);
-            IcCards = data.ToSmartObservableCollection();
+            IcCards = new PagedCollectionView(data);
         }
 
         [Command]

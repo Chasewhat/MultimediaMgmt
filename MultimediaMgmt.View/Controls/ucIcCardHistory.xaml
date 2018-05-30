@@ -84,41 +84,48 @@
             <dxb:BarButtonItem Content="查询" Command="{Binding QueryCommand}" Glyph="{dx:DXImage Image=Zoom_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
             <dxb:BarButtonItem Content="重置" Command="{Binding ResetCommand}" Glyph="{dx:DXImage Image=Reset_16x16.png}" BarItemDisplayMode="ContentAndGlyph"/>
         </dxb:ToolBarControl>
-        <dxg:GridControl ItemsSource="{Binding CardLogExs}"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <dxg:GridControl ItemsSource="{Binding CardLogExs}"
                 		SelectionMode="Row" x:Name="gridControl"
                         AllowInitiallyFocusedRow="False" 
                         >
-            <dxg:GridControl.View>
-                <dxg:TableView x:Name="gridView" AllowEditing="False">
-                </dxg:TableView>
-            </dxg:GridControl.View>
-            <dxg:GridColumn FieldName="HexCode" Header="IC卡号" Width="80"/>
-            <dxg:GridColumn FieldName="CardNum" Header="IC卡编号" Width="80" />
-            <dxg:GridColumn FieldName="CardType" Header="卡类别" Width="80">
-                <dxg:GridColumn.CellTemplate>
-                    <DataTemplate>
-                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.CardTypes}" DisplayMember="Value" ValueMember="Key"/>
-                    </DataTemplate>
-                </dxg:GridColumn.CellTemplate>
-            </dxg:GridColumn>
-            <dxg:GridColumn FieldName="PersonId" Header="工号" Width="80"/>
-            <dxg:GridColumn FieldName="Name" Header="姓名" Width="80"/>
-            <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" />
-            <dxg:GridColumn FieldName="Location" Header="位置" Width="80"/>
-            <dxg:GridColumn FieldName="RoomNum" Header="教室编号" Width="80"/>
-            <dxg:GridColumn FieldName="TerminalId" Header="终端编号" Width="80"/>
-            <dxg:GridColumn FieldName="State" Header="刷卡状态" Width="80">
-                <dxg:GridColumn.CellTemplate>
-                    <DataTemplate>
-                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.CardStatuss}" DisplayMember="Value" ValueMember="Key"/>
-                    </DataTemplate>
-                </dxg:GridColumn.CellTemplate>
-            </dxg:GridColumn>
-            <dxg:GridColumn FieldName="LogTime" Header="记录时间" Width="180">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings Mask="yyyy-MM-dd HH:mm:ss" MaskType="DateTime" MaskUseAsDisplayFormat="True"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-        </dxg:GridControl>
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gridView" AllowEditing="False">
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+                <dxg:GridColumn FieldName="HexCode" Header="IC卡号" Width="80"/>
+                <dxg:GridColumn FieldName="CardNum" Header="IC卡编号" Width="80" />
+                <dxg:GridColumn FieldName="CardType" Header="卡类别" Width="80">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.CardTypes}" DisplayMember="Value" ValueMember="Key"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="PersonId" Header="工号" Width="80"/>
+                <dxg:GridColumn FieldName="Name" Header="姓名" Width="80"/>
+                <dxg:GridColumn FieldName="BuildingName" Header="教学楼" Width="80" />
+                <dxg:GridColumn FieldName="Location" Header="位置" Width="80"/>
+                <dxg:GridColumn FieldName="RoomNum" Header="教室编号" Width="80"/>
+                <dxg:GridColumn FieldName="TerminalId" Header="终端编号" Width="80"/>
+                <dxg:GridColumn FieldName="State" Header="刷卡状态" Width="80">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding View.DataContext.CardStatuss}" DisplayMember="Value" ValueMember="Key"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="LogTime" Header="记录时间" Width="180">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings Mask="yyyy-MM-dd HH:mm:ss" MaskType="DateTime" MaskUseAsDisplayFormat="True"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+            </dxg:GridControl>
+            <dxe:DataPager Source="{Binding CardLogExs}" PageSize="{Binding Size}" x:Name="DataPager" Grid.Row="1" HorizontalAlignment="Left" ShowTotalPageCount="True" />
+        </Grid>
     </DockPanel>
 </UserControl>
