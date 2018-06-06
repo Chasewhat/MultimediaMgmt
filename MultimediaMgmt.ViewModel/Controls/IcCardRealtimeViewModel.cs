@@ -59,7 +59,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                          restConnection.GetPageValues<CardLogEx>("api/SwipeAccessCardLog/QueryAccessCardLogs"
                          , 1, 0, 1000000, parameters, ref total);
                     if (logs != null)
-                        CardLogExs = logs.ToSmartObservableCollection();              
+                        CardLogExs = logs.Take(35).ToSmartObservableCollection();              
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace MultimediaMgmt.ViewModel.Controls
                          restConnection.GetPageValues<CardLogEx>("api/SwipeCardLog/QuerySwipeCardLogs"
                          , 1, 0, 1000000, parameters, ref total);
                     if (logs != null)
-                        CardLogExs = logs.ToSmartObservableCollection();
+                        CardLogExs = logs.Take(35).ToSmartObservableCollection();
                 }
             }
             catch(Exception ex) { }
