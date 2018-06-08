@@ -198,6 +198,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             //return new Task<bool>(() =>
             //{
+            List<IcCard> stocks = new List<IcCard>();
             try
             {
                 using (TransactionScope ts = new TransactionScope(TransactionScopeOption.RequiresNew,
@@ -238,8 +239,9 @@ namespace MultimediaMgmt.ViewModel.Controls
                                         }
                                     }
                                 }
-                                multimediaEntities.IcCard.Add(card);
+                                stocks.Add(card);
                             }
+                            multimediaEntities.IcCard.AddRange(stocks);
                             multimediaEntities.SaveChanges();
                         }
                         //Person表去除
@@ -305,6 +307,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                     catch (Exception ex)
                     {
                         result = ex.Message;
+                        foreach (var s in stocks)
+                            multimediaEntities.Entry(s).State = System.Data.Entity.EntityState.Detached;
                         return false;
                     }
                     ts.Complete();

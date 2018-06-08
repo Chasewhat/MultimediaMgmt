@@ -152,6 +152,7 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             //return new Task<bool>(() =>
             //{
+            List<EquipmentLoanLog> stocks = new List<EquipmentLoanLog>();
             try
             {
                 using (TransactionScope ts = new TransactionScope(TransactionScopeOption.RequiresNew,
@@ -190,8 +191,9 @@ namespace MultimediaMgmt.ViewModel.Controls
                                         }
                                     }
                                 }
-                                multimediaEntities.EquipmentLoanLog.Add(card);
+                                stocks.Add(card);
                             }
+                            multimediaEntities.EquipmentLoanLog.AddRange(stocks);
                             multimediaEntities.SaveChanges();
                         }
 
@@ -199,6 +201,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                     catch (Exception ex)
                     {
                         result = ex.Message;
+                        foreach (var s in stocks)
+                            multimediaEntities.Entry(s).State = System.Data.Entity.EntityState.Detached;
                         return false;
                     }
                     ts.Complete();
