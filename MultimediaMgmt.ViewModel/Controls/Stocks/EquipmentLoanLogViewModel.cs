@@ -185,7 +185,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                                         if (cell != null)
                                         {
                                             string s = cell.ToString();
-                                            pi.SetValue(card, Convert.ChangeType(cell.ToString(), pi.PropertyType), null);
+                                            pi.SetValue(card, Convert.ChangeType(cell.ToString(),
+                                                (Nullable.GetUnderlyingType(pi.PropertyType) ?? pi.PropertyType)), null);
                                         }
                                     }
                                 }
