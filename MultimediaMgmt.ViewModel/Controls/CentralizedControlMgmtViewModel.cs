@@ -27,10 +27,12 @@ namespace MultimediaMgmt.ViewModel.Controls
         public virtual int? BuildingId { get; set; }
         public virtual string Floor { get; set; }
 
-        public virtual bool AllControlSwitch { get; set; }
-        public virtual bool AllAirConditionerSwitch { get; set; }
-        public virtual bool AllLightingSwitch { get; set; }
+        public virtual bool? AllControlSwitch { get; set; }
+        public virtual bool? AllAirConditionerSwitch { get; set; }
+        public virtual bool? AllLightingSwitch { get; set; }
         public virtual string RoomTotal { get; set; }
+        public virtual string WaitIndiContent { get; set; }
+        public virtual bool IsLoad { get; set; }
         //public virtual bool SystemCheck { get; set; }
         //public virtual bool AirConitionerCheck { get; set; }
         //public virtual bool LampCheck { get; set; }
@@ -42,6 +44,7 @@ namespace MultimediaMgmt.ViewModel.Controls
 
         public CentralizedControlMgmtViewModel()
         {
+            IsLoad = false;
             Buildings = multimediaEntities.ClassroomBuilding.Select(s => new
             {
                 Key = s.Id,
@@ -106,21 +109,31 @@ namespace MultimediaMgmt.ViewModel.Controls
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0 ||
                 restConnection == null)
                 return;
-            CentralizedControls.BeginUpdate();
-            foreach (var cc in SelectedCentralizedControls)
+            IsLoad = true;
+            WaitIndiContent = "正在执行远程写卡...";
+            try
             {
-                if (await CardWrite(cc.TerminalId))
+                CentralizedControls.BeginUpdate();
+                foreach (var cc in SelectedCentralizedControls)
                 {
-                    cc.ExecStatus = true;
-                    cc.ExecResult = "写入执行成功"; 
+                    if (await CardWrite(cc.TerminalId))
+                    {
+                        cc.ExecStatus = true;
+                        cc.ExecResult = "写入执行成功";
+                    }
+                    else
+                    {
+                        cc.ExecStatus = false;
+                        cc.ExecResult = "写入执行失败";
+                    }
                 }
-                else
-                {
-                    cc.ExecStatus = false;
-                    cc.ExecResult = "写入执行失败";
-                }
+                CentralizedControls.EndUpdate();
             }
-            CentralizedControls.EndUpdate();
+            catch { }
+            finally
+            {
+                IsLoad = false;
+            }
         }
 
         private Task<bool> CardWrite(string terminal)
@@ -162,57 +175,75 @@ namespace MultimediaMgmt.ViewModel.Controls
         {
             if (SelectedCentralizedControls == null || SelectedCentralizedControls.Count <= 0)
                 return;
-            TokenSource = new CancellationTokenSource();
-            bool tempFlag;
-            CentralizedControls.BeginUpdate();
-            foreach (var cc in SelectedCentralizedControls)
+            IsLoad = true;
+            WaitIndiContent = "正在执行指令...";
+            try
             {
-                if (TokenSource.IsCancellationRequested)
-                    break;
-                tempFlag = true;
-                StringBuilder temp = new StringBuilder();
-                if (cc.System.HasValue && !TokenSource.IsCancellationRequested)
+                TokenSource = new CancellationTokenSource();
+                bool tempFlag;
+                CentralizedControls.BeginUpdate();
+                foreach (var cc in SelectedCentralizedControls)
                 {
-                    temp.AppendFormat("中控{0}", cc.System.Value ? "开" : "关");
-                    if (await GetExec(cc.TerminalId, cc.System.Value, "System"))
-                        temp.Append("执行成功,");
-                    else
+                    if (TokenSource.IsCancellationRequested)
+                        break;
+                    tempFlag = true;
+                    try
                     {
-                        temp.Append("执行失败,");
-                        tempFlag = false;
+                        StringBuilder temp = new StringBuilder();
+                        if (cc.System.HasValue && !TokenSource.IsCancellationRequested)
+                        {
+                            temp.AppendFormat("中控{0}", cc.System.Value ? "开" : "关");
+                            if (await GetExec(cc.TerminalId, cc.System.Value, "System"))
+                                temp.Append("执行成功,");
+                            else
+                            {
+                                temp.Append("执行失败,");
+                                tempFlag = false;
+                            }
+                        }
+                        if (cc.AirConitioner.HasValue && !TokenSource.IsCancellationRequested)
+                        {
+                            temp.AppendFormat("空调{0}", cc.AirConitioner.Value ? "开" : "关");
+                            if (await GetExec(cc.TerminalId, cc.AirConitioner.Value, "AirConitioner"))
+                                temp.Append("执行成功,");
+                            else
+                            {
+                                temp.Append("执行失败,");
+                                tempFlag = false;
+                            }
+                        }
+                        if (cc.Lamp.HasValue && !TokenSource.IsCancellationRequested)
+                        {
+                            temp.AppendFormat("照明{0}", cc.Lamp.Value ? "开" : "关");
+                            if (await GetExec(cc.TerminalId, cc.Lamp.Value, "Lamp"))
+                                temp.Append("执行成功,");
+                            else
+                            {
+                                temp.Append("执行失败,");
+                                tempFlag = false;
+                            }
+                        }
+                        if (temp.Length > 0)
+                        {
+                            temp = temp.Remove(temp.Length - 1, 1);
+                            cc.ExecResult = temp.ToString();
+                            cc.ExecStatus = tempFlag;
+                        }
+                    }
+                    catch
+                    {
+                        cc.ExecResult = "执行异常";
+                        cc.ExecStatus = false;
                     }
                 }
-                if (cc.AirConitioner.HasValue && !TokenSource.IsCancellationRequested)
-                {
-                    temp.AppendFormat("空调{0}", cc.System.Value ? "开" : "关");
-                    if (await GetExec(cc.TerminalId, cc.AirConitioner.Value, "AirConitioner"))
-                        temp.Append("执行成功,");
-                    else
-                    {
-                        temp.Append("执行失败,");
-                        tempFlag = false;
-                    }
-                }
-                if (cc.Lamp.HasValue && !TokenSource.IsCancellationRequested)
-                {
-                    temp.AppendFormat("照明{0}", cc.System.Value ? "开" : "关");
-                    if (await GetExec(cc.TerminalId, cc.Lamp.Value, "Lamp"))
-                        temp.Append("执行成功,");
-                    else
-                    {
-                        temp.Append("执行失败,");
-                        tempFlag = false;
-                    }
-                }
-                if (temp.Length > 0)
-                {
-                    temp = temp.Remove(temp.Length - 1, 1);
-                    cc.ExecResult = temp.ToString();
-                    cc.ExecStatus = tempFlag;
-                }
+                CentralizedControls.EndUpdate();
+                TokenSource = null;
             }
-            CentralizedControls.EndUpdate();
-            TokenSource = null;
+            catch { }
+            finally
+            {
+                IsLoad = false;
+            }
         }
 
         private Task<bool> GetExec(string terminal, bool status, string target)
@@ -251,6 +282,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void SelectedAll(int field)
         {
+            if (CentralizedControls == null)
+                return;
             CentralizedControls.BeginUpdate();
             foreach (CentralizedControlEx cc in CentralizedControls)
             {
@@ -273,6 +306,8 @@ namespace MultimediaMgmt.ViewModel.Controls
         [Command]
         public void UnSelectedAll(int field)
         {
+            if (CentralizedControls == null)
+                return;
             CentralizedControls.BeginUpdate();
             foreach (CentralizedControlEx cc in CentralizedControls)
             {
@@ -287,6 +322,29 @@ namespace MultimediaMgmt.ViewModel.Controls
                 if (field == 3)
                 {
                     cc.Lamp = false;
+                }
+            }
+            CentralizedControls.EndUpdate();
+        }
+        [Command]
+        public void UnControlAll(int field)
+        {
+            if (CentralizedControls == null)
+                return;
+            CentralizedControls.BeginUpdate();
+            foreach (CentralizedControlEx cc in CentralizedControls)
+            {
+                if (field == 1)
+                {
+                    cc.System = null;
+                }
+                if (field == 2)
+                {
+                    cc.AirConitioner = null;
+                }
+                if (field == 3)
+                {
+                    cc.Lamp = null;
                 }
             }
             CentralizedControls.EndUpdate();
