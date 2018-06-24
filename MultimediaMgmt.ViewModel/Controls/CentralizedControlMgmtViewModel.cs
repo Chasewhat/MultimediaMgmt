@@ -55,6 +55,7 @@ namespace MultimediaMgmt.ViewModel.Controls
             string url = ConfigHelper.Main.WebUrl;
             if (!string.IsNullOrEmpty(url))
                 restConnection = new RestConnection(url);
+            AllControlSwitch = AllAirConditionerSwitch = AllLightingSwitch = null;
         }
 
         [Command]
@@ -80,9 +81,9 @@ namespace MultimediaMgmt.ViewModel.Controls
                                Floor = c.Floor,
                                RoomName = c.RoomNum,
                                BuildingName = b.BuildingName,
-                               System = (t == null ? false : (t.System ?? false)),
-                               AirConitioner = (t == null ? false : (t.AirConditioner ?? false)),
-                               Lamp = (t == null ? false : (t.Lamp ?? false))
+                               System = null,//(t == null ? false : (t.System ?? false)),
+                               AirConitioner = null,// (t == null ? false : (t.AirConditioner ?? false)),
+                               Lamp = null// (t == null ? false : (t.Lamp ?? false))
                            };
                 if (BuildingId.HasValue && BuildingId.Value > 0)
                     data = data.Where(s => s.BuildingId == BuildingId.Value);
@@ -352,19 +353,19 @@ namespace MultimediaMgmt.ViewModel.Controls
 
         public void AllSwitchSet()
         {
-            bool acSwitch = true, aaSwitch = true, alSwitch = true;
-            foreach (CentralizedControlEx cc in CentralizedControls)
-            {
-                if (!cc.System.HasValue || !cc.System.Value)
-                    acSwitch = false;
-                if (!cc.AirConitioner.HasValue || !cc.AirConitioner.Value)
-                    aaSwitch = false;
-                if (!cc.Lamp.HasValue || !cc.Lamp.Value)
-                    alSwitch = false;
-            }
-            AllControlSwitch = acSwitch;
-            AllAirConditionerSwitch = aaSwitch;
-            AllLightingSwitch = alSwitch;
+            //bool acSwitch = true, aaSwitch = true, alSwitch = true;
+            //foreach (CentralizedControlEx cc in CentralizedControls)
+            //{
+            //    if (!cc.System.HasValue || !cc.System.Value)
+            //        acSwitch = false;
+            //    if (!cc.AirConitioner.HasValue || !cc.AirConitioner.Value)
+            //        aaSwitch = false;
+            //    if (!cc.Lamp.HasValue || !cc.Lamp.Value)
+            //        alSwitch = false;
+            //}
+            //AllControlSwitch = acSwitch;
+            //AllAirConditionerSwitch = aaSwitch;
+            //AllLightingSwitch = alSwitch;
         }
     }
 }
