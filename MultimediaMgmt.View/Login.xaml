@@ -14,6 +14,9 @@
 	Title="用户登录" PreviewKeyDown="Login_PreviewKeyDown"
 	Width="600" Height="400"
     ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="{x:Null}" Topmost="True">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="1" ResizeBorderThickness="0" CaptionHeight="30" CornerRadius="0"/>
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <Storyboard x:Key="Storyboard1">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="wind">
