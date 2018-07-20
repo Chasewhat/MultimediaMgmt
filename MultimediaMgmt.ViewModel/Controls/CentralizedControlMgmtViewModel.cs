@@ -181,12 +181,12 @@ namespace MultimediaMgmt.ViewModel.Controls
             try
             {
                 TokenSource = new CancellationTokenSource();
-                bool tempFlag;
-                CentralizedControls.BeginUpdate();
+                bool tempFlag;                
                 foreach (var cc in SelectedCentralizedControls)
                 {
                     if (TokenSource.IsCancellationRequested)
                         break;
+                    CentralizedControls.BeginUpdate();
                     tempFlag = true;
                     try
                     {
@@ -236,8 +236,8 @@ namespace MultimediaMgmt.ViewModel.Controls
                         cc.ExecResult = "执行异常";
                         cc.ExecStatus = false;
                     }
+                    CentralizedControls.EndUpdate();
                 }
-                CentralizedControls.EndUpdate();
                 TokenSource = null;
             }
             catch { }
